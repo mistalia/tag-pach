@@ -16,6 +16,7 @@ public class FieldMaker : MonoBehaviour
     [Header("Field Setting")]
     [SerializeField] private Vector2Int fieldSize = new(10, 10);
     [SerializeField] private float fieldSpacing = 2.0f;
+    [SerializeField, HideInInspector] private bool[] enabledCells = new bool[0];
 
     [Header("Generated Object")]
     [SerializeField] private Transform generatedRoot;
@@ -25,12 +26,12 @@ public class FieldMaker : MonoBehaviour
 
     private void OnValidate()
     {
-        if (Application.isPlaying)
-        {
-            return;
-        }
-
-        QueueGenerateField();
+        //if (Application.isPlaying)
+        //{
+        //    return;
+        //}
+        //
+        //QueueGenerateField();
     }
 
     private void Start()
