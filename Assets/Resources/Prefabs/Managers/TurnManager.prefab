@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnManager
   turnTimeLimit: 20
-  defendRepositionTime: 3
-  attackRepositionTime: 5
-  repositionTurnInterval: 2
+  repositionTimeLimit: 10
+  secondPlayerExitDelay: 2
+  repositionTurnInterval: 10

@@ -170,4 +170,22 @@ public class FieldManager : MonoBehaviour
             }
         }
     }
+
+    //-----------------------------------------------------------
+
+    //リセット
+    public void ResetField()
+    {
+        foreach (FieldTile tile in FieldTile)
+        {
+            if (tile == null)
+            {
+                continue;
+            }
+
+            tile.ClearStone();
+            tile.ResetTileColor();
+        }
+    }
+    //-----------------------------------------------------------
 }

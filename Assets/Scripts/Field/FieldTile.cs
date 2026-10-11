@@ -85,4 +85,13 @@ public class FieldTile : MonoBehaviour
             this.gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
         }
     }
+
+    public void ClearStone()
+    {
+        if (PutedStone != null)
+        {
+            Destroy(PutedStone.gameObject);
+            PutedStone = null;
+        }
+    }
 }

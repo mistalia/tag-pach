@@ -298,5 +298,38 @@ public class Player : MonoBehaviour
         repositionMeshRenderer.material.color = color;
     }
 
+    public void StartResult()
+    {
+        ChangeState("result");
+    }
+
+    //プレイヤーリセット
+    public void ResetBattle()
+    {
+        // 石を置ける状態に戻す
+        canPlaceStone = true;
+
+        // 現在立っているTileのハイライト解除
+        if (OnStandingPiece != null)
+        {
+            OnStandingPiece.ResetTileColor();
+            OnStandingPiece = null;
+        }
+
+        // Rigidbody停止
+        if (TryGetComponent<Rigidbody>(out var rb))
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        // 通常状態へ戻す
+        ChangeState("idle");
+
+        // Reposition用Visualになっている可能性を考慮
+        repositionMesh.SetActive(false);
+        normalMesh.SetActive(true);
+    }
+
     //---------------------------------------------------------------
 }
