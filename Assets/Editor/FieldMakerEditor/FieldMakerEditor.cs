@@ -119,10 +119,12 @@ public class FieldMakerEditor : EditorWindow
         {
             if(GUILayout.Button("フィールド生成"))
             {
+                fieldData.ApplyModifiedProperties();
                 fieldMaker.GenerateField();
+                fieldData.Update();
             }
         }
-            using (new EditorGUILayout.HorizontalScope())
+        using (new EditorGUILayout.HorizontalScope())
         {
             if(GUILayout.Button("全て有効"))
             {
@@ -135,7 +137,9 @@ public class FieldMakerEditor : EditorWindow
             }
         }
 
-        DrawGrid(newSize);
+        DrawPatternSlot();
+
+        DrawGrid(fieldSizeProp.vector2IntValue);
 
         fieldData.ApplyModifiedProperties();
     }
@@ -273,6 +277,71 @@ public class FieldMakerEditor : EditorWindow
 
                 enableCellProp.GetArrayElementAtIndex(newIndex).boolValue = value;
             }
+        }
+    }
+
+    private void DrawPatternSlot()
+    {
+        SerializedProperty patternProp = fieldData.FindProperty("savedPattern");
+
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("保存パターン", EditorStyles.boldLabel);
+
+        for(int i = 0; i < patternProp.arraySize; i++)
+        {
+            SerializedProperty slot = patternProp.GetArrayElementAtIndex(i);
+
+            SerializedProperty hasData = slot.FindPropertyRelative("HasData");
+
+            SerializedProperty size = slot.FindPropertyRelative("Size");
+
+            SerializedProperty enableCell = slot.FindPropertyRelative("EnableCell");
+
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                string label = hasData.boolValue
+                    ? $"パターン{i + 1} : {size.vector2IntValue.x} x {size.vector2IntValue.y}"
+                    : $"パターン{i + 1} : 未保存";
+
+                EditorGUILayout.LabelField(label);
+
+                if (GUILayout.Button("保存", GUILayout.Width(60)))
+                {
+                    // Save the current field configuration to this slot
+                    size.vector2IntValue = fieldSizeProp.vector2IntValue;
+                    CopyCell(enableCellProp, enableCell);
+
+                    hasData.boolValue = true;
+
+                }
+
+                using (new EditorGUI.DisabledScope(!hasData.boolValue))
+                {
+                    if (GUILayout.Button("読み込み", GUILayout.Width(60)))
+                    {
+                        if (hasData.boolValue)
+                        {
+                            // Load the saved field configuration from this slot
+                            fieldSizeProp.vector2IntValue = size.vector2IntValue;
+                            CopyCell(enableCell, enableCellProp);
+                            scrollPos = Vector2.zero; // Reset scroll position after loading
+                            Repaint();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void CopyCell(SerializedProperty source, SerializedProperty destination)
+    {
+        if(source.arraySize != destination.arraySize)
+        {
+            destination.arraySize = source.arraySize;
+        }
+        for(int i = 0; i < source.arraySize; i++)
+        {
+            destination.GetArrayElementAtIndex(i).boolValue = source.GetArrayElementAtIndex(i).boolValue;
         }
     }
 }

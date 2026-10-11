@@ -4,6 +4,14 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
+[System.Serializable]
+public class FieldPattern
+{
+    public bool HasData;
+    public Vector2Int Size;
+    public bool[] EnableCell = new bool[0];
+}
+
 [ExecuteAlways]
 public class FieldMaker : MonoBehaviour
 {
@@ -17,6 +25,15 @@ public class FieldMaker : MonoBehaviour
     [SerializeField] private Vector2Int fieldSize = new(10, 10);
     [SerializeField] private float fieldSpacing = 2.0f;
     [SerializeField, HideInInspector] private bool[] enableCell = new bool[0];
+    [SerializeField]
+    private FieldPattern[] savedPattern = new FieldPattern[3]
+    {
+        new FieldPattern(),
+        new FieldPattern(),
+        new FieldPattern()
+    };
+
+
 
     [Header("Generated Object")]
     [SerializeField] private Transform generatedRoot;
@@ -235,6 +252,52 @@ public class FieldMaker : MonoBehaviour
         {
             DestroyImmediate(generatedRoot.GetChild(i).gameObject);
         }
+    }
+
+    public void GenerateFieldFromPattern(int patternNumber)
+    {
+        // 外部からは1～3で指定する
+        if (patternNumber < 1 || patternNumber > 3)
+        {
+            Debug.LogError("パターン番号は1～3で指定してください。", this);
+            return;
+        }
+
+        int index = patternNumber - 1;
+
+        if (savedPattern == null || index >= savedPattern.Length)
+        {
+            Debug.LogError("保存パターンの配列が未設定です。", this);
+            return;
+        }
+
+        FieldPattern pattern = savedPattern[index];
+
+        if (pattern == null || !pattern.HasData)
+        {
+            Debug.LogWarning(
+                $"パターン{patternNumber}は未保存です。",
+                this);
+            return;
+        }
+
+        // 不正なデータで既存フィールドを消さないよう、先に確認する
+        if (pattern.Size.x <= 0 || pattern.Size.y <= 0 ||
+            pattern.EnableCell == null ||
+            pattern.EnableCell.Length != (long)pattern.Size.x * pattern.Size.y)
+        {
+            Debug.LogError(
+                $"パターン{patternNumber}のサイズと塗り情報が不正です。",
+                this);
+            return;
+        }
+
+        fieldSize = pattern.Size;
+
+        // 保存済みデータと共有しないよう、配列をコピーする
+        enableCell = (bool[])pattern.EnableCell.Clone();
+
+        GenerateField();
     }
 
     private void QueueGenerateField()
