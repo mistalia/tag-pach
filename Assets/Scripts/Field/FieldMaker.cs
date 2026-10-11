@@ -16,23 +16,16 @@ public class FieldMaker : MonoBehaviour
     [Header("Field Setting")]
     [SerializeField] private Vector2Int fieldSize = new(10, 10);
     [SerializeField] private float fieldSpacing = 2.0f;
-    [SerializeField, HideInInspector] private bool[] enabledCells = new bool[0];
+    [SerializeField, HideInInspector] private bool[] enableCell = new bool[0];
 
     [Header("Generated Object")]
     [SerializeField] private Transform generatedRoot;
 
+    const float oversize = 1f;
+    const float barrierHeight = 10f;
+
     private bool isGenerating = false;
     private bool rebuildQueued = false;
-
-    private void OnValidate()
-    {
-        //if (Application.isPlaying)
-        //{
-        //    return;
-        //}
-        //
-        //QueueGenerateField();
-    }
 
     private void Start()
     {
@@ -122,6 +115,17 @@ public class FieldMaker : MonoBehaviour
             {
                 for (int y = 0; y < fieldSize.y; y++)
                 {
+                    if (!enableCell[x + y * fieldSize.x])
+                    {
+                        // 無効なセルは上方にバリアを作ってcontinue
+                        GameObject barrierInstans = Instantiate(barrierBlock, generatedRoot);
+                        barrierInstans.name = $"Barrier_{x}_{y}";
+                        barrierInstans.transform.localPosition = new Vector3(x * 1.0f * fieldSpacing, 5.0f, y * 1.0f * fieldSpacing);
+                        barrierInstans.transform.localScale = new Vector3(fieldSpacing, barrierHeight, fieldSpacing);
+                        barrierInstans.tag = "BarrierBlock";
+                        continue;
+                    }
+
                     GameObject newField = Instantiate(field, generatedRoot);
 
                     newField.name = $"Field_{x}_{y}";
@@ -143,6 +147,7 @@ public class FieldMaker : MonoBehaviour
             }
 
             // バリアブロックの生成
+
             if (barrierBlock != null)
             {
                 //4面分
@@ -151,7 +156,8 @@ public class FieldMaker : MonoBehaviour
 
                     barrierInstans.name = $"Barrier_Left";
                     barrierInstans.transform.localPosition = new Vector3(-1.5f, 5.0f, (fieldSize.y - 1) * fieldSpacing * 0.5f );
-                    barrierInstans.transform.localScale = new Vector3(1.0f, 10.0f, fieldSize.y * fieldSpacing);
+                    barrierInstans.transform.localScale = new Vector3(1.0f, barrierHeight, fieldSize.y * fieldSpacing + (fieldSpacing * oversize));
+                    barrierInstans.tag = "BarrierBlock";
                 }
 
                 {//奥面
@@ -159,7 +165,8 @@ public class FieldMaker : MonoBehaviour
 
                     barrierInstans.name = $"Barrier_Far";
                     barrierInstans.transform.localPosition = new Vector3((fieldSize.x - 1) * fieldSpacing * 0.5f,5.0f,fieldSize.y * fieldSpacing - 0.5f);
-                    barrierInstans.transform.localScale = new Vector3(fieldSize.x * fieldSpacing, 10.0f, 1.0f);
+                    barrierInstans.transform.localScale = new Vector3(fieldSize.x * fieldSpacing + (fieldSpacing * oversize), barrierHeight, 1.0f);
+                    barrierInstans.tag = "BarrierBlock";
                 }
 
                 {//右面
@@ -167,7 +174,8 @@ public class FieldMaker : MonoBehaviour
 
                     barrierInstans.name = $"Barrier_Right";
                     barrierInstans.transform.localPosition = new Vector3(fieldSize.x * fieldSpacing - 0.5f, 5.0f, (fieldSize.y - 1) * fieldSpacing * 0.5f);
-                    barrierInstans.transform.localScale = new Vector3(1.0f, 10.0f, fieldSize.y * fieldSpacing);
+                    barrierInstans.transform.localScale = new Vector3(1.0f, barrierHeight, fieldSize.y * fieldSpacing + (fieldSpacing * oversize));
+                    barrierInstans.tag = "BarrierBlock";
                 }
 
                 {//奥面
@@ -175,7 +183,8 @@ public class FieldMaker : MonoBehaviour
 
                     barrierInstans.name = $"Barrier_Near";
                     barrierInstans.transform.localPosition = new Vector3((fieldSize.x - 1) * fieldSpacing * 0.5f, 5.0f, -1.5f);
-                    barrierInstans.transform.localScale = new Vector3(fieldSize.x * fieldSpacing, 10.0f, 1.0f);
+                    barrierInstans.transform.localScale = new Vector3(fieldSize.x * fieldSpacing + (fieldSpacing * oversize), barrierHeight, 1.0f);
+                    barrierInstans.tag = "BarrierBlock";
                 }
             }
 
