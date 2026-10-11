@@ -36,6 +36,11 @@ public class Stone : MonoBehaviour
 
     private Color revealedColor;
     private float elapsedTime;
+
+    private float activeHoldDuration;
+    private float activeFadeDuration;
+
+
     private bool isTransitioning;
     private bool isReady;
 
@@ -133,10 +138,21 @@ public class Stone : MonoBehaviour
     /// </summary>
     public void RevealColor(Color teamColor)
     {
+        RevealColor(teamColor, holdDuration, fadeDuration);
+    }
+
+    public void RevealColor(
+        Color teamColor,
+        float visibleDuration,
+        float returnDuration)
+    {
         if (!InitializeColor())
         {
             return;
         }
+
+        activeHoldDuration = Mathf.Max(0f, visibleDuration);
+        activeFadeDuration = Mathf.Max(0f, returnDuration);
 
         revealedColor = teamColor;
         elapsedTime = 0f;
@@ -156,8 +172,8 @@ public class Stone : MonoBehaviour
         // Time.timeScaleが0の間は色変化も止まる。
         elapsedTime += Time.deltaTime;
 
-        float holdTime = Mathf.Max(0f, holdDuration);
-        float fadeTime = Mathf.Max(0f, fadeDuration);
+        float holdTime = activeHoldDuration;
+        float fadeTime = activeFadeDuration;
 
         // 保持時間中は色を変えない。
         if (elapsedTime < holdTime)
