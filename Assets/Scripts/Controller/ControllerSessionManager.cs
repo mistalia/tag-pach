@@ -1,30 +1,30 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// ƒoƒCƒ“ƒh‰æ–Ê‚Å“o˜^‚³‚ê‚½“ü—ÍƒfƒoƒCƒX‚ÌŠÇ—
+// ãƒã‚¤ãƒ³ãƒ‰ç”»é¢ã§ç™»éŒ²ã•ã‚ŒãŸå…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹ã®ç®¡ç†
 
 public sealed class ControllerSessionManager : MonoBehaviour
 {
     public static ControllerSessionManager Instance { get; private set; }
 
-    // “o˜^‰Â”\‚ÈÅ‘åƒvƒŒƒCƒ„[”
+    // ç™»éŒ²å¯èƒ½ãªæœ€å¤§ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ•°
     public const int MaxPlayerCount = 4;
 
-    // “ü—ÍƒfƒoƒCƒX‚ğƒvƒŒƒCƒ„[“o˜^‡‚É•Û‚·‚éB
+    // å…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹ã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç™»éŒ²é †ã«ä¿æŒã™ã‚‹ã€‚
     private readonly List<InputDevice> registeredDevices = new();
 
-    // ƒfƒoƒCƒX“o˜^Š®—¹‚É’Ê’m‚³‚ê‚éB
+    // ãƒ‡ãƒã‚¤ã‚¹ç™»éŒ²å®Œäº†æ™‚ã«é€šçŸ¥ã•ã‚Œã‚‹ã€‚
     public event Action<int, InputDevice> DeviceRegistered;
 
-    // “o˜^î•ñ‚ª‚·‚×‚Äíœ‚³‚ê‚½‚Æ‚«‚É’Ê’m‚³‚ê‚éB
+    // ç™»éŒ²æƒ…å ±ãŒã™ã¹ã¦å‰Šé™¤ã•ã‚ŒãŸã¨ãã«é€šçŸ¥ã•ã‚Œã‚‹ã€‚
     public event Action RegistrationCleared;
 
-    // Œ»İ‚Ì“o˜^l”
+    // ç¾åœ¨ã®ç™»éŒ²äººæ•°
     public int PlayerCount => registeredDevices.Count;
 
-    // “o˜^ãŒÀ‚É’B‚µ‚Ä‚¢‚é‚©
+    // ç™»éŒ²ä¸Šé™ã«é”ã—ã¦ã„ã‚‹ã‹
     public bool IsFull => PlayerCount >= MaxPlayerCount;
 
     private void Awake()
@@ -37,7 +37,7 @@ public sealed class ControllerSessionManager : MonoBehaviour
 
         Instance = this;
 
-        // ƒQ[ƒ€ƒV[ƒ“‚Ö“o˜^î•ñ‚ğˆø‚«Œp‚®
+        // ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã¸ç™»éŒ²æƒ…å ±ã‚’å¼•ãç¶™ã
         DontDestroyOnLoad(gameObject);
     }
 
@@ -47,38 +47,38 @@ public sealed class ControllerSessionManager : MonoBehaviour
             Instance = null;
     }
 
-    // “ü—ÍƒfƒoƒCƒX‚ğŸ‚Ì‹ó‚«ƒvƒŒƒCƒ„[‚Ö“o˜^‚·‚éB
+    // å…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹ã‚’æ¬¡ã®ç©ºããƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¸ç™»éŒ²ã™ã‚‹ã€‚
     public bool TryRegisterDevice(InputDevice device)
     {
         if (!CanRegisterDevice(device))
             return false;
 
-        // Add‚³‚ê‚½ˆÊ’u‚ª‚»‚Ì‚Ü‚ÜPlayer”Ô†‚É‚È‚é
+        // Addã•ã‚ŒãŸä½ç½®ãŒãã®ã¾ã¾Playerç•ªå·ã«ãªã‚‹
         registeredDevices.Add(device);
 
         int playerIndex = registeredDevices.Count - 1;
 
         Debug.Log(
             $"[ControllerSessionManager] " +
-            $"Player {playerIndex + 1}‚É“o˜^‚µ‚Ü‚µ‚½B" +
-            $"\n–¼‘O: {device.displayName}" +
-            $"\nŒ^: {device.GetType().Name}" +
+            $"Player {playerIndex + 1}ã«ç™»éŒ²ã—ã¾ã—ãŸã€‚" +
+            $"\nåå‰: {device.displayName}" +
+            $"\nå‹: {device.GetType().Name}" +
             $"\nID: {device.deviceId}"
         );
 
-        // UI‚È‚Ç‚É“o˜^Š®—¹‚ğ’Ê’m‚·‚é
+        // UIãªã©ã«ç™»éŒ²å®Œäº†ã‚’é€šçŸ¥ã™ã‚‹
         DeviceRegistered?.Invoke(playerIndex, device);
 
         return true;
     }
 
-    // w’è‚³‚ê‚½ƒfƒoƒCƒX‚ª“o˜^Ï‚İ‚©Šm”F‚·‚é
+    // æŒ‡å®šã•ã‚ŒãŸãƒ‡ãƒã‚¤ã‚¹ãŒç™»éŒ²æ¸ˆã¿ã‹ç¢ºèªã™ã‚‹
     public bool IsRegistered(InputDevice device)
     {
         return device != null && registeredDevices.Contains(device);
     }
 
-    // ƒvƒŒƒCƒ„[”Ô†‚©‚ç“ü—ÍƒfƒoƒCƒX‚ğæ“¾‚·‚é
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ã‹ã‚‰å…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹ã‚’å–å¾—ã™ã‚‹
     public InputDevice GetDevice(int playerIndex)
     {
         if (!IsValidRegisteredPlayerIndex(playerIndex))
@@ -87,7 +87,7 @@ public sealed class ControllerSessionManager : MonoBehaviour
         return registeredDevices[playerIndex];
     }
 
-    // “o˜^Ï‚İƒfƒoƒCƒX‚ğ‚·‚×‚Äíœ‚·‚é
+    // ç™»éŒ²æ¸ˆã¿ãƒ‡ãƒã‚¤ã‚¹ã‚’ã™ã¹ã¦å‰Šé™¤ã™ã‚‹
     public void ClearRegistration()
     {
         if (registeredDevices.Count == 0)
@@ -97,27 +97,27 @@ public sealed class ControllerSessionManager : MonoBehaviour
 
         Debug.Log(
             "[ControllerSessionManager] " +
-            "‚·‚×‚Ä‚ÌƒRƒ“ƒgƒ[ƒ‰[“o˜^‚ğ‰ğœ‚µ‚Ü‚µ‚½B"
+            "ã™ã¹ã¦ã®ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ç™»éŒ²ã‚’è§£é™¤ã—ã¾ã—ãŸã€‚"
         );
 
-        // UI‚Ö“o˜^‰ğœ‚ğ’Ê’m‚·‚é
+        // UIã¸ç™»éŒ²è§£é™¤ã‚’é€šçŸ¥ã™ã‚‹
         RegistrationCleared?.Invoke();
     }
 
-    // w’èƒfƒoƒCƒX‚ª“o˜^‰Â”\‚©Šm”F‚·‚é
+    // æŒ‡å®šãƒ‡ãƒã‚¤ã‚¹ãŒç™»éŒ²å¯èƒ½ã‹ç¢ºèªã™ã‚‹
     private bool CanRegisterDevice(InputDevice device)
     {
         if (device == null)
         {
             Debug.LogWarning(
                 "[ControllerSessionManager] " +
-                "null‚Ì“ü—ÍƒfƒoƒCƒX‚Í“o˜^‚Å‚«‚Ü‚¹‚ñB"
+                "nullã®å…¥åŠ›ãƒ‡ãƒã‚¤ã‚¹ã¯ç™»éŒ²ã§ãã¾ã›ã‚“ã€‚"
             );
 
             return false;
         }
 
-        // “¯‚¶ƒRƒ“ƒgƒ[ƒ‰[‚Ì•¡”“o˜^‚ğ–h‚®
+        // åŒã˜ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®è¤‡æ•°ç™»éŒ²ã‚’é˜²ã
         if (IsRegistered(device))
             return false;
 
@@ -125,7 +125,7 @@ public sealed class ControllerSessionManager : MonoBehaviour
         {
             Debug.LogWarning(
                 $"[ControllerSessionManager] " +
-                $"“o˜^‰Â”\l”‚ÍA{MaxPlayerCount}l‚Ü‚Å‚Å‚·B"
+                $"ç™»éŒ²å¯èƒ½äººæ•°ã¯ã€{MaxPlayerCount}äººã¾ã§ã§ã™ã€‚"
             );
 
             return false;
@@ -134,7 +134,7 @@ public sealed class ControllerSessionManager : MonoBehaviour
         return true;
     }
 
-    // w’è‚³‚ê‚½ƒvƒŒƒCƒ„[”Ô†‚ª“o˜^”ÍˆÍ“à‚©Šm”F‚·‚é
+    // æŒ‡å®šã•ã‚ŒãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·ãŒç™»éŒ²ç¯„å›²å†…ã‹ç¢ºèªã™ã‚‹
     private bool IsValidRegisteredPlayerIndex(int playerIndex)
     {
         return playerIndex >= 0 && playerIndex < registeredDevices.Count;

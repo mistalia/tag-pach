@@ -29,12 +29,14 @@ public class TurnEndState : TurnBaseState
                 case 6:
                     // 6ライン以上
                     Debug.Log($"6ライン以上を検知(所有者:{matchData.Owner}): 起点位置:{matchData.Coordinate} / ライン方向{matchData.Direction}]");
+                    manager.SetBattleWinner(matchData.Owner);
                     manager.ChangeState(TurnStateType.Result);
                     return;
 
                 case 5:
                     // 5ライン
                     Debug.Log($"5ラインを検知(所有者:{matchData.Owner}): 起点位置:{matchData.Coordinate} / ライン方向{matchData.Direction}]");
+                    manager.SetBattleWinner(matchData.Owner);
                     manager.ChangeState(TurnStateType.Result);
                     return;
 

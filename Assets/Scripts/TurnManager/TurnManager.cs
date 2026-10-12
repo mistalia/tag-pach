@@ -30,6 +30,8 @@ public class TurnManager : MonoBehaviour
     // 現在Attack側になっているPlayer
     private Player currentAttackPlayer;
 
+    private Player battleWinner;
+
     // ========================================
     // Turn
     // ========================================
@@ -279,7 +281,37 @@ public class TurnManager : MonoBehaviour
 
         hasFirstPlayer = false;
 
+        battleWinner = null;
+
         currentState = null;
+    }
+
+    public void StartNextBattle(Player firstPlayer)
+    {
+        // ========================================
+        // 前Battle終了
+        // ========================================
+
+        ResetBattle();
+
+        // ========================================
+        // 先攻設定
+        // ========================================
+
+        if (firstPlayer != player1 && firstPlayer != player2) 
+        {
+            Debug.LogWarning("TurnManager : " + "先攻Playerが不正です。");
+
+            return;
+        }
+
+        SetFirstPlayer(firstPlayer);
+
+        // ========================================
+        // 次Battle開始
+        // ========================================
+
+        StartBattle();
     }
 
     // ========================================
@@ -473,6 +505,16 @@ public class TurnManager : MonoBehaviour
         repositionState.RequestEnd(player, this);
     }
 
+    public void RequestEndResult(Player player)
+    {
+        if (currentStateType != TurnStateType.Result)
+        {
+            return;
+        }
+
+        resultState.RequestEnd(player, this);
+    }
+
     // ========================================
     // Getter / Check
     // ========================================
@@ -598,10 +640,22 @@ public class TurnManager : MonoBehaviour
         return "None";
     }
 
+    public void SetBattleWinner(Player player)
+    {
+        battleWinner = player;
+    }
+
+    public Player GetBattleWinner()
+    {
+        return battleWinner;
+    }
+
 #if UNITY_EDITOR
 
     private void OnGUI()
     {
+        GUI.color = Color.black;
+
         float timeLimit = 0.0f;
 
         switch (currentStateType)
@@ -619,6 +673,8 @@ public class TurnManager : MonoBehaviour
         GUI.Label(new Rect(10, 40, 300, 30), $"TIME : {turnTimer:F1} / {timeLimit:F1}");
         GUI.Label(new Rect(10, 70, 300, 30), $"ATTACK : {GetPlayerName(currentAttackPlayer)}");
         GUI.Label(new Rect(10, 100, 300, 30), $"STATE : {currentStateType}");
+
+        GUI.color = Color.white;
     }
 
 #endif
