@@ -6,9 +6,9 @@ public class FieldMakerEditor : EditorWindow
 {
     [SerializeField] private FieldMaker fieldMaker;
 
-    public SerializedObject fieldData;
-    public SerializedProperty fieldSizeProp;
-    public SerializedProperty enableCellProp;
+    private SerializedObject fieldData;
+    private SerializedProperty fieldSizeProp;
+    private SerializedProperty enableCellProp;
 
     private Vector2 scrollPos;
 
