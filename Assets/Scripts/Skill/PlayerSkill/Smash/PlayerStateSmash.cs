@@ -80,7 +80,7 @@ public class PlayerStateSmash : PlayerState
         opponent = null;
 
         Player[] players =
-            Object.FindObjectsByType<Player>(FindObjectsSortMode.None);
+            Object.FindObjectsByType<Player>();
 
         foreach (Player candidate in players)
         {
