@@ -248,9 +248,33 @@ public class FieldMaker : MonoBehaviour
 
     private void ClearField()
     {
+        if(generatedRoot == null)
+        {
+            return;
+        }
+
+
         for(int i = generatedRoot.childCount - 1; i >= 0; i--)
         {
-            DestroyImmediate(generatedRoot.GetChild(i).gameObject);
+            GameObject tgt = generatedRoot.GetChild(i).gameObject;
+
+            if (Application.isPlaying)
+            {
+                var fieldTile = tgt.GetComponent<FieldTile>();
+                if (fieldTile != null)
+                {
+                    fieldTile.RemoveStone();
+                    fieldManager.UnregisterFieldTile(fieldTile.GetCoordinate());
+                }
+
+                tgt.SetActive(false);
+                tgt.transform.SetParent(null, true);
+                Destroy(tgt);
+            }
+            else
+            {
+                DestroyImmediate(tgt);
+            }
         }
     }
 
