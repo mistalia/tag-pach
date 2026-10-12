@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -8,7 +9,7 @@ using UnityEngine;
 /// 設定時間の経過後、徐々に共通色へ戻る。
 /// 色が戻っても持ち主の記録は維持する。
 /// </summary>
-[RequireComponent(typeof(MeshRenderer))]
+
 public class Stone : MonoBehaviour
 {
     // 既存の参照との互換性を保つため、名前は変更しない。
@@ -29,8 +30,9 @@ public class Stone : MonoBehaviour
     [Min(0f)]
     [SerializeField] private float fadeDuration = 3f;
 
+    [Header("色付け用メッシュの登録")]
+    [SerializeField]private List<MeshRenderer> meshRenderer;
     // この駒だけの表示を変更するために使用する。
-    private MeshRenderer meshRenderer;
     private MaterialPropertyBlock propertyBlock;
     private int colorPropertyId;
 
@@ -60,44 +62,51 @@ public class Stone : MonoBehaviour
             return true;
         }
 
-        meshRenderer = GetComponent<MeshRenderer>();
-
-        if (meshRenderer == null)
-        {
-            Debug.LogError("駒にMeshRendererがありません。", this);
-            return false;
-        }
 
         // 共有素材は確認にだけ使用し、直接変更しない。
-        Material material = meshRenderer.sharedMaterial;
-
-        if (material == null)
+        foreach (var renderer in meshRenderer)
         {
-            Debug.LogError("駒にマテリアルが設定されていません。", this);
-            return false;
+            if (renderer == null)
+            {
+                Debug.LogError("駒のMeshRendererが設定されていません。", this);
+                return false;
+            }
         }
 
-        // 使用する素材に合わせて、色の設定項目を選ぶ。
-        if (material.HasProperty("_BaseColor"))
+        foreach (var renderer in meshRenderer)
         {
-            colorPropertyId = Shader.PropertyToID("_BaseColor");
-        }
-        else if (material.HasProperty("_Color"))
-        {
-            colorPropertyId = Shader.PropertyToID("_Color");
-        }
-        else
-        {
-            Debug.LogError(
-                "駒のマテリアルに対応する色設定がありません。",
-                this);
-            return false;
-        }
 
-        propertyBlock = new MaterialPropertyBlock();
-        isReady = true;
 
-        ApplyColor(neutralColor);
+            Material material = renderer.sharedMaterial;
+
+            if (material == null)
+            {
+                Debug.LogError("駒にマテリアルが設定されていません。", this);
+                return false;
+            }
+
+            // 使用する素材に合わせて、色の設定項目を選ぶ。
+            if (material.HasProperty("_BaseColor"))
+            {
+                colorPropertyId = Shader.PropertyToID("_BaseColor");
+            }
+            else if (material.HasProperty("_Color"))
+            {
+                colorPropertyId = Shader.PropertyToID("_Color");
+            }
+            else
+            {
+                Debug.LogError(
+                    "駒のマテリアルに対応する色設定がありません。",
+                    this);
+                return false;
+            }
+
+            propertyBlock = new MaterialPropertyBlock();
+            isReady = true;
+
+            ApplyColor(neutralColor);
+        }
         return true;
     }
 
@@ -201,9 +210,12 @@ public class Stone : MonoBehaviour
     /// </summary>
     private void ApplyColor(Color color)
     {
-        meshRenderer.GetPropertyBlock(propertyBlock);
-        propertyBlock.SetColor(colorPropertyId, color);
-        meshRenderer.SetPropertyBlock(propertyBlock);
+        foreach (var renderer in meshRenderer)
+        {
+            renderer.GetPropertyBlock(propertyBlock);
+            propertyBlock.SetColor(colorPropertyId, color);
+            renderer.SetPropertyBlock(propertyBlock);
+        }
     }
 
 }

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 691071579451837433}
-  - component: {fileID: 1465224527972127489}
   - component: {fileID: 3698060235813204057}
   m_Layer: 0
   m_Name: Stone_Komanoko
@@ -27,62 +26,13 @@ Transform:
   m_GameObject: {fileID: 2254132153046115247}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 975061836655947210}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &1465224527972127489
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2254132153046115247}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &3698060235813204057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,6 +48,9 @@ MonoBehaviour:
   neutralColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   holdDuration: 1
   fadeDuration: 3
+  meshRenderer:
+  - {fileID: 5882648082781543115}
+  - {fileID: 8302002282184486717}
 --- !u!1001 &721320234477652513
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -132,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 111afe222e7336d41a932b35ac3aff0e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 111afe222e7336d41a932b35ac3aff0e, type: 3}
       propertyPath: m_LocalRotation.x
@@ -140,11 +93,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 111afe222e7336d41a932b35ac3aff0e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 111afe222e7336d41a932b35ac3aff0e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 111afe222e7336d41a932b35ac3aff0e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -152,7 +105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 111afe222e7336d41a932b35ac3aff0e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 111afe222e7336d41a932b35ac3aff0e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -166,6 +119,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: mdl_komanoko_01
       objectReference: {fileID: 0}
+    - target: {fileID: 3682845477030775973, guid: 111afe222e7336d41a932b35ac3aff0e, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5e005dc7c7542c64e995ab82dd85e1b1, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -174,5 +131,15 @@ PrefabInstance:
 --- !u!4 &975061836655947210 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 111afe222e7336d41a932b35ac3aff0e, type: 3}
+  m_PrefabInstance: {fileID: 721320234477652513}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5882648082781543115 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -2620538982542077718, guid: 111afe222e7336d41a932b35ac3aff0e, type: 3}
+  m_PrefabInstance: {fileID: 721320234477652513}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8302002282184486717 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -489757695541172964, guid: 111afe222e7336d41a932b35ac3aff0e, type: 3}
   m_PrefabInstance: {fileID: 721320234477652513}
   m_PrefabAsset: {fileID: 0}

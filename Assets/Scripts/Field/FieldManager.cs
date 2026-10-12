@@ -198,7 +198,7 @@ public class FieldManager : MonoBehaviour
                 continue;
             }
 
-            tile.ClearStone();
+            tile.RemoveStone();
             tile.ResetTileColor();
         }
     }
