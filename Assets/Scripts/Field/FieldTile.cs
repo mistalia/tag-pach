@@ -6,7 +6,7 @@ public class FieldTile : MonoBehaviour
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material highlightMaterial;
 
-    // À•Wî•ñ
+    // ÂÃ€â€¢WÂÃ®â€¢Ã±
     [SerializeField]private Vector2Int coordinate;
     public Stone PutedStone {get; private set; } = null;
 
@@ -86,7 +86,7 @@ public class FieldTile : MonoBehaviour
         }
     }
 
-    public void ClearStone()
+    public void RemoveStone()
     {
         if (PutedStone != null)
         {
