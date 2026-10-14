@@ -4,12 +4,12 @@
     "maps": [
         {
             "name": "Player",
-            "id": "df70fa95-8a34-4494-b137-73ab6b9c7d37",
+            "id": "14db618a-3ecc-40ff-a476-23ea32f1a09f",
             "actions": [
                 {
                     "name": "Move",
                     "type": "Value",
-                    "id": "351f2ccd-1f9f-44bf-9bec-d62ac5c5f408",
+                    "id": "30728b6e-bc12-4d8e-9276-f557695942db",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -19,7 +19,7 @@
                 {
                     "name": "Attack",
                     "type": "Button",
-                    "id": "2188522e-b474-4686-8495-59d70adbba9b",
+                    "id": "641fc70e-cc11-4b00-91d1-495875588a1b",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -29,7 +29,7 @@
                 {
                     "name": "Place",
                     "type": "Button",
-                    "id": "21952389-d521-424a-960b-849b16ce5698",
+                    "id": "eb089470-ab14-4f41-8d69-8ee1067f693c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -39,7 +39,7 @@
                 {
                     "name": "Skill",
                     "type": "Button",
-                    "id": "d3ceed5d-ae7d-4209-b50b-9c11afb49936",
+                    "id": "73b0899f-acb6-4b31-aeae-7e9a8e4d3125",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -50,7 +50,7 @@
             "bindings": [
                 {
                     "name": "WASD",
-                    "id": "00ca640b-d935-4593-8157-c05846ea39b3",
+                    "id": "381f0d5a-b71b-42a6-a186-680bdeb8adee",
                     "path": "Dpad",
                     "interactions": "",
                     "processors": "",
@@ -61,7 +61,7 @@
                 },
                 {
                     "name": "up",
-                    "id": "e2062cb9-1b15-46a2-838c-2f8d72a0bdd9",
+                    "id": "7b9493e4-ba65-40af-95be-81c119d94873",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
@@ -72,7 +72,7 @@
                 },
                 {
                     "name": "up",
-                    "id": "8180e8bd-4097-4f4e-ab88-4523101a6ce9",
+                    "id": "8f9fb945-0b67-4fe7-a307-b9c10fdcc1f7",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
@@ -83,7 +83,7 @@
                 },
                 {
                     "name": "down",
-                    "id": "320bffee-a40b-4347-ac70-c210eb8bc73a",
+                    "id": "3fd59af2-9f94-4dd3-9c01-21e969c5f056",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
@@ -94,7 +94,7 @@
                 },
                 {
                     "name": "down",
-                    "id": "1c5327b5-f71c-4f60-99c7-4e737386f1d1",
+                    "id": "d9810bfc-20ce-4361-9be2-21c854993fda",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
@@ -105,7 +105,7 @@
                 },
                 {
                     "name": "left",
-                    "id": "d2581a9b-1d11-4566-b27d-b92aff5fabbc",
+                    "id": "5ea9b000-7709-4f25-87a9-35dbd0bb553d",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -116,7 +116,7 @@
                 },
                 {
                     "name": "left",
-                    "id": "2e46982e-44cc-431b-9f0b-c11910bf467a",
+                    "id": "a536f092-2b7d-4985-94ac-b1687033444c",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
@@ -127,7 +127,7 @@
                 },
                 {
                     "name": "right",
-                    "id": "fcfe95b8-67b9-4526-84b5-5d0bc98d6400",
+                    "id": "cfbfdcd4-5f65-40bf-8295-5501b49bba17",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
@@ -138,7 +138,7 @@
                 },
                 {
                     "name": "right",
-                    "id": "77bff152-3580-4b21-b6de-dcd0c7e41164",
+                    "id": "abd60fa4-bc55-495b-a9b7-235744d489a1",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
@@ -149,7 +149,7 @@
                 },
                 {
                     "name": "",
-                    "id": "978bfe49-cc26-4a3d-ab7b-7d7a29327403",
+                    "id": "d7efb5cc-a30a-4632-944c-e83959bdcc7d",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
@@ -160,7 +160,7 @@
                 },
                 {
                     "name": "",
-                    "id": "1635d3fe-58b6-4ba9-a4e2-f4b964f6b5c8",
+                    "id": "5545c7ce-fe3c-49c4-b494-1102b1695215",
                     "path": "<XRController>/{Primary2DAxis}",
                     "interactions": "",
                     "processors": "",
@@ -171,7 +171,7 @@
                 },
                 {
                     "name": "",
-                    "id": "3ea4d645-4504-4529-b061-ab81934c3752",
+                    "id": "53f0c829-2e1c-4387-abe5-02eba4fbd916",
                     "path": "<Joystick>/stick",
                     "interactions": "",
                     "processors": "",
@@ -182,7 +182,7 @@
                 },
                 {
                     "name": "",
-                    "id": "9ce0524e-4d82-4905-8a7e-a21df89e30c8",
+                    "id": "8c084704-5404-4c0e-8d9d-82553b7b401a",
                     "path": "<HID::Nintendo Wireless Gamepad>/hat",
                     "interactions": "",
                     "processors": "",
@@ -193,7 +193,7 @@
                 },
                 {
                     "name": "",
-                    "id": "9b1d6da7-5cad-4afa-9bef-97011b15502f",
+                    "id": "fe8c77cd-9a2c-405d-b8ca-a8940fdeb3d9",
                     "path": "<HID::Nintendo Wireless Gamepad>/hat",
                     "interactions": "",
                     "processors": "",
@@ -204,7 +204,7 @@
                 },
                 {
                     "name": "",
-                    "id": "899b0641-05fe-4f3b-b937-c9a6dc205dd1",
+                    "id": "c6751b38-a74b-4f99-99a9-3ed4bff8ad77",
                     "path": "<SwitchProControllerHID>/leftStick",
                     "interactions": "",
                     "processors": "",
@@ -215,7 +215,7 @@
                 },
                 {
                     "name": "",
-                    "id": "bb1a9f0e-4052-4895-8743-7fa3700387e2",
+                    "id": "44de28b4-39e6-4809-9f30-f0e2d06c3e88",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
@@ -226,7 +226,7 @@
                 },
                 {
                     "name": "",
-                    "id": "71dd0b93-a270-4554-9375-cc04f206a57b",
+                    "id": "7b495af1-60fe-4bae-b145-4b387e158689",
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
@@ -237,7 +237,7 @@
                 },
                 {
                     "name": "",
-                    "id": "9ccea83d-0465-4180-9568-c2dfaf488d54",
+                    "id": "42cea2de-4746-40e5-97bd-c018660a3722",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
@@ -248,7 +248,7 @@
                 },
                 {
                     "name": "",
-                    "id": "51fdecaf-5e7f-4cf3-af92-155359dc4d34",
+                    "id": "4b31df5e-6b84-4ec9-baa8-91a352e633da",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
@@ -259,7 +259,7 @@
                 },
                 {
                     "name": "",
-                    "id": "43238239-2044-4f55-b2b2-c0f721918a28",
+                    "id": "c6f4bd8a-c6e7-48a7-af14-64dc1b3a1be4",
                     "path": "<HID::Nintendo Wireless Gamepad>/button3",
                     "interactions": "",
                     "processors": "",
@@ -270,7 +270,7 @@
                 },
                 {
                     "name": "",
-                    "id": "a3bbfd87-a15c-4985-8504-7e03a4438001",
+                    "id": "19cce93b-dc0d-4961-9867-080bbf6ed9f6",
                     "path": "<HID::Nintendo Wireless Gamepad>/button3",
                     "interactions": "",
                     "processors": "",
@@ -281,7 +281,7 @@
                 },
                 {
                     "name": "",
-                    "id": "4d82f00a-f7cc-4aec-afa3-a96f4e3f84a9",
+                    "id": "1427189c-dfb5-44a1-93ba-dba9b28d6084",
                     "path": "<HID::E502-2>/trigger",
                     "interactions": "",
                     "processors": "",
@@ -292,7 +292,7 @@
                 },
                 {
                     "name": "",
-                    "id": "faa16f42-2b3c-4cb7-99e8-cade7354ecbc",
+                    "id": "55f7d71b-fe0f-4647-aa61-976bc863b912",
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
@@ -303,7 +303,7 @@
                 },
                 {
                     "name": "",
-                    "id": "ff65caf9-b182-458e-8b30-dac1aec48b9e",
+                    "id": "4b0ad2a4-7167-44c8-b3c7-2bbb0808664a",
                     "path": "<HID::E502-2>/button2",
                     "interactions": "",
                     "processors": "",
@@ -319,6 +319,348 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "Skill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Operation",
+            "id": "ff8bd18b-c764-4e8e-abf5-bc2315eaad02",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "ba7f6eaa-81e5-4c80-826c-9e70c519ef70",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "51bfb7a1-1b52-4d4a-95cc-2df6ba5605b5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "WASD",
+                    "id": "e3d80667-9806-4e1c-b9fb-b2461267a812",
+                    "path": "Dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "3705f9a6-78a1-412e-97d4-52f93fbf46d4",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "up",
+                    "id": "bca4d470-8920-41bb-a537-5b5a6e1a9ae8",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "d4a33975-6f69-463b-bb1f-979ef67427ab",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "1fb1a2c8-2b1f-4f37-a403-f6e3b890bcf9",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "37c3bca6-8ad7-434d-a37b-7e61d7654b4d",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "76456931-931b-44ca-b987-7d5c3a747b8e",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "5d9ff538-b7ee-487e-af4d-b23c4835f0f4",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "1c1640d1-d174-4c83-b827-d82246cd711a",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b83f8a47-a923-4fe1-a28d-7992eb9a96bc",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dcccf439-3f4d-464f-87cc-e3e700d0ab0b",
+                    "path": "<XRController>/{Primary2DAxis}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XR",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c419130f-ba73-45fe-b078-bfbd1fbff455",
+                    "path": "<Joystick>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a97f2264-a5d7-49d2-908a-2eae2aeb8058",
+                    "path": "<HID::Nintendo Wireless Gamepad>/hat",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Joystick",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b5fca41-7495-4c62-b9df-a60b0b1df6bb",
+                    "path": "<HID::Nintendo Wireless Gamepad>/hat",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Joystick",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ca4d0bab-1e9a-49b5-a504-a894d02c99c0",
+                    "path": "<SwitchProControllerHID>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d30cccd0-6603-48db-95b0-f947e694ea0c",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7eeccf15-0175-42a9-bacb-718ee37eccd7",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "05331436-b098-41ad-b623-f105762adf74",
+                    "path": "<HID::Nintendo Wireless Gamepad>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "27c61e40-c115-44ad-80f4-f38bb77ceb65",
+                    "path": "<HID::Nintendo Wireless Gamepad>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Placement",
+            "id": "9be8a7ab-216f-4ebc-b6be-b9ccdfe03fa0",
+            "actions": [
+                {
+                    "name": "Place",
+                    "type": "Button",
+                    "id": "8dbcee37-29a4-4059-a243-8605dcba7a8a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Skill",
+                    "type": "Button",
+                    "id": "c8537e28-a08f-49aa-aeb6-1560c32b85bd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a84c6248-2085-46da-b3e1-001244015a0a",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Place",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "132af58c-5c1e-4a73-9bc5-0032aa3044a3",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Place",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "37a6bc7e-1e41-48dc-b00f-d1d35f27ec0a",
+                    "path": "<HID::Nintendo Wireless Gamepad>/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Joystick",
+                    "action": "Place",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a567590-c53b-4ab6-99e1-389ca2ebc153",
+                    "path": "<HID::Nintendo Wireless Gamepad>/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Joystick",
+                    "action": "Place",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c9e4876f-d10c-4924-8122-e58144a3b000",
+                    "path": "<HID::E502-2>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Joystick",
+                    "action": "Place",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ce4ccc6-c6a7-493d-b281-1fac9943a4b2",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e527626e-bee9-4260-bc83-1438b665ce5f",
+                    "path": "<HID::E502-2>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Joystick",
                     "action": "Skill",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -853,12 +1195,12 @@
         },
         {
             "name": "BindScene",
-            "id": "2f1f1586-2af6-4f18-aba8-6efd73172983",
+            "id": "3c705bcb-abc4-4713-9e43-70e2046dcbaa",
             "actions": [
                 {
                     "name": "Proceed",
                     "type": "Button",
-                    "id": "c1bf23a1-f10a-4907-bc51-91d6b61ff59a",
+                    "id": "65530b7c-564a-4f04-bc34-06a3bdc5b4aa",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -868,7 +1210,7 @@
                 {
                     "name": "ClearRegistration",
                     "type": "Button",
-                    "id": "f6ed0c69-1fd4-4148-8695-8c9ed66111ff",
+                    "id": "8d3594b8-8694-4367-a994-5d35f378c1d6",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -879,18 +1221,51 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "c15530b3-2ac9-4706-a6bb-a32bc58a647b",
-                    "path": "<Keyboard>/enter",
+                    "id": "ac907c2b-7539-4bd9-8176-47644dd82dc6",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Gamepad",
                     "action": "Proceed",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "1c3a3467-7ea1-45df-9451-ee5193413991",
+                    "id": "845e9788-47f3-48a7-a863-128fad50361a",
+                    "path": "<HID::Nintendo Wireless Gamepad>/button13",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Proceed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c49a6253-f79c-45fc-84d4-f6fd77eb5c73",
+                    "path": "<HID::Nintendo Wireless Gamepad>/button14",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Proceed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "80f568a7-f735-4dc0-97cd-27fffbc57f89",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Proceed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2dc39daa-026b-4733-b626-ade2e8ad9351",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
