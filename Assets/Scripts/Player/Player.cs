@@ -14,10 +14,8 @@ public class Player : MonoBehaviour
 
     //---------------------------------------------------------------
     [Header("Reposition Visual")]
-    private GameObject normalMesh;
     private GameObject repositionMesh;
 
-    private Renderer normalMeshRenderer;
     private Renderer repositionMeshRenderer;
 
     //---------------------------------------------------------------
@@ -45,18 +43,6 @@ public class Player : MonoBehaviour
         }
 
         //---------------------------------------------------------------
-        // NormalMeshを取得
-        Transform normalMeshTransform = transform.Find("NormalMesh");
-
-        if (normalMeshTransform != null)
-        {
-            normalMesh = normalMeshTransform.gameObject;
-        }
-        else
-        {
-            Debug.LogError("NormalMesh is not found");
-            return;
-        }
 
         // RepositionPointerを取得
         Transform repositionMeshTransform = transform.Find("RepositionMesh");
@@ -71,13 +57,12 @@ public class Player : MonoBehaviour
             return;
         }
 
-        normalMeshRenderer = normalMesh.GetComponent<Renderer>();
 
         repositionMeshRenderer = repositionMesh.GetComponent<Renderer>();
 
-        if (!normalMeshRenderer || !repositionMeshRenderer)
+        if ( !repositionMeshRenderer)
         {
-            Debug.LogError("NormalMesh または RepositionMesh にRendererがありません。");
+            Debug.LogError("RepositionMesh にRendererがありません。");
 
             return;
         }
@@ -282,19 +267,16 @@ public class Player : MonoBehaviour
 
     public void EnterRepositionVisual()
     {
-        normalMesh.SetActive(false);
         repositionMesh.SetActive(true);
     }
 
     public void ExitRepositionVisual()
     {
         repositionMesh.SetActive(false);
-        normalMesh.SetActive(true);
     }
 
     public void SetRepositionColor(Color color)
     {
-        normalMeshRenderer.material.color = color;
         repositionMeshRenderer.material.color = color;
     }
 
@@ -328,7 +310,6 @@ public class Player : MonoBehaviour
 
         // Reposition用Visualになっている可能性を考慮
         repositionMesh.SetActive(false);
-        normalMesh.SetActive(true);
     }
 
     //---------------------------------------------------------------
