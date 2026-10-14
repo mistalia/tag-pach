@@ -8,6 +8,10 @@ public class Player : MonoBehaviour
     [SerializeField] private string initializeStatekey = "idle";
     [SerializeField] private LayerMask fieldLayer; // フィールドのレイヤーマスク
 
+    [Header("Player TeamColor")]
+    [SerializeField] private Color teamColor = Color.red;
+    public Color TeamColor => teamColor;
+
     //---------------------------------------------------------------
     [Header("Reposition Visual")]
     private GameObject normalMesh;
@@ -137,30 +141,94 @@ public class Player : MonoBehaviour
         currentState.EnterState(this, input);
     }
 
-    private void AnyStateTransition()
+    public bool IsRepositioning =>
+    currentState is PlayerStateReposition ||
+    (TurnManager.Instance != null &&
+     TurnManager.Instance.GetCurrentStateType() == TurnStateType.Reposition);
+
+    public void AddKnockback(
+        Vector3 direction,
+        float distance,
+        float speed,
+        float stunDuration)
     {
-        // 命中情報が届いていたら、操作より優先して吹き飛ばされる状態へ入る。
-        if (TryGetComponent<SmashHitReceiver>(out var receiver) &&
-            receiver.HasPendingHit)
+        if (!isActiveAndEnabled || IsRepositioning)
         {
-            ChangeState("knockback");
             return;
         }
 
-        // 吹き飛ばされている間は、攻撃・配置入力を使わない。
-        if (currentState is PlayerStateSmashed)
+        // スタン中の追撃では、最初の命中情報を上書きしない。
+        if (currentState is PlayerStateSmashed currentSmashed &&
+            currentSmashed.IsStunned)
+        {
+            return;
+        }
+
+        direction.y = 0f;
+        float directionSqrMagnitude = direction.sqrMagnitude;
+
+        if (!IsValidKnockbackValue(directionSqrMagnitude) ||
+            !IsValidKnockbackValue(distance) ||
+            !IsValidKnockbackValue(speed) ||
+            !IsValidKnockbackValue(stunDuration) ||
+            speed <= 0f ||
+            (distance > 0f && directionSqrMagnitude < 0.0001f))
+        {
+            Debug.LogWarning(
+                "ノックバック情報が不正なため、被弾を受け付けません。",
+                this);
+            return;
+        }
+
+        if (stateList == null ||
+            !stateList.TryGetRuntimeState("knockback", out var state) ||
+            state is not PlayerStateSmashed smashedState)
+        {
+            Debug.LogError(
+                "knockbackにPlayerStateSmashedが登録されていません。",
+                this);
+            return;
+        }
+
+        if (!TryGetComponent<Rigidbody>(out _))
+        {
+            Debug.LogError(
+                "ノックバックに必要なRigidbodyがありません。",
+                this);
+            return;
+        }
+
+        ChangeState("knockback");
+
+        // EnterStateで初期化した後に、今回の被弾情報を渡す。
+        if (currentState == smashedState)
+        {
+            smashedState.Setup(direction, distance, speed, stunDuration);
+        }
+    }
+
+    private static bool IsValidKnockbackValue(float value)
+    {
+        return !float.IsNaN(value) &&
+               !float.IsInfinity(value) &&
+               value >= 0f;
+    }
+
+    private void AnyStateTransition()
+    {
+        // 命中情報が届いていたら、操作より優先して吹き飛ばされる状態へ入る。
+        if (IsRepositioning || currentState is PlayerStateSmashed)
         {
             return;
         }
 
         if (input.Attack.Pressed &&
-            TryGetComponent<SmashAttack>(out var skill))
+            stateList.TryGetRuntimeState("smash", out var attackState) &&
+            attackState is PlayerStateSmash smashState &&
+            smashState.CanUse(this))
         {
-            // 攻撃が発動した場合は、同時に配置しない。
-            if (skill.TryUse())
-            {
-                return;
-            }
+            ChangeState("smash");
+            return;
         }
 
         // どの状態からでも特定のイベントで遷移するトランジションはここに記述する
@@ -228,6 +296,39 @@ public class Player : MonoBehaviour
     {
         normalMeshRenderer.material.color = color;
         repositionMeshRenderer.material.color = color;
+    }
+
+    public void StartResult()
+    {
+        ChangeState("result");
+    }
+
+    //プレイヤーリセット
+    public void ResetBattle()
+    {
+        // 石を置ける状態に戻す
+        canPlaceStone = true;
+
+        // 現在立っているTileのハイライト解除
+        if (OnStandingPiece != null)
+        {
+            OnStandingPiece.ResetTileColor();
+            OnStandingPiece = null;
+        }
+
+        // Rigidbody停止
+        if (TryGetComponent<Rigidbody>(out var rb))
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        // 通常状態へ戻す
+        ChangeState("idle");
+
+        // Reposition用Visualになっている可能性を考慮
+        repositionMesh.SetActive(false);
+        normalMesh.SetActive(true);
     }
 
     //---------------------------------------------------------------

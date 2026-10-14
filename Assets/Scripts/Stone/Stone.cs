@@ -1,41 +1,46 @@
-
+ï»¿
 using UnityEngine;
 
 /// <summary>
-/// ‹î‚Ì‚¿å‚ÆA”z’uŒã‚ÌF•Ï‰»‚ğŠÇ—‚·‚éB
+/// é§’ã®æŒã¡ä¸»ã¨ã€é…ç½®å¾Œã®è‰²å¤‰åŒ–ã‚’ç®¡ç†ã™ã‚‹ã€‚
 ///
-/// SetOwner‚Å‚¿å‚ğ‹L˜^‚µA‚»‚ÌƒvƒŒƒCƒ„[‚ÌF‚ğ•\¦‚·‚éB
-/// İ’èŠÔ‚ÌŒo‰ßŒãA™X‚É‹¤’ÊF‚Ö–ß‚éB
-/// F‚ª–ß‚Á‚Ä‚à‚¿å‚Ì‹L˜^‚ÍˆÛ‚·‚éB
+/// SetOwnerã§æŒã¡ä¸»ã‚’è¨˜éŒ²ã—ã€ãã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è‰²ã‚’è¡¨ç¤ºã™ã‚‹ã€‚
+/// è¨­å®šæ™‚é–“ã®çµŒéå¾Œã€å¾ã€…ã«å…±é€šè‰²ã¸æˆ»ã‚‹ã€‚
+/// è‰²ãŒæˆ»ã£ã¦ã‚‚æŒã¡ä¸»ã®è¨˜éŒ²ã¯ç¶­æŒã™ã‚‹ã€‚
 /// </summary>
 [RequireComponent(typeof(MeshRenderer))]
 public class Stone : MonoBehaviour
 {
-    // Šù‘¶‚ÌQÆ‚Æ‚ÌŒİŠ·«‚ğ•Û‚Â‚½‚ßA–¼‘O‚Í•ÏX‚µ‚È‚¢B
+    // æ—¢å­˜ã®å‚ç…§ã¨ã®äº’æ›æ€§ã‚’ä¿ã¤ãŸã‚ã€åå‰ã¯å¤‰æ›´ã—ãªã„ã€‚
     public Player Owner { get; private set; }
 
-    [Header("F‚Ìİ’è")]
+    [Header("è‰²ã®è¨­å®š")]
 
-    [Tooltip("”z’u‘O‚ÆF•Ï‰»I—¹Œã‚Ì‹¤’ÊFB—¼ƒ`[ƒ€‚Æ‚à“¯‚¶F‚Éİ’è‚·‚éB")]
+    [Tooltip("é…ç½®å‰ã¨è‰²å¤‰åŒ–çµ‚äº†å¾Œã®å…±é€šè‰²ã€‚ä¸¡ãƒãƒ¼ãƒ ã¨ã‚‚åŒã˜è‰²ã«è¨­å®šã™ã‚‹ã€‚")]
     [SerializeField] private Color neutralColor = Color.gray;
 
-    [Header("ŠÔ‚Ìİ’èi•bj")]
+    [Header("æ™‚é–“ã®è¨­å®šï¼ˆç§’ï¼‰")]
 
-    [Tooltip("ƒvƒŒƒCƒ„[‚ÌF‚ğ•Û‚·‚é•b”B0‚È‚çA‚·‚®‚É‹¤’ÊF‚Ö–ß‚èn‚ß‚éB")]
+    [Tooltip("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è‰²ã‚’ä¿æŒã™ã‚‹ç§’æ•°ã€‚0ãªã‚‰ã€ã™ãã«å…±é€šè‰²ã¸æˆ»ã‚Šå§‹ã‚ã‚‹ã€‚")]
     [Min(0f)]
     [SerializeField] private float holdDuration = 1f;
 
-    [Tooltip("‹¤’ÊF‚Ö™X‚É–ß‚é•b”B0‚È‚çA•ÛŠÔ‚ÌI—¹Œã‚É‘¦À‚É–ß‚éB")]
+    [Tooltip("å…±é€šè‰²ã¸å¾ã€…ã«æˆ»ã‚‹ç§’æ•°ã€‚0ãªã‚‰ã€ä¿æŒæ™‚é–“ã®çµ‚äº†å¾Œã«å³åº§ã«æˆ»ã‚‹ã€‚")]
     [Min(0f)]
     [SerializeField] private float fadeDuration = 3f;
 
-    // ‚±‚Ì‹î‚¾‚¯‚Ì•\¦‚ğ•ÏX‚·‚é‚½‚ß‚Ég—p‚·‚éB
+    // ã“ã®é§’ã ã‘ã®è¡¨ç¤ºã‚’å¤‰æ›´ã™ã‚‹ãŸã‚ã«ä½¿ç”¨ã™ã‚‹ã€‚
     private MeshRenderer meshRenderer;
     private MaterialPropertyBlock propertyBlock;
     private int colorPropertyId;
 
     private Color revealedColor;
     private float elapsedTime;
+
+    private float activeHoldDuration;
+    private float activeFadeDuration;
+
+
     private bool isTransitioning;
     private bool isReady;
 
@@ -45,8 +50,8 @@ public class Stone : MonoBehaviour
     }
 
     /// <summary>
-    /// •`‰æ‚Ì€”õ‚ğs‚¢A‰Šúó‘Ô‚ğ‹¤’ÊF‚É‚·‚éB
-    /// €”õÏ‚İ‚È‚çÄ‰Šú‰»‚µ‚È‚¢B
+    /// æç”»ã®æº–å‚™ã‚’è¡Œã„ã€åˆæœŸçŠ¶æ…‹ã‚’å…±é€šè‰²ã«ã™ã‚‹ã€‚
+    /// æº–å‚™æ¸ˆã¿ãªã‚‰å†åˆæœŸåŒ–ã—ãªã„ã€‚
     /// </summary>
     private bool InitializeColor()
     {
@@ -59,20 +64,20 @@ public class Stone : MonoBehaviour
 
         if (meshRenderer == null)
         {
-            Debug.LogError("‹î‚ÉMeshRenderer‚ª‚ ‚è‚Ü‚¹‚ñB", this);
+            Debug.LogError("é§’ã«MeshRendererãŒã‚ã‚Šã¾ã›ã‚“ã€‚", this);
             return false;
         }
 
-        // ‹¤—L‘fŞ‚ÍŠm”F‚É‚¾‚¯g—p‚µA’¼Ú•ÏX‚µ‚È‚¢B
+        // å…±æœ‰ç´ æã¯ç¢ºèªã«ã ã‘ä½¿ç”¨ã—ã€ç›´æ¥å¤‰æ›´ã—ãªã„ã€‚
         Material material = meshRenderer.sharedMaterial;
 
         if (material == null)
         {
-            Debug.LogError("‹î‚Éƒ}ƒeƒŠƒAƒ‹‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB", this);
+            Debug.LogError("é§’ã«ãƒãƒ†ãƒªã‚¢ãƒ«ãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚", this);
             return false;
         }
 
-        // g—p‚·‚é‘fŞ‚É‡‚í‚¹‚ÄAF‚Ìİ’è€–Ú‚ğ‘I‚ÔB
+        // ä½¿ç”¨ã™ã‚‹ç´ æã«åˆã‚ã›ã¦ã€è‰²ã®è¨­å®šé …ç›®ã‚’é¸ã¶ã€‚
         if (material.HasProperty("_BaseColor"))
         {
             colorPropertyId = Shader.PropertyToID("_BaseColor");
@@ -84,7 +89,7 @@ public class Stone : MonoBehaviour
         else
         {
             Debug.LogError(
-                "‹î‚Ìƒ}ƒeƒŠƒAƒ‹‚É‘Î‰‚·‚éFİ’è‚ª‚ ‚è‚Ü‚¹‚ñB",
+                "é§’ã®ãƒãƒ†ãƒªã‚¢ãƒ«ã«å¯¾å¿œã™ã‚‹è‰²è¨­å®šãŒã‚ã‚Šã¾ã›ã‚“ã€‚",
                 this);
             return false;
         }
@@ -97,21 +102,21 @@ public class Stone : MonoBehaviour
     }
 
     /// <summary>
-    /// ”z’uˆ—‚©‚çŒÄ‚Ño‚µA‚¿å‚Ì‹L˜^‚ÆF•Ï‰»‚ğŠJn‚·‚éB
-    /// PlayerStoneColor‚ÍPlayer‚Æ“¯‚¶GameObject‚É•t‚¯‚éB
+    /// é…ç½®å‡¦ç†ã‹ã‚‰å‘¼ã³å‡ºã—ã€æŒã¡ä¸»ã®è¨˜éŒ²ã¨è‰²å¤‰åŒ–ã‚’é–‹å§‹ã™ã‚‹ã€‚
+    /// PlayerStoneColorã¯Playerã¨åŒã˜GameObjectã«ä»˜ã‘ã‚‹ã€‚
     ///
-    /// Ä“xŒÄ‚Ô‚ÆAF•Ï‰»‚ÌŠÔ‚ğÅ‰‚©‚ç”‚¦’¼‚·B
-    /// null‚Ìê‡‚Í‚¿å‚È‚µE‹¤’ÊF‚É‚·‚éB
+    /// å†åº¦å‘¼ã¶ã¨ã€è‰²å¤‰åŒ–ã®æ™‚é–“ã‚’æœ€åˆã‹ã‚‰æ•°ãˆç›´ã™ã€‚
+    /// nullã®å ´åˆã¯æŒã¡ä¸»ãªã—ãƒ»å…±é€šè‰²ã«ã™ã‚‹ã€‚
     /// </summary>
     public void SetOwner(Player player)
     {
         Owner = player;
 
-        // ˆÈ‘O‚ÌF•Ï‰»‚ğI—¹‚·‚éB
+        // ä»¥å‰ã®è‰²å¤‰åŒ–ã‚’çµ‚äº†ã™ã‚‹ã€‚
         isTransitioning = false;
         elapsedTime = 0f;
 
-        // F‚ğ•\¦‚Å‚«‚È‚¢ê‡‚àA‚¿å‚Ì‹L˜^‚ÍˆÛ‚·‚éB
+        // è‰²ã‚’è¡¨ç¤ºã§ããªã„å ´åˆã‚‚ã€æŒã¡ä¸»ã®è¨˜éŒ²ã¯ç¶­æŒã™ã‚‹ã€‚
         if (!InitializeColor())
         {
             return;
@@ -124,28 +129,30 @@ public class Stone : MonoBehaviour
             return;
         }
 
-        if (!Owner.TryGetComponent<PlayerStoneColor>(
-                out var playerStoneColor))
-        {
-            Debug.LogWarning(
-                "‚¿å‚ÌPlayer‚ÉPlayerStoneColor‚ª‚È‚¢‚½‚ßA‹¤’ÊF‚Å•\¦‚µ‚Ü‚·B",
-                this);
-            return;
-        }
-
-        RevealColor(playerStoneColor.StoneColor);
+        RevealColor(Owner.TeamColor);
     }
 
     /// <summary>
-    /// w’èF‚ğ•\¦‚µA‹¤’ÊF‚Ö–ß‚é‚Ü‚Å‚ÌŒv‘ª‚ğŠJn‚·‚éB
-    /// ‚¿å‚Í•ÏX‚µ‚È‚¢BÄ“xŒÄ‚Ô‚ÆŠÔ‚ªƒŠƒZƒbƒg‚³‚ê‚éB
+    /// æŒ‡å®šè‰²ã‚’è¡¨ç¤ºã—ã€å…±é€šè‰²ã¸æˆ»ã‚‹ã¾ã§ã®è¨ˆæ¸¬ã‚’é–‹å§‹ã™ã‚‹ã€‚
+    /// æŒã¡ä¸»ã¯å¤‰æ›´ã—ãªã„ã€‚å†åº¦å‘¼ã¶ã¨æ™‚é–“ãŒãƒªã‚»ãƒƒãƒˆã•ã‚Œã‚‹ã€‚
     /// </summary>
     public void RevealColor(Color teamColor)
+    {
+        RevealColor(teamColor, holdDuration, fadeDuration);
+    }
+
+    public void RevealColor(
+        Color teamColor,
+        float visibleDuration,
+        float returnDuration)
     {
         if (!InitializeColor())
         {
             return;
         }
+
+        activeHoldDuration = Mathf.Max(0f, visibleDuration);
+        activeFadeDuration = Mathf.Max(0f, returnDuration);
 
         revealedColor = teamColor;
         elapsedTime = 0f;
@@ -161,21 +168,21 @@ public class Stone : MonoBehaviour
             return;
         }
 
-        // ƒQ[ƒ€“àŠÔ‚ÅŒv‘ª‚·‚éB
-        // Time.timeScale‚ª0‚ÌŠÔ‚ÍF•Ï‰»‚à~‚Ü‚éB
+        // ã‚²ãƒ¼ãƒ å†…æ™‚é–“ã§è¨ˆæ¸¬ã™ã‚‹ã€‚
+        // Time.timeScaleãŒ0ã®é–“ã¯è‰²å¤‰åŒ–ã‚‚æ­¢ã¾ã‚‹ã€‚
         elapsedTime += Time.deltaTime;
 
-        float holdTime = Mathf.Max(0f, holdDuration);
-        float fadeTime = Mathf.Max(0f, fadeDuration);
+        float holdTime = activeHoldDuration;
+        float fadeTime = activeFadeDuration;
 
-        // •ÛŠÔ’†‚ÍF‚ğ•Ï‚¦‚È‚¢B
+        // ä¿æŒæ™‚é–“ä¸­ã¯è‰²ã‚’å¤‰ãˆãªã„ã€‚
         if (elapsedTime < holdTime)
         {
             return;
         }
 
-        // 0ƒvƒŒƒCƒ„[‚ÌFA1‹¤’ÊFB
-        // •Ï‰»ŠÔ‚ª0‚È‚çAŠ„‚èZ‚¹‚¸Š®—¹ˆµ‚¢‚É‚·‚éB
+        // 0ï¼ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è‰²ã€1ï¼å…±é€šè‰²ã€‚
+        // å¤‰åŒ–æ™‚é–“ãŒ0ãªã‚‰ã€å‰²ã‚Šç®—ã›ãšå®Œäº†æ‰±ã„ã«ã™ã‚‹ã€‚
         float progress = fadeTime <= 0f
             ? 1f
             : Mathf.Clamp01((elapsedTime - holdTime) / fadeTime);
@@ -189,8 +196,8 @@ public class Stone : MonoBehaviour
     }
 
     /// <summary>
-    /// ‹¤—L‘fŞ‚ğ‘‚«Š·‚¦‚¸A‚±‚Ì‹î‚¾‚¯‚ÉF‚ğ”½‰f‚·‚éB
-    /// “¯‚¶GameObject‚ÉRenderer‚ª‚ ‚èA‘fŞ‚ª1‚Â‚Ì\¬‚ğ‘z’èB
+    /// å…±æœ‰ç´ æã‚’æ›¸ãæ›ãˆãšã€ã“ã®é§’ã ã‘ã«è‰²ã‚’åæ˜ ã™ã‚‹ã€‚
+    /// åŒã˜GameObjectã«RendererãŒã‚ã‚Šã€ç´ æãŒ1ã¤ã®æ§‹æˆã‚’æƒ³å®šã€‚
     /// </summary>
     private void ApplyColor(Color color)
     {

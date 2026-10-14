@@ -28,6 +28,13 @@ public class PlayerStateMove : PlayerState
         var moveDirection = new Vector3(input.MoveValue.x, 0.0f, input.MoveValue.y);
 
         rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
+
+        // Rotate the player to face the movement direction
+        if (moveDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, 10f * Time.fixedDeltaTime));
+        }
     }
 
     public override void ExitState()

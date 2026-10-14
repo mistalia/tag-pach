@@ -59,6 +59,21 @@ public class FieldManager : MonoBehaviour
         piece.SetCoodinate(coodinate.x, coodinate.y);
     }
 
+    public void UnregisterFieldTile(Vector2Int coodinate)
+    {
+        if(!IsInsideField(coodinate))
+        {
+            Debug.LogError($"[FieldManager] UnregisterFieldTile: 範囲外の指定です Coodinate:{coodinate} / FieldSize:{fieldSize}");
+            return;
+        }
+        FieldTile piece = FieldTileArray[coodinate.x, coodinate.y];
+        if(piece != null)
+        {
+            FieldTile.Remove(piece);
+            FieldTileArray[coodinate.x, coodinate.y] = null;
+        }
+    }
+
     public FieldTile GetFieldTile(Vector2Int coodinate)
     {
         if(!IsInsideField(coodinate))
@@ -166,8 +181,26 @@ public class FieldManager : MonoBehaviour
         {
             if (tile.PutedStone != null)
             {
-                tile.PutedStone.RevealColor(tile.PutedStone.Owner.GetComponent<PlayerStoneColor>().StoneColor);
+                tile.PutedStone.RevealColor(tile.PutedStone.Owner.TeamColor);
             }
         }
     }
+
+    //-----------------------------------------------------------
+
+    //リセット
+    public void ResetField()
+    {
+        foreach (FieldTile tile in FieldTile)
+        {
+            if (tile == null)
+            {
+                continue;
+            }
+
+            tile.RemoveStone();
+            tile.ResetTileColor();
+        }
+    }
+    //-----------------------------------------------------------
 }

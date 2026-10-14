@@ -51,3 +51,5 @@ MonoBehaviour:
     managerPrefab: {fileID: 4096825921369753741, guid: 432ef1bfe2817b541a6a7885f264cfb4, type: 3}
   - managerName: SEManager
     managerPrefab: {fileID: 8823283371552667480, guid: d103cddc5eca21d449baf6d6059b933a, type: 3}
+  - managerName: BattleManager
+    managerPrefab: {fileID: 8824057607491060923, guid: 5ac79c1d83e80aa42b5f21d3a84bfaa0, type: 3}

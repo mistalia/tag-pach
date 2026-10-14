@@ -6,7 +6,7 @@ public class FieldTile : MonoBehaviour
     [SerializeField] private Material defaultMaterial;
     [SerializeField] private Material highlightMaterial;
 
-    // ç¿ïWèÓïÒ
+    // ¬ç√Ä‚Ä¢W¬è√Æ‚Ä¢√±
     [SerializeField]private Vector2Int coordinate;
     public Stone PutedStone {get; private set; } = null;
 
@@ -66,7 +66,7 @@ public class FieldTile : MonoBehaviour
     {
         if(PutedStone != null)
         {
-            PutedStone.RevealColor(PutedStone.Owner.GetComponent<PlayerStoneColor>().StoneColor);
+            PutedStone.RevealColor(PutedStone.Owner.TeamColor);
         }
     }
 
@@ -83,6 +83,15 @@ public class FieldTile : MonoBehaviour
         if (defaultMaterial != null)
         {
             this.gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
+        }
+    }
+
+    public void RemoveStone()
+    {
+        if (PutedStone != null)
+        {
+            Destroy(PutedStone.gameObject);
+            PutedStone = null;
         }
     }
 }

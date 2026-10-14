@@ -4,8 +4,8 @@ public class TurnStartState : TurnBaseState
 {
     public override void Enter(TurnManager manager)
     {
-        // Turn�^�C�}�[������
         manager.ResetTurnTimer();
+        TurnUI.Instance.SetColor(manager.GetAttackPlayer().TeamColor);
     }
 
 

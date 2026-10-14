@@ -193,7 +193,7 @@ Desktop.ini
 # Imported .unitypackage files should be placed under this directory.
 /[Aa]ssets/[Ll]ocalAssets/
 /[Aa]ssets/[Ll]ocalSpace/
-
+/[Aa]ssets/_Recovery
 # ============================================================
 # Unity-specific temporary files
 # ============================================================

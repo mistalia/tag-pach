@@ -28,6 +28,8 @@ public class TurnRepositionState : TurnBaseState
 
         manager.GetPlayer1().StartReposition();
         manager.GetPlayer2().StartReposition();
+
+        TurnUI.Instance.SetColor(Color.purple);
     }
 
     public override void UpdateState(TurnManager manager)

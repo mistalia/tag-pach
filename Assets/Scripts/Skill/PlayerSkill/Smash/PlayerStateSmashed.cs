@@ -2,48 +2,42 @@ using UnityEngine;
 
 [CreateAssetMenu(
     fileName = "PlayerStateSmashed",
-    menuName = "PlayerState/Knockback")]
+    menuName = "PlayerState/Smashed")]
 public class PlayerStateSmashed : PlayerState
 {
+    private const float MinDirectionSqrMagnitude = 0.0001f;
+
+    [Header("壁の判定")]
+    [SerializeField]
+    [Tooltip("吹き飛ばしを止める壁のレイヤー")]
+    private LayerMask wallLayers;
+
+    [SerializeField, Min(0f)]
+    [Tooltip("壁へのめり込みを避けるために空ける距離")]
+    private float wallPadding = 0.01f;
+
     private Rigidbody playerRigidbody;
 
     private Vector3 knockbackDirection;
     private float knockbackSpeed;
-    private float knockbackDuration;
+    private float remainingDistance;
+    private float stunEndTime;
 
-    private float remainingTime;
-
-    public void Setup(
-        Vector3 direction,
-        float speed,
-        float duration)
-    {
-        // 高さの差で斜め上や下へ吹き飛ばされないようにする。
-        direction.y = 0f;
-
-        knockbackDirection = direction.normalized;
-        knockbackSpeed = speed;
-        knockbackDuration = duration;
-    }
+    // 吹き飛ばしの終了とは別に、追加被弾を無視する期間を表す。
+    public bool IsStunned => Time.time < stunEndTime;
 
     public override void EnterState(
-    Player owner,
-    PlayerInputReader input)
+        Player owner,
+        PlayerInputReader input)
     {
         base.EnterState(owner, input);
 
-        // 攻撃情報を取り出し、受信側に残っている情報を消費する。
-        if (!owner.TryGetComponent<SmashHitReceiver>(out var receiver) ||
-            !receiver.TryTakeHit(
-                out var direction,
-                out var speed,
-                out var duration))
-        {
-            owner.ChangeState("idle");
-            return;
-        }
-
         playerRigidbody = owner.GetComponent<Rigidbody>();
+
+        knockbackDirection = Vector3.zero;
+        knockbackSpeed = 0f;
+        remainingDistance = 0f;
+        stunEndTime = 0f;
 
         if (playerRigidbody == null)
         {
@@ -55,10 +49,42 @@ public class PlayerStateSmashed : PlayerState
             return;
         }
 
-        Setup(direction, speed, duration);
-
-        remainingTime = knockbackDuration;
         playerRigidbody.linearVelocity = Vector3.zero;
+    }
+
+    // Playerがこのステートへ切り替えた直後に呼ぶ。
+    public void Setup(
+        Vector3 direction,
+        float distance,
+        float speed,
+        float stunDuration)
+    {
+        direction.y = 0f;
+
+        if (!IsFinite(direction.x) ||
+            !IsFinite(direction.z) ||
+            !IsFinite(distance) ||
+            !IsFinite(speed) ||
+            !IsFinite(stunDuration) ||
+            distance < 0f ||
+            speed <= 0f ||
+            stunDuration < 0f ||
+            (distance > 0f &&
+             direction.sqrMagnitude < MinDirectionSqrMagnitude))
+        {
+            Debug.LogError(
+                "ノックバック情報が不正です。",
+                owner);
+
+            return;
+        }
+
+        knockbackDirection = direction.normalized;
+        knockbackSpeed = speed;
+        remainingDistance = distance;
+        stunEndTime = Time.time + stunDuration;
+
+        
     }
 
     public override void FixedUpdateState()
@@ -68,24 +94,96 @@ public class PlayerStateSmashed : PlayerState
             return;
         }
 
-        if (remainingTime <= 0f)
+        if (remainingDistance <= 0f)
         {
-            owner.ChangeState("idle");
+            if (!IsStunned)
+            {
+                owner.ChangeState("idle");
+            }
+
             return;
         }
 
-        // 最後の移動が、指定された時間を超えないようにする。
-        float moveTime = Mathf.Min(
-            Time.fixedDeltaTime,
-            remainingTime);
+        float moveDistance = Mathf.Min(
+            knockbackSpeed * Time.fixedDeltaTime,
+            remainingDistance);
 
-        Vector3 movement =
-            knockbackDirection * knockbackSpeed * moveTime;
+        bool hitWall = TryGetWallDistance(
+            moveDistance,
+            out float allowedDistance);
 
-        playerRigidbody.MovePosition(
-            playerRigidbody.position + movement);
+        if (allowedDistance > 0f)
+        {
+            Vector3 movement =
+                knockbackDirection * allowedDistance;
 
-        remainingTime = Mathf.Max(0f, remainingTime - moveTime);
+            playerRigidbody.MovePosition(
+                playerRigidbody.position + movement);
+        }
+
+        if (hitWall)
+        {
+            // 壁で止まった場合は、残りの距離を待ち続けない。
+            remainingDistance = 0f;
+        }
+        else
+        {
+            remainingDistance = Mathf.Max(
+                0f,
+                remainingDistance - allowedDistance);
+        }
+
+        // 最後のMovePositionが反映されてから、
+        // 次のFixedUpdateStateで復帰を判断する。
+    }
+
+    private bool TryGetWallDistance(
+        float moveDistance,
+        out float allowedDistance)
+    {
+        allowedDistance = moveDistance;
+        bool hitWall = false;
+
+        RaycastHit[] hits = playerRigidbody.SweepTestAll(
+            knockbackDirection,
+            moveDistance + wallPadding,
+            QueryTriggerInteraction.Ignore);
+
+        foreach (RaycastHit hit in hits)
+        {
+            // 床タイルの縁を壁と判定して、
+            // 吹き飛ばしが途中で止まるのを防ぐ。
+            if (hit.collider.GetComponentInParent<FieldTile>() != null)
+            {
+                continue;
+            }
+
+            int hitLayer = hit.collider.gameObject.layer;
+
+            if ((wallLayers.value & (1 << hitLayer)) == 0)
+            {
+                continue;
+            }
+
+            // 進行方向を遮る面だけを壁として扱う。
+            if (Vector3.Dot(hit.normal, knockbackDirection) >= 0f)
+            {
+                continue;
+            }
+
+            float distanceToWall = Mathf.Max(
+                0f,
+                hit.distance - wallPadding);
+
+            allowedDistance = Mathf.Min(
+                allowedDistance,
+                distanceToWall);
+
+           
+            hitWall = true;
+        }
+
+        return hitWall;
     }
 
     public override void ExitState()
@@ -95,6 +193,14 @@ public class PlayerStateSmashed : PlayerState
             playerRigidbody.linearVelocity = Vector3.zero;
         }
 
-        remainingTime = 0f;
+        knockbackDirection = Vector3.zero;
+        knockbackSpeed = 0f;
+        remainingDistance = 0f;
+        stunEndTime = 0f;
+    }
+
+    private static bool IsFinite(float value)
+    {
+        return !float.IsNaN(value) && !float.IsInfinity(value);
     }
 }
