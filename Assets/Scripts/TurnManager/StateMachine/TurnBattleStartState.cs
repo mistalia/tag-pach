@@ -4,6 +4,7 @@ public class TurnBattleStartState : TurnBaseState
 {
     public override void Enter(TurnManager manager)
     {
+        ARScanController.Instance?.OnBattleStart();
     }
 
 
