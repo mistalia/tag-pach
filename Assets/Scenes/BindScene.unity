@@ -629,7 +629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42b713b304272e540848228085a6581f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControllerSessionManager
-  bindingMode: 0
+  bindingMode: 1
 --- !u!4 &820751211
 Transform:
   m_ObjectHideFlags: 0
