@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -14,6 +15,7 @@ public class Stone : MonoBehaviour
 {
     // 既存の参照との互換性を保つため、名前は変更しない。
     public Player Owner { get; private set; }
+    public Player GetOwner() { if (isVoid <= 0) return Owner; return null; }
 
     [Header("色の設定")]
 
@@ -32,11 +34,21 @@ public class Stone : MonoBehaviour
 
     [Header("色付け用メッシュの登録")]
     [SerializeField]private List<MeshRenderer> meshRenderer;
+    [SerializeField] private List<MeshRenderer> holoMesh;
+
+    [Header("Void化するターン")]
+    [SerializeField] private const int minVoidTurn = 1;
+    [SerializeField] private const int maxVoidTurn = 3;
+
     // この駒だけの表示を変更するために使用する。
     private MaterialPropertyBlock propertyBlock;
     private int colorPropertyId;
 
+    private Material defaultMaterial;
+    private Material holoMaterial;
+
     private Color revealedColor;
+    public Color CurrentColor { get; private set; }
     private float elapsedTime;
 
     private float activeHoldDuration;
@@ -44,11 +56,18 @@ public class Stone : MonoBehaviour
 
 
     private bool isTransitioning;
+    public bool IsTransitioning => isTransitioning;
+    public float CurrentProg { get; private set; } = 0f;
+
     private bool isReady;
+
+    public int isVoid{get;private set;} = 0;
 
     private void Awake()
     {
         InitializeColor();
+        defaultMaterial = holoMesh[0].sharedMaterial;
+        holoMaterial = Resources.Load<Material>("Materials/HologramMaterial");
     }
 
     /// <summary>
@@ -160,6 +179,10 @@ public class Stone : MonoBehaviour
             return;
         }
 
+        if(teamColor == null) {
+            return;
+        }
+
         activeHoldDuration = Mathf.Max(0f, visibleDuration);
         activeFadeDuration = Mathf.Max(0f, returnDuration);
 
@@ -192,13 +215,13 @@ public class Stone : MonoBehaviour
 
         // 0＝プレイヤーの色、1＝共通色。
         // 変化時間が0なら、割り算せず完了扱いにする。
-        float progress = fadeTime <= 0f
+        CurrentProg = fadeTime <= 0f
             ? 1f
             : Mathf.Clamp01((elapsedTime - holdTime) / fadeTime);
 
-        ApplyColor(Color.Lerp(revealedColor, neutralColor, progress));
-
-        if (progress >= 1f)
+        ApplyColor(Color.Lerp(revealedColor, neutralColor, CurrentProg));
+        
+        if (CurrentProg >= 1f)
         {
             isTransitioning = false;
         }
@@ -210,6 +233,8 @@ public class Stone : MonoBehaviour
     /// </summary>
     private void ApplyColor(Color color)
     {
+        CurrentColor = color;
+
         foreach (var renderer in meshRenderer)
         {
             renderer.GetPropertyBlock(propertyBlock);
@@ -218,4 +243,70 @@ public class Stone : MonoBehaviour
         }
     }
 
+    public void SetVoid()
+    {
+        Debug.Log("SetVoid");
+        isVoid = Random.Range(minVoidTurn, maxVoidTurn);
+
+        foreach (var renderer in holoMesh)
+        {
+            renderer.material.color = Color.black;
+        }
+    }
+
+    public void DecreaseVoid()
+    {
+        if(isVoid > 0)
+        {
+            isVoid--;
+            if(isVoid <= 0)
+            {
+                foreach (var renderer in holoMesh)
+                {
+                    renderer.material = defaultMaterial;
+                }
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            // ここで衝突時の処理を行う
+            foreach (var renderer in holoMesh)
+            {
+                renderer.material = holoMaterial;
+                if (isVoid > 0)
+                {
+                    renderer.material.color = Color.black;
+                }
+                else if(isTransitioning)
+                {
+                    renderer.material.color = Owner.TeamColor;
+                }
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            // ここで衝突終了時の処理を行う
+            foreach(var renderer in holoMesh)
+            {
+                renderer.material = defaultMaterial;
+                if(isVoid > 0)
+                {
+                    renderer.material.color = Color.black;
+                }
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        
+    }
 }

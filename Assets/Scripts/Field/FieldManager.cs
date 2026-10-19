@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public struct MatchCount
@@ -12,6 +11,9 @@ public struct MatchCount
 
 public class FieldManager : MonoBehaviour
 {
+    [Header("空駒の閾値 x = 駒ありタイルのmin y = 駒ありタイルのmax z = 数")]
+    [SerializeField] private List<Vector3Int> voidStoneTurnThreshold = new List<Vector3Int> { new Vector3Int(1, 3, 0) };
+
     public static FieldManager Instance { get; private set; }
 
     private Vector2Int fieldSize = new(10, 10);
@@ -155,7 +157,7 @@ public class FieldManager : MonoBehaviour
         while (IsInsideField(checkCoodinate))
         {
             FieldTile checkTile = GetFieldTile(checkCoodinate);
-            if (checkTile == null || checkTile.PutedStone == null || checkTile.PutedStone.Owner != currentStone.Owner)
+            if (checkTile == null || checkTile.PutedStone == null || checkTile.PutedStone.GetOwner() != currentStone.GetOwner())
             {
                 break;
             }
@@ -181,7 +183,75 @@ public class FieldManager : MonoBehaviour
         {
             if (tile.PutedStone != null)
             {
-                tile.PutedStone.RevealColor(tile.PutedStone.Owner.TeamColor);
+                tile.PutedStone.RevealColor(tile.PutedStone.GetOwner().TeamColor);
+            }
+        }
+    }
+
+    public List<FieldTile> SearchOnStoneTile()
+    {
+        List<FieldTile> result = new List<FieldTile>();
+        foreach (FieldTile tile in FieldTile)
+        {
+            if (tile.PutedStone != null)
+            {
+                //tile.ShowColor();
+                result.Add(tile);
+            }
+        }
+
+        return result;
+    }
+
+    public void SetVoidStone()
+    {
+        Debug.Log($"[FieldManager] SetVoidStone: ターン数に応じて空駒化します");
+        List<FieldTile> onStoneTile = SearchOnStoneTile();
+
+        foreach (Vector3Int threshold in voidStoneTurnThreshold)
+        {
+            if (onStoneTile.Count >= threshold.x && onStoneTile.Count <= threshold.y)
+            {
+                int voidStoneCount = threshold.z;
+
+                int[] index = new int[onStoneTile.Count];
+
+                for (int i = 0; i < voidStoneCount; i++)
+                {
+                    index[i] = Random.Range(0, onStoneTile.Count);
+
+                    // 重複チェック
+                    for (int j = 0; j < i; j++)
+                    {
+                        if (index[i] == index[j])
+                        {
+                            i--; // 重複があった場合は再度ランダムに選び直す
+                            break;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < voidStoneCount; i++)
+                {
+                    FieldTile tile = onStoneTile[index[i]];
+                    if (tile.PutedStone != null)
+                    {
+                        tile.PutedStone.SetVoid();
+                    }
+                }
+            }
+        }
+    }
+
+    public void DecreaseVoidStoneTurn()
+    {
+        List<FieldTile> onStoneTile = SearchOnStoneTile();
+
+        foreach (FieldTile tile in onStoneTile)
+        {
+            if (tile.PutedStone != null)
+            {
+                tile.PutedStone.DecreaseVoid();
             }
         }
     }

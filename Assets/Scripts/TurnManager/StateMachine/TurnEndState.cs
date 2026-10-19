@@ -5,7 +5,7 @@ public class TurnEndState : TurnBaseState
 {
     public override void Enter(TurnManager manager)
     {
-        
+        FieldManager.Instance.DecreaseVoidStoneTurn();
     }
 
 
@@ -14,6 +14,7 @@ public class TurnEndState : TurnBaseState
 
 
         int matchCount = MatchStorage.Instance.GetMatchCount();
+        bool setVoidStone = false;
         if (matchCount > 0)
         {
             MatchStorage.Instance.SortMatchData();
@@ -43,14 +44,23 @@ public class TurnEndState : TurnBaseState
                 case 4:
                     // 4ライン
                     Debug.Log($"4ラインを検知(所有者:{matchData.Owner}): 起点位置:{matchData.Coordinate} / ライン方向{matchData.Direction}]");
+                    setVoidStone = true;
                     break;
 
                 case 3:
                     // 3ライン
                     Debug.Log($"3ラインを検知(所有者:{matchData.Owner}): 起点位置:{matchData.Coordinate} / ライン方向{matchData.Direction}]");
+                    setVoidStone = true;
                     break;
             }
         }
+
+        if (setVoidStone)
+        {
+            FieldManager.Instance.SetVoidStone();
+            setVoidStone = false;
+        }
+
         MatchStorage.Instance.ClearMatchData();
 
         manager.ProceedNextTurn();
