@@ -32,6 +32,11 @@ public class Stone : MonoBehaviour
 
     [Header("色付け用メッシュの登録")]
     [SerializeField]private List<MeshRenderer> meshRenderer;
+    [SerializeField] private List<MeshRenderer> holoMesh;
+
+    [Header("ホログラム用マテリアル")]
+    [SerializeField] private Material holoMaterial;
+
     // この駒だけの表示を変更するために使用する。
     private MaterialPropertyBlock propertyBlock;
     private int colorPropertyId;
