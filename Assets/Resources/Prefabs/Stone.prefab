@@ -103,3 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfddcedb6256ff34687c4a391314247f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Stone
+  neutralColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  holdDuration: 1
+  fadeDuration: 3
+  meshRenderer:
+  - {fileID: 1465224527972127489}

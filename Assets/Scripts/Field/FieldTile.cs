@@ -23,7 +23,7 @@ public class FieldTile : MonoBehaviour
             return false;
         }
         PutedStone = stone;
-        PutedStone.transform.position = this.transform.position + new Vector3(0, (this.transform.localScale.y * 0.5f) + PutedStone.transform.localScale.y, 0);
+        PutedStone.transform.position = this.transform.position + new Vector3(0, (this.transform.localScale.y * 0.5f) , 0);
 
         MatchCount count = FieldManager.Instance.CheckMatch(this.coordinate);
 

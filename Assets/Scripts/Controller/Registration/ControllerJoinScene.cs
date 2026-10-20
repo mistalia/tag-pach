@@ -1,13 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// コントローラー登録画面の進行を管理する。
-// 登録人数の確認、登録解除、シーン遷移を担当する。
+// コントローラー登録画面の進行管理
 public sealed class ControllerJoinScene : MonoBehaviour
 {
-    // ゲーム開始に必要な最低人数
-    private const int MinimumPlayerCount = 2;
-
     // 次に遷移するシーン名
     [SerializeField]
     private string nextSceneName = "DevelopScene";
@@ -25,6 +21,7 @@ public sealed class ControllerJoinScene : MonoBehaviour
     {
         ControllerSessionManager session = ControllerSessionManager.Instance;
 
+        // BindSceneに入ったら以前のバインド状態を破棄し、改めて登録
         if (session != null)
             session.ClearRegistration();
 
@@ -62,7 +59,7 @@ public sealed class ControllerJoinScene : MonoBehaviour
         if (session == null)
         {
             Debug.LogError(
-                "[JoinSceneController] " +
+                "[ControllerJoinScene] " +
                 "ControllerSessionManagerが存在しません。",
                 this
             );
@@ -70,24 +67,26 @@ public sealed class ControllerJoinScene : MonoBehaviour
             return;
         }
 
-        // 最低人数に達していない場合は開始しない
-        if (session.PlayerCount < MinimumPlayerCount)
+        // 登録が終了してから次のシーンへ進む
+        if (!session.AreAllTeamsComplete)
+            return;
+
+        if (string.IsNullOrWhiteSpace(nextSceneName))
         {
-            Debug.Log(
-                $"[JoinSceneController] " +
-                $"開始には{MinimumPlayerCount}人以上必要です。" +
-                $" 現在の登録人数: {session.PlayerCount}",
+            Debug.LogError(
+                "[ControllerJoinScene] " +
+                "遷移先シーン名が設定されていません。",
                 this
             );
 
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(nextSceneName))
+        if (SceneTransitionManager.Instance == null)
         {
             Debug.LogError(
-                "[JoinSceneController] " +
-                "遷移先シーン名が設定されていません。",
+                "[ControllerJoinScene] " +
+                "SceneTransitionManagerが存在しません。",
                 this
             );
 
@@ -97,6 +96,7 @@ public sealed class ControllerJoinScene : MonoBehaviour
         SceneTransitionManager.Instance.LoadScene(nextSceneName, transitionSettings);
     }
 
+
     // 登録済みデバイスをすべて解除する
     public void ClearRegistration()
     {
@@ -104,8 +104,7 @@ public sealed class ControllerJoinScene : MonoBehaviour
 
         if (session == null)
         {
-            Debug.LogError("[JoinSceneController] " + "ControllerSessionManagerが存在しません。", this);
-
+            Debug.LogError("[ControllerJoinScene] " + "ControllerSessionManagerが存在しません。", this);
             return;
         }
 

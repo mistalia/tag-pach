@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d6da9bd915105c44b75c12252e27820, type: 3}
   m_Name: PlayerStatePlace
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatePlace
-  stonePrefab: {fileID: 2254132153046115247, guid: 5abf49f6ba72de54c8a5f766dcf6e467, type: 3}
+  stonePrefab: {fileID: 2254132153046115247, guid: 4e62b006bd9c56d459314fd51d3fdfa1, type: 3}
   rayPositionOffset: -0.5
   rayDistance: 1
   fieldLayer:
