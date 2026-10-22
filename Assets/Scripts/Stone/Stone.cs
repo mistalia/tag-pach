@@ -32,6 +32,11 @@ public class Stone : MonoBehaviour
 
     [Header("色付け用メッシュの登録")]
     [SerializeField]private List<MeshRenderer> meshRenderer;
+    [SerializeField] private List<MeshRenderer> holoMesh;
+
+    [Header("ホロマテリアル")]
+    [SerializeField] private Material holoMaterial;
+
     // この駒だけの表示を変更するために使用する。
     private MaterialPropertyBlock propertyBlock;
     private int colorPropertyId;
@@ -46,9 +51,17 @@ public class Stone : MonoBehaviour
     private bool isTransitioning;
     private bool isReady;
 
+    private Material defaultMaterial;
+
+    public float CurrentProg { get; private set; } = 0f;
+    public bool IsTransitioning => isTransitioning;
+
     private void Awake()
     {
         InitializeColor();
+
+        holoMaterial = Resources.Load<Material>("Materials/HologramMaterial");
+        defaultMaterial = holoMesh[0].material;
     }
 
     /// <summary>
@@ -192,13 +205,13 @@ public class Stone : MonoBehaviour
 
         // 0＝プレイヤーの色、1＝共通色。
         // 変化時間が0なら、割り算せず完了扱いにする。
-        float progress = fadeTime <= 0f
+        CurrentProg = fadeTime <= 0f
             ? 1f
             : Mathf.Clamp01((elapsedTime - holdTime) / fadeTime);
 
-        ApplyColor(Color.Lerp(revealedColor, neutralColor, progress));
+        ApplyColor(Color.Lerp(revealedColor, neutralColor, CurrentProg));
 
-        if (progress >= 1f)
+        if (CurrentProg >= 1f)
         {
             isTransitioning = false;
         }
@@ -215,6 +228,22 @@ public class Stone : MonoBehaviour
             renderer.GetPropertyBlock(propertyBlock);
             propertyBlock.SetColor(colorPropertyId, color);
             renderer.SetPropertyBlock(propertyBlock);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        foreach (var renderer in holoMesh)
+        {
+            renderer.material = holoMaterial;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        foreach (var renderer in holoMesh)
+        {
+            renderer.material = defaultMaterial;
         }
     }
 

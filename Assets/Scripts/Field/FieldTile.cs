@@ -15,6 +15,17 @@ public class FieldTile : MonoBehaviour
         this.gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
     }
 
+    private void Update()
+    {
+        if(PutedStone != null)
+        {
+            if(PutedStone.IsTransitioning)
+            {
+                this.gameObject.GetComponent<MeshRenderer>().material.color = Color.Lerp(PutedStone.Owner.TeamColor, defaultMaterial.color,PutedStone.CurrentProg);
+            }
+        }
+    }
+
     public bool PutStone(Stone stone)
     {
         const int MATCH_COUNT = 3;
@@ -72,7 +83,11 @@ public class FieldTile : MonoBehaviour
 
     public void LightUpTile()
     {
-        if (highlightMaterial != null)
+        if (PutedStone && PutedStone.IsTransitioning)
+        {
+            this.gameObject.GetComponent<MeshRenderer>().material.color = Color.Lerp(PutedStone.Owner.TeamColor, highlightMaterial.color,PutedStone.CurrentProg);
+        }
+        else if (highlightMaterial != null)
         {
             this.gameObject.GetComponent<MeshRenderer>().material = highlightMaterial;
         }
