@@ -123,15 +123,26 @@ public sealed class PlayerSetup : MonoBehaviour
 
         PlayerControllerInputSet playerInputSet = players[playerIndex];
 
-        if (playerInputSet == null || !playerInputSet.IsConfigured)
+        if (playerInputSet == null)
         {
-            Debug.LogError(
-                $"[PlayerSetup] " +
-                $"Player {playerIndex + 1}の入力設定が" +
-                "完了していません。",
-                this
-            );
+            Debug.LogError($"[PlayerSetup] Player {playerIndex + 1}の入力設定が存在しません。", this);
+            return;
+        }
 
+        if (session.BindingMode == ControllerBindingMode.TwoControllersTest)
+        {
+            SetupTestModePlayer(session, playerInputSet, teamIndex, playerIndex);
+            return;
+        }
+
+        SetupFourControllersPlayer(session, playerInputSet, teamIndex, playerIndex);
+    }
+
+    private void SetupFourControllersPlayer(ControllerSessionManager session, PlayerControllerInputSet playerInputSet, int teamIndex, int playerIndex)
+    {
+        if (!playerInputSet.IsFourControllersConfigured)
+        {
+            Debug.LogError($"[PlayerSetup] Player {playerIndex + 1}の4台モード用入力設定が完了していません。", this);
             return;
         }
 
@@ -140,27 +151,70 @@ public sealed class PlayerSetup : MonoBehaviour
 
         if (operationDevice == null || placementDevice == null)
         {
-            Debug.LogError(
-                $"[PlayerSetup] " +
-                $"Team {teamIndex + 1}のデバイス情報が" +
-                "不足しています。",
-                this
-            );
-
+            Debug.LogError($"[PlayerSetup] Team {teamIndex + 1}のデバイス情報が不足しています。", this);
             return;
         }
 
-        // Player本体を有効化してから、子のPlayerInputへデバイスを割り当てる
+        // Player本体を有効化する前に、使用する入力Objectを選択する
+        playerInputSet.SetFourControllersInputActive(true);
         playerInputSet.SetPlayerActive(true);
 
-        bool operationSetupSucceeded = SetupRoleInput(playerInputSet.OperationPlayerInput, operationDevice, operationActionMapName, teamIndex, ControllerRole.Operation);
-        bool placementSetupSucceeded = SetupRoleInput(playerInputSet.PlacementPlayerInput, placementDevice, placementActionMapName, teamIndex, ControllerRole.Placement);
+        // Player本体が参照するReaderを通常モード用へ切り替える
+        playerInputSet.PlayerInputReader.UseFourControllersMode();
 
-        if (!operationSetupSucceeded || !placementSetupSucceeded)
+        bool operationSucceeded = SetupRoleInput(playerInputSet.OperationPlayerInput, operationDevice, operationActionMapName, teamIndex, ControllerRole.Operation);
+        bool placementSucceeded = SetupRoleInput(playerInputSet.PlacementPlayerInput, placementDevice, placementActionMapName, teamIndex, ControllerRole.Placement);
+
+        if (operationSucceeded && placementSucceeded)
+            return;
+
+        playerInputSet.SetFourControllersInputActive(false);
+        playerInputSet.SetPlayerActive(false);
+    }
+
+    private void SetupTestModePlayer(ControllerSessionManager session, PlayerControllerInputSet playerInputSet, int teamIndex, int playerIndex)
+    {
+        if (!playerInputSet.IsTestModeConfigured)
         {
-            playerInputSet.SetPlayerActive(false);
+            Debug.LogError($"[PlayerSetup] Player {playerIndex + 1}のテストモード用入力設定が完了していません。", this);
             return;
         }
+
+        InputDevice device = session.GetDevice(teamIndex, ControllerRole.Operation);
+
+        if (device == null)
+        {
+            Debug.LogError($"[PlayerSetup] Team {teamIndex + 1}のテストモード用デバイスが存在しません。", this);
+            return;
+        }
+
+        string controlSchemeName = GetControlSchemeName(device);
+
+        if (string.IsNullOrEmpty(controlSchemeName))
+        {
+            Debug.LogError($"[PlayerSetup] {device.displayName}に対応するControl Schemeを判定できません。", this);
+            return;
+        }
+
+        // Player本体を有効化する前に、TestInputだけを有効化対象にする
+        playerInputSet.SetTestInputActive(true);
+        playerInputSet.SetPlayerActive(true);
+
+        // Player本体が参照するReaderをTestInput側へ切り替える
+        playerInputSet.PlayerInputReader.UseTwoControllersTestMode();
+
+        PlayerInput playerInput = playerInputSet.TestPlayerInput;
+
+        playerInput.enabled = true;
+        playerInput.SwitchCurrentControlScheme(controlSchemeName, device);
+
+        InputActionMap operationMap = playerInput.actions.FindActionMap(operationActionMapName, true);
+        InputActionMap placementMap = playerInput.actions.FindActionMap(placementActionMapName, true);
+
+        operationMap.Enable();
+        placementMap.Enable();
+
+        playerInput.ActivateInput();
     }
 
     private bool SetupRoleInput(PlayerInput playerInput, InputDevice device, string actionMapName, int teamIndex, ControllerRole role)
@@ -247,8 +301,12 @@ public sealed class PlayerSetup : MonoBehaviour
 
         foreach (PlayerControllerInputSet playerInputSet in players)
         {
-            if (playerInputSet != null)
-                playerInputSet.SetPlayerActive(false);
+            if (playerInputSet == null)
+                continue;
+
+            playerInputSet.SetFourControllersInputActive(false);
+            playerInputSet.SetTestInputActive(false);
+            playerInputSet.SetPlayerActive(false);
         }
     }
 }
