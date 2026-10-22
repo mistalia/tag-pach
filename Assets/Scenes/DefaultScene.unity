@@ -6068,6 +6068,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8f31cc6150ec9489d6750211d07b1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldManager
+  voidStoneTurnThreshold:
+  - {x: 1, y: 6, z: 1}
+  - {x: 7, y: 12, z: 2}
+  - {x: 13, y: 21, z: 3}
+  - {x: 22, y: 100, z: 4}
 --- !u!114 &997618648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14157,8 +14162,8 @@ SceneRoots:
   - {fileID: 1113472272}
   - {fileID: 997618646}
   - {fileID: 2037192936}
-  - {fileID: 1807389852}
   - {fileID: 1142835343}
   - {fileID: 1511652438}
   - {fileID: 997483065}
   - {fileID: 1071587589}
+  - {fileID: 1807389852}

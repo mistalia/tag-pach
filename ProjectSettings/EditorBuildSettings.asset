@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BindScene.unity
     guid: 750fc5abdc0ac074389953bdd66ccb89
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/DefaultScene.unity
     guid: 0a1e8e2e981c168448d9b699edba6dd4
+  - enabled: 1
+    path: Assets/LocalSpace/Local_Ueda.unity
+    guid: 589b416dd1273b648b87ac1a30c5d34e
   - enabled: 1
     path: Assets/Scenes/ResultScene.unity
     guid: c19e1440c8842394dabf3c50918b4948

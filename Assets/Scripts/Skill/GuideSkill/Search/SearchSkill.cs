@@ -148,7 +148,7 @@ public class SearchSkill : MonoBehaviour
             }
 
             stone.RevealColor(
-                stone.Owner.TeamColor,
+                stone.GetOwner().TeamColor,
                 settings.RevealDuration,
                 settings.FadeDuration);
 

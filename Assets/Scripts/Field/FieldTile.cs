@@ -15,6 +15,21 @@ public class FieldTile : MonoBehaviour
         this.gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
     }
 
+    private void FixedUpdate()
+    {
+        if(PutedStone != null)
+        {
+            if(PutedStone.IsTransitioning)
+            {
+                this.GetComponent<MeshRenderer>().material.color = Color.Lerp(PutedStone.Owner.TeamColor, defaultMaterial.color, PutedStone.CurrentProg);
+            }
+            else
+            {
+                this.GetComponent<MeshRenderer>().material = defaultMaterial;
+            }
+        }
+    }
+
     public bool PutStone(Stone stone)
     {
         const int MATCH_COUNT = 3;
@@ -29,19 +44,19 @@ public class FieldTile : MonoBehaviour
 
         if(count.lineDir_x1_y0 >= MATCH_COUNT)
         {
-            MatchStorage.Instance.AddMatchData(count.lineDir_x1_y0, this.coordinate, new Vector2Int(1, 0), PutedStone.Owner);
+            MatchStorage.Instance.AddMatchData(count.lineDir_x1_y0, this.coordinate, new Vector2Int(1, 0), PutedStone.GetOwner());
         }
         if(count.lineDir_x0_y1 >= MATCH_COUNT)
         {
-            MatchStorage.Instance.AddMatchData(count.lineDir_x0_y1, this.coordinate, new Vector2Int(0, 1), PutedStone.Owner);
+            MatchStorage.Instance.AddMatchData(count.lineDir_x0_y1, this.coordinate, new Vector2Int(0, 1), PutedStone.GetOwner());
         }
         if(count.lineDir_x1_y1 >= MATCH_COUNT)
         {
-            MatchStorage.Instance.AddMatchData(count.lineDir_x1_y1, this.coordinate, new Vector2Int(1, 1), PutedStone.Owner);
+            MatchStorage.Instance.AddMatchData(count.lineDir_x1_y1, this.coordinate, new Vector2Int(1, 1), PutedStone.GetOwner());
         }
         if(count.lineDir_x1_yn1 >= MATCH_COUNT)
         {
-            MatchStorage.Instance.AddMatchData(count.lineDir_x1_yn1, this.coordinate, new Vector2Int(1, -1), PutedStone.Owner);
+            MatchStorage.Instance.AddMatchData(count.lineDir_x1_yn1, this.coordinate, new Vector2Int(1, -1), PutedStone.GetOwner());
         }
 
 
@@ -66,15 +81,22 @@ public class FieldTile : MonoBehaviour
     {
         if(PutedStone != null)
         {
-            PutedStone.RevealColor(PutedStone.Owner.TeamColor);
+            PutedStone.RevealColor(PutedStone.GetOwner().TeamColor);
         }
     }
 
     public void LightUpTile()
     {
-        if (highlightMaterial != null)
+        if(PutedStone != null && PutedStone.IsTransitioning)
         {
-            this.gameObject.GetComponent<MeshRenderer>().material = highlightMaterial;
+            this.gameObject.GetComponent<MeshRenderer>().material.color = PutedStone.Owner.TeamColor;
+        }
+        else
+        {
+            if (highlightMaterial != null)
+            {
+                this.gameObject.GetComponent<MeshRenderer>().material = highlightMaterial;
+            }
         }
     }
 
