@@ -30,6 +30,9 @@ public class TurnRepositionState : TurnBaseState
         manager.GetPlayer2().StartReposition();
 
         TurnUI.Instance.SetColor(Color.purple);
+
+        RepositionSign.Instance.SignActive = true;
+        RepositionSign.Instance.SetTurnTimer(manager.GetRepositionTimeLimit(), manager.GetRepositionTimeLimit());
     }
 
     public override void UpdateState(TurnManager manager)
@@ -40,6 +43,8 @@ public class TurnRepositionState : TurnBaseState
         if (!firstPlayerExited)
         {
             manager.UpdateTurnTimer();
+
+            RepositionSign.Instance.SetTurnTimer(manager.GetTurnTimer(), manager.GetRepositionTimeLimit());
 
             // 両PlayerがReady
             bool bothReady = player1Ready && player2Ready;
@@ -78,10 +83,12 @@ public class TurnRepositionState : TurnBaseState
         if (player == manager.GetPlayer1())
         {
             player1Ready = true;
+            RepositionSign.Instance.SetInputSignColor(1, player.TeamColor, "Ready!!");
         }
         else if (player == manager.GetPlayer2())
         {
             player2Ready = true;
+            RepositionSign.Instance.SetInputSignColor(2, player.TeamColor,"Ready!!");
         }
     }
 
@@ -96,6 +103,8 @@ public class TurnRepositionState : TurnBaseState
         }
 
         firstPlayerExited = true;
+
+        RepositionSign.Instance.SignActive = false;
 
         // 一人目 = Defend Player
         manager.GetDefendPlayer().EndReposition();
@@ -123,5 +132,6 @@ public class TurnRepositionState : TurnBaseState
 
     public override void Exit(TurnManager manager)
     {
+        
     }
 }
