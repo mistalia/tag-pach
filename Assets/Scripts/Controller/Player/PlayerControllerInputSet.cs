@@ -9,11 +9,20 @@ public sealed class PlayerControllerInputSet
     [SerializeField]
     private GameObject playerObject;
 
+    [Header("Four Controllers Mode")]
     [SerializeField]
     private PlayerInput operationPlayerInput;
 
     [SerializeField]
     private PlayerInput placementPlayerInput;
+
+    [Header("Two Controllers Test Mode")]
+    [SerializeField]
+    private PlayerInput testPlayerInput;
+
+    [SerializeField]
+    private PlayerInputReader playerInputReader;
+    public PlayerInputReader PlayerInputReader => playerInputReader;
 
     public GameObject PlayerObject => playerObject;
 
@@ -21,21 +30,30 @@ public sealed class PlayerControllerInputSet
 
     public PlayerInput PlacementPlayerInput => placementPlayerInput;
 
-    public bool IsConfigured => playerObject != null && operationPlayerInput != null && placementPlayerInput != null;
+    public PlayerInput TestPlayerInput => testPlayerInput;
 
-    public PlayerInput GetPlayerInput(ControllerRole role)
+    public bool IsFourControllersConfigured => playerObject != null && playerInputReader != null && operationPlayerInput != null && placementPlayerInput != null;
+
+    public bool IsTestModeConfigured => playerObject != null && playerInputReader != null && testPlayerInput != null;
+
+    public void SetFourControllersInputActive(bool isActive)
     {
-        switch (role)
-        {
-            case ControllerRole.Operation:
-                return operationPlayerInput;
+        SetPlayerInputActive(operationPlayerInput, isActive);
+        SetPlayerInputActive(placementPlayerInput, isActive);
+        SetPlayerInputActive(testPlayerInput, false);
+    }
 
-            case ControllerRole.Placement:
-                return placementPlayerInput;
+    public void SetTestInputActive(bool isActive)
+    {
+        SetPlayerInputActive(operationPlayerInput, false);
+        SetPlayerInputActive(placementPlayerInput, false);
+        SetPlayerInputActive(testPlayerInput, isActive);
+    }
 
-            default:
-                return null;
-        }
+    private static void SetPlayerInputActive(PlayerInput playerInput, bool isActive)
+    {
+        if (playerInput != null)
+            playerInput.gameObject.SetActive(isActive);
     }
 
     public void SetPlayerActive(bool isActive)

@@ -5,9 +5,7 @@ using UnityEngine;
 public sealed class InputState
 {
     public bool Pressed { get; private set; }
-
     public bool Released { get; private set; }
-
     public bool Hold { get; private set; }
 
     public void SetPressed()
@@ -36,67 +34,57 @@ public sealed class InputState
     }
 }
 
-// 操作担当と配置担当の入力を、PlayerとPlayerStateへ提供する共通の窓口
+// OperationとPlacementの入力をPlayerへ提供する
 public sealed class PlayerInputReader : MonoBehaviour
 {
-    [Header("Input Readers")]
-
+    [Header("Four Controllers Mode")]
     [SerializeField]
     private OperationInputReader operationInputReader;
 
     [SerializeField]
     private PlacementInputReader placementInputReader;
 
-    // Playerの移動は常に操作担当コントローラーの入力を使用する
-    public Vector2 MoveValue =>
-        operationInputReader != null
-            ? operationInputReader.MoveValue
-            : Vector2.zero;
+    [Header("Two Controllers Test Mode")]
+    [SerializeField]
+    private OperationInputReader testOperationInputReader;
 
-    public InputState Attack =>
-        operationInputReader?.Attack;
+    [SerializeField]
+    private PlacementInputReader testPlacementInputReader;
 
-    public InputState Skill =>
-        placementInputReader?.Skill;
+    private OperationInputReader currentOperationInputReader;
+    private PlacementInputReader currentPlacementInputReader;
 
-    public InputState Place =>
-        placementInputReader?.Place;
+    public Vector2 MoveValue => currentOperationInputReader != null ? currentOperationInputReader.MoveValue : Vector2.zero;
 
-    public bool IsConfigured =>
-        operationInputReader != null &&
-        placementInputReader != null;
+    public InputState Attack => currentOperationInputReader?.Attack;
+
+    public InputState Skill => currentPlacementInputReader?.Skill;
+
+    public InputState Place => currentPlacementInputReader?.Place;
 
     private void Awake()
     {
-        if (operationInputReader == null)
-        {
-            Debug.LogError(
-                "[PlayerInputReader] " +
-                "OperationInputReaderが設定されていません。",
-                this
-            );
-        }
+        UseFourControllersMode();
+    }
 
-        if (placementInputReader == null)
-        {
-            Debug.LogError(
-                "[PlayerInputReader] " +
-                "PlacementInputReaderが設定されていません。",
-                this
-            );
-        }
+    public void UseFourControllersMode()
+    {
+        currentOperationInputReader = operationInputReader;
+        currentPlacementInputReader = placementInputReader;
+    }
+
+    public void UseTwoControllersTestMode()
+    {
+        currentOperationInputReader = testOperationInputReader;
+        currentPlacementInputReader = testPlacementInputReader;
     }
 
     public void SetInputEnable(bool enable)
     {
-        if (operationInputReader != null)
-        {
-            operationInputReader.SetInputEnable(enable);
-        }
+        if (currentOperationInputReader != null)
+            currentOperationInputReader.SetInputEnable(enable);
 
-        if (placementInputReader != null)
-        {
-            placementInputReader.SetInputEnable(enable);
-        }
+        if (currentPlacementInputReader != null)
+            currentPlacementInputReader.SetInputEnable(enable);
     }
 }
