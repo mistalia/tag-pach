@@ -36,6 +36,8 @@ public class FieldTile : MonoBehaviour
         PutedStone = stone;
         PutedStone.transform.position = this.transform.position + new Vector3(0, (this.transform.localScale.y * 0.5f) , 0);
 
+        FieldManager.Instance.AddStoneCount();
+
         MatchCount count = FieldManager.Instance.CheckMatch(this.coordinate);
 
         if(count.lineDir_x1_y0 >= MATCH_COUNT)
@@ -105,6 +107,7 @@ public class FieldTile : MonoBehaviour
     {
         if (PutedStone != null)
         {
+            FieldManager.Instance.SubtractStoneCount();
             Destroy(PutedStone.gameObject);
             PutedStone = null;
         }

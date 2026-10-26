@@ -3,22 +3,15 @@ using UnityEngine.SceneManagement;
 
 public class TurnEndState : TurnBaseState
 {
+ 
     public override void Enter(TurnManager manager)
     {
-        
-    }
-
-
-    public override void UpdateState(TurnManager manager)
-    {
-
-
         int matchCount = MatchStorage.Instance.GetMatchCount();
         if (matchCount > 0)
         {
             MatchStorage.Instance.SortMatchData();
         }
-        for(int i = 0; i < matchCount; i++)
+        for (int i = 0; i < matchCount; i++)
         {
             MatchData matchData = MatchStorage.Instance.PopMatchData();
             int num = matchData.Num;
@@ -43,6 +36,12 @@ public class TurnEndState : TurnBaseState
                 case 4:
                     // 4ライン
                     Debug.Log($"4ラインを検知(所有者:{matchData.Owner}): 起点位置:{matchData.Coordinate} / ライン方向{matchData.Direction}]");
+
+                    if(RandomRemoveEvent.Instance != null)
+                    {
+                        RandomRemoveEvent.Instance.IncreaseEventProbability();
+                        RandomRemoveEvent.Instance.ExecuteRandomRemoveEvent();
+                    }
                     break;
 
                 case 3:
@@ -53,12 +52,40 @@ public class TurnEndState : TurnBaseState
         }
         MatchStorage.Instance.ClearMatchData();
 
+        var fieldManager = FieldManager.Instance;
+        var capacity = fieldManager.GetFieldTileCount();
+
+        // ランダム削除イベントの実行条件をチェック
+        if (fieldManager.GetStoneCount() >= capacity * 0.9f)
+        {
+            // 石の数がフィールドの90％以上の場合、ランダム削除イベントを実行
+            if(RandomRemoveEvent.Instance != null)
+            {
+                RandomRemoveEvent.Instance.ExecuteSaturationRemoveEvent();
+            }
+        }
+
+        if(fieldManager.IsRemoveing)
+        {
+            WarningEvent.Instance.SetWarningEventActive(true);
+        }
+    }
+
+
+    public override void UpdateState(TurnManager manager)
+    {
+        if(FieldManager.Instance.IsRemoveing)
+        {
+            return;
+        }
+
         manager.ProceedNextTurn();
+        
     }
 
 
     public override void Exit(TurnManager manager)
     {
-
+        WarningEvent.Instance.SetWarningEventActive(false);
     }
 }
