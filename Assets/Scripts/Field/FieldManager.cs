@@ -1,5 +1,5 @@
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public struct MatchCount
@@ -12,10 +12,23 @@ public struct MatchCount
 
 public class FieldManager : MonoBehaviour
 {
+
     public static FieldManager Instance { get; private set; }
 
+    [Header("ランダム削除")]
+    [SerializeField, Min(0.001f)] private float removeInterval = 0.1f;
+    [SerializeField, Min(0.001f)] private float removeStartDelay = 1.5f;
+
+    public bool IsRemoveing { get; private set; } = false;
+
+    private Coroutine removeCoroutine;
+
     private Vector2Int fieldSize = new(10, 10);
+    public Vector2Int GetFieldSize() { return fieldSize; }
     private List<FieldTile> FieldTile = new List<FieldTile>();
+    public int GetFieldTileCount() { return FieldTile.Count; }
+
+    private int stoneCount = 0;
 
     private Vector2Int[] checkDirection = new Vector2Int[4]
     {
@@ -41,6 +54,9 @@ public class FieldManager : MonoBehaviour
 
     public void BeginFieldSetup(Vector2Int size)
     {
+
+        CancelRandomRemove();
+
         fieldSize = size;
         FieldTile.Clear();
 
@@ -186,11 +202,148 @@ public class FieldManager : MonoBehaviour
         }
     }
 
+    // 石の乗っているフィールドを返す関数
+    public List<FieldTile> GetAllStoneField()
+    {
+        List<FieldTile> stoneFields = new List<FieldTile>();
+        foreach (FieldTile tile in FieldTile)
+        {
+            if (tile.PutedStone != null)
+            {
+                stoneFields.Add(tile);
+            }
+        }
+        return stoneFields;
+    }
+
+    public void AddStoneCount()
+    {
+        stoneCount++;
+    }
+
+    public void SubtractStoneCount()
+    {
+        stoneCount--;
+    }
+
+    public int GetStoneCount()
+    {
+        return stoneCount;
+    }
+
+    public void RandomRemove(int count)
+    {
+        if(!isActiveAndEnabled || IsRemoveing || stoneCount <= 0)
+        {
+            return;
+        }
+
+        List<FieldTile> candiData = GetAllStoneField();
+
+        count = Mathf.Min(count, candiData.Count);
+
+        if (count <= 0)
+        {
+            return;
+        }
+
+        int[] removeIndex = new int[count];
+        List<FieldTile> stoneFields = GetAllStoneField();
+
+        if(stoneFields.Count <= 0)
+        {
+            return;
+        }
+
+        var target = new List<(FieldTile tile, Stone stone)>();
+
+        for(int i = 0; i < count; i++)
+        {
+            int randomIndex = Random.Range(0, stoneFields.Count);
+            FieldTile tile = candiData[randomIndex];
+
+            target.Add((tile, tile.PutedStone));
+
+            candiData.RemoveAt(randomIndex);
+        }
+
+        IsRemoveing = true;
+        removeCoroutine = StartCoroutine(RemoveStoneRoutine(target));
+    }
+
+    private IEnumerator RemoveStoneRoutine(List<(FieldTile tile, Stone stone)> target)
+    {
+        yield return null;
+        
+        if(removeStartDelay > 0.0f)
+        {
+            yield return new WaitForSeconds(removeStartDelay);
+        }
+
+        var wait = new WaitForSeconds(Mathf.Max(removeInterval, 0.001f));
+
+        for(int i = 0; i<target.Count; i++)
+        {
+            var targetObj = target[i];
+            if(targetObj.tile != null && targetObj.stone != null && targetObj.tile.PutedStone == targetObj.stone)
+            {
+                targetObj.tile.RemoveStone();
+            }
+
+            if(i < target.Count - 1)
+            {
+                yield return wait;
+            }
+        }
+
+        IsRemoveing = false;
+        removeCoroutine = null;
+
+    }
+
+    private void CancelRandomRemove()
+    {
+        if(removeCoroutine != null)
+        {
+            StopCoroutine(removeCoroutine);
+            removeCoroutine = null;
+        }
+
+        IsRemoveing = false;
+    }
+
+    private void OnDisable()
+    {
+        CancelRandomRemove();
+    }
+
+    public List<FieldTile> GetRandomOnStoneTile(int count)
+    {
+        List<FieldTile> stoneFields = GetAllStoneField();
+        List<FieldTile> randomTiles = new List<FieldTile>();
+
+        if(stoneFields.Count <= 0)
+        {
+            return randomTiles;
+        }
+
+        for (int i = 0; i < count; i++)
+        {
+            int randomIndex = Random.Range(0, stoneFields.Count);
+            randomTiles.Add(stoneFields[randomIndex]);
+            stoneFields.RemoveAt(randomIndex);
+        }
+
+        return randomTiles;
+    }
+
     //-----------------------------------------------------------
 
     //リセット
     public void ResetField()
     {
+        CancelRandomRemove();
+
         foreach (FieldTile tile in FieldTile)
         {
             if (tile == null)
@@ -200,6 +353,7 @@ public class FieldManager : MonoBehaviour
 
             tile.RemoveStone();
             tile.ResetTileColor();
+            stoneCount = 0;
         }
     }
     //-----------------------------------------------------------
