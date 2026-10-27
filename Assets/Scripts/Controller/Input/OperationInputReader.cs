@@ -9,11 +9,15 @@ public sealed class OperationInputReader : MonoBehaviour
 
     public InputState Attack { get; } = new InputState();
 
+    public InputState ForcePlace { get; } = new InputState();
+
     private PlayerInput playerInput;
 
     private InputAction moveAction;
 
     private InputAction attackAction;
+
+    private InputAction forcePlaceAction;
 
     private void Awake()
     {
@@ -40,6 +44,11 @@ public sealed class OperationInputReader : MonoBehaviour
 
         attackAction.performed += HandleAttack;
         attackAction.canceled += HandleAttackCanceled;
+
+        forcePlaceAction = playerInput.actions.FindAction("Operation/ForcePlace", true);
+
+        forcePlaceAction.performed += HandleForcePlace;
+        forcePlaceAction.canceled += HandleForcePlaceCanceled;
     }
 
     private void OnDestroy()
@@ -55,11 +64,18 @@ public sealed class OperationInputReader : MonoBehaviour
             attackAction.performed -= HandleAttack;
             attackAction.canceled -= HandleAttackCanceled;
         }
+
+        if (forcePlaceAction != null)
+        {
+            forcePlaceAction.performed -= HandleForcePlace;
+            forcePlaceAction.canceled -= HandleForcePlaceCanceled;
+        }
     }
 
     private void LateUpdate()
     {
         Attack.ClearFrameFlags();
+        ForcePlace.ClearFrameFlags();
     }
 
     public void SetInputEnable(bool enable)
@@ -77,6 +93,7 @@ public sealed class OperationInputReader : MonoBehaviour
 
         MoveValue = Vector2.zero;
         Attack.ClearAllFlags();
+        ForcePlace.ClearAllFlags();
     }
 
     private void HandleMove(InputAction.CallbackContext context)
@@ -97,5 +114,15 @@ public sealed class OperationInputReader : MonoBehaviour
     private void HandleAttackCanceled(InputAction.CallbackContext context)
     {
         Attack.SetReleased();
+    }
+
+    private void HandleForcePlace(InputAction.CallbackContext context)
+    {
+        ForcePlace.SetPressed();
+    }
+
+    private void HandleForcePlaceCanceled(InputAction.CallbackContext context)
+    {
+        ForcePlace.SetReleased();
     }
 }

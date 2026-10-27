@@ -348,6 +348,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "ForcePlace",
+                    "type": "Button",
+                    "id": "b4bcf960-a1e5-45c0-8f59-3f9eb7d04368",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -557,6 +567,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ee35ed93-ee4e-47ff-98f1-3800b6eb6141",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ForcePlace",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

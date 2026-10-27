@@ -10,6 +10,8 @@ public class LABPDevice : MonoBehaviour
 
     private LABPState currentState;
 
+    public bool IsPlacing => currentState is LABP_Place;
+
     private void Awake()
     {
         if(!animator)
