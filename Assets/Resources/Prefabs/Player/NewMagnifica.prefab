@@ -1653,6 +1653,8 @@ MonoBehaviour:
   fieldLayer:
     serializedVersion: 2
     m_Bits: 1
+  labpDevice: {fileID: 0}
+  rootDisableObj: {fileID: 41299144455587122}
   teamColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &6839388946122522228
 MonoBehaviour:
