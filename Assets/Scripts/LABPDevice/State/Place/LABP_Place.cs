@@ -72,6 +72,9 @@ public class LABP_Place : LABPState
                 {
                     var movePosition = Vector3.Lerp(owner.transform.position, startPosition, Time.deltaTime / MoveDuration);
                     owner.transform.position = movePosition;
+                    // Y180ï˚å¸Ç÷ÉâÅ[ÉvÇ≥ÇπÇÈ
+                    owner.transform.rotation = Quaternion.Lerp(owner.transform.rotation, Quaternion.Euler(0f, 180f, 0f), Time.deltaTime / MoveDuration);
+
                 }
                 else
                 {

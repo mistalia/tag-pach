@@ -259,7 +259,7 @@ public class FieldManager : MonoBehaviour
 
         for(int i = 0; i < count; i++)
         {
-            int randomIndex = Random.Range(0, stoneFields.Count);
+            int randomIndex = Random.Range(0, candiData.Count);
             FieldTile tile = candiData[randomIndex];
 
             target.Add((tile, tile.PutedStone));

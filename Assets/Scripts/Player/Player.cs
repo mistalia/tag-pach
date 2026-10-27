@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     [SerializeField] private string initializeStatekey = "idle";
     [SerializeField] private LayerMask fieldLayer; // フィールドのレイヤーマスク
     [SerializeField] private LABPDevice labpDevice;
+    [SerializeField] private GameObject rootDisableObj;
+
     public void SetLABPDevice(LABPDevice device)
     {
         labpDevice = device;
@@ -277,11 +279,13 @@ public class Player : MonoBehaviour
     public void EnterRepositionVisual()
     {
         repositionMesh.SetActive(true);
+        rootDisableObj.SetActive(false);
     }
 
     public void ExitRepositionVisual()
     {
         repositionMesh.SetActive(false);
+        rootDisableObj.SetActive(true);
     }
 
     public void SetRepositionColor(Color color)

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af4ab97db35149d44bf0d29a22d7b964, type: 3}
   m_Name: LABP_Place
   m_EditorClassIdentifier: Assembly-CSharp::LABP_Place
-  MoveDuration: 0.3
+  MoveDuration: 0.2
   stonePrefab: {fileID: 2254132153046115247, guid: 4e62b006bd9c56d459314fd51d3fdfa1, type: 3}

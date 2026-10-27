@@ -86,6 +86,7 @@ public class TurnEndState : TurnBaseState
 
     public override void Exit(TurnManager manager)
     {
-        WarningEvent.Instance.SetWarningEventActive(false);
+        if(WarningEvent.Instance != null)
+            WarningEvent.Instance.SetWarningEventActive(false);
     }
 }

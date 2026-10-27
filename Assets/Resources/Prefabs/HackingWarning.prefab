@@ -748,6 +748,7 @@ GameObject:
   m_Component:
   - component: {fileID: 466959893301311516}
   - component: {fileID: 7426199694625640707}
+  - component: {fileID: 1981669991494894117}
   m_Layer: 5
   m_Name: HackingWarning
   m_TagString: Untagged
@@ -790,3 +791,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WarningEvent
   warningEventObjTop: {fileID: 2027085742740613374}
   warningEventObjBottom: {fileID: 6529898601498505235}
+--- !u!114 &1981669991494894117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7525920911549587299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5199305ac8c7404aae5f841fdc42c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RandomRemoveEvent
+  removeRate: 0.7
+  eventRemoveRate: 0.2
+  eventProbability: 0.1
+  eventProbabilityIncrease: 0.05
