@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4849337627268345661}
-  - component: {fileID: 2087533904840502721}
+  - component: {fileID: 7883928378568066862}
   m_Layer: 0
   m_Name: LABPd_Gashagon
   m_TagString: Untagged
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 6991867150088284401}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: -0.845}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 602831460133823304}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2087533904840502721
+--- !u!114 &7883928378568066862
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,13 +43,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6991867150088284401}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44b9d043df3807c4c8427e7c38e248c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 164bd760b99c2064b8b4c7efc9a10260, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LABP_Chase
-  target: {fileID: 0}
-  speed: 2
-  rotationSpeed: 5
-  chaseOffset: {x: 0.5, y: 1.5, z: -2}
+  m_EditorClassIdentifier: Assembly-CSharp::LABPDevice
+  stateList:
+    stateList:
+    - key: chase
+      sourceState: {fileID: 11400000, guid: f4fb597ef8896334191d583d9c3457bc, type: 2}
+    - key: place
+      sourceState: {fileID: 11400000, guid: f569d33b3e2cf754f9a4eefbd2a22b51, type: 2}
+  initializeStateKey: chase
+  animator: {fileID: 6826785029038356786}
+  player: {fileID: 0}
 --- !u!1 &8192887193378623621
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,43 +235,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: anim_gasha_idle
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 2700ffb64ca7d8c42bbd5b38f9ea6da4, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6918fac258ba9694ca283b74dcc2de97, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 2700ffb64ca7d8c42bbd5b38f9ea6da4, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2700ffb64ca7d8c42bbd5b38f9ea6da4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7126141209272558371}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2700ffb64ca7d8c42bbd5b38f9ea6da4, type: 3}
---- !u!1 &222471508319320562 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2700ffb64ca7d8c42bbd5b38f9ea6da4, type: 3}
-  m_PrefabInstance: {fileID: 1141391448508826787}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &7126141209272558371
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222471508319320562}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 2700ffb64ca7d8c42bbd5b38f9ea6da4, type: 3}
-  m_Controller: {fileID: 9100000, guid: 6918fac258ba9694ca283b74dcc2de97, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &602831460133823304 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2700ffb64ca7d8c42bbd5b38f9ea6da4, type: 3}
+  m_PrefabInstance: {fileID: 1141391448508826787}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6826785029038356786 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 2700ffb64ca7d8c42bbd5b38f9ea6da4, type: 3}
   m_PrefabInstance: {fileID: 1141391448508826787}
   m_PrefabAsset: {fileID: 0}

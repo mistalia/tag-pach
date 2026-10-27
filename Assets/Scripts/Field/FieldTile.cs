@@ -40,7 +40,9 @@ public class FieldTile : MonoBehaviour
 
         MatchCount count = FieldManager.Instance.CheckMatch(this.coordinate);
 
-        if(count.lineDir_x1_y0 >= MATCH_COUNT)
+        FieldCamera.Instance.CameraShake(0.1f, 0.2f);
+
+        if (count.lineDir_x1_y0 >= MATCH_COUNT)
         {
             MatchStorage.Instance.AddMatchData(count.lineDir_x1_y0, this.coordinate, new Vector2Int(1, 0), PutedStone.Owner);
         }
