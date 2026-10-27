@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93e08b108c5b42949a3ac2188cea834a, type: 3}
+  m_Name: BombFeverSettings
+  m_EditorClassIdentifier: Assembly-CSharp::BombFeverSettings
+  bombSettings: {fileID: 11400000, guid: 30aee924298994249b5f695918170804, type: 2}
+  triggerMode: 0
+  minimumStartIntervalSeconds: 10
+  maximumStartIntervalSeconds: 10
+  minimumStartIntervalTurns: 2
+  maximumStartIntervalTurns: 2
+  minimumFeverDuration: 20
+  maximumFeverDuration: 20
+  minimumDropInterval: 0.5
+  maximumDropInterval: 0.5
+  startDropIntervalScale: 1
+  endDropIntervalScale: 0.5
+  spawnMode: 1
+  fallingHeight: 10
+  fallingSpeed: 5
+  allowMultipleBombsOnSameTile: 0
