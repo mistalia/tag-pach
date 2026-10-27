@@ -7,6 +7,15 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerStateList stateList;
     [SerializeField] private string initializeStatekey = "idle";
     [SerializeField] private LayerMask fieldLayer; // フィールドのレイヤーマスク
+    [SerializeField] private LABPDevice labpDevice;
+    public void SetLABPDevice(LABPDevice device)
+    {
+        labpDevice = device;
+    }
+    public LABPDevice GetLABPDevice()
+    {
+        return labpDevice;
+    }
 
     [Header("Player TeamColor")]
     [SerializeField] private Color teamColor = Color.red;

@@ -104,7 +104,6 @@ public class RepositionSign : MonoBehaviour
 
     public void SetInputSignColor(int playerIndex, Color color,string text)
     {
-        Debug.Log($"SetInputSignColor called for player {playerIndex} with color {color} and text '{text}'");
         if (playerIndex == 1)
         {
             inputSign_1Img.color = color;

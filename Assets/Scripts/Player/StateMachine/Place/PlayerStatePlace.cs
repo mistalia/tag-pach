@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerStatePlace : PlayerState
 {
     [Header("Place State Settings")]
-    [SerializeField] private GameObject stonePrefab; // 石のプレハブ
     [SerializeField] private float rayPositionOffset = -0.5f; // レイの開始位置のオフセット
     [SerializeField] private float rayDistance = 1.0f; // レイの距離
     [SerializeField] private LayerMask fieldLayer; // フィールドのレイヤーマスク
@@ -23,16 +22,9 @@ public class PlayerStatePlace : PlayerState
 
         if(owner.OnStandingPiece.CanPutStone())
         { // 足元の床に石が置ける状態
-            Stone stone = Instantiate(stonePrefab).GetComponent<Stone>();
-            stone.SetOwner(owner);
-            owner.OnStandingPiece.PutStone(stone);
-            FieldCamera.Instance.CameraShake(0.1f, 0.2f);
-            owner.ChangeState("idle");
+            owner.GetLABPDevice().ChangeState("place");
 
-            //---------------------------------------------------------------
-            if(TurnManager.Instance != null)
-                TurnManager.Instance.ConsumeTurn(owner);
-            //---------------------------------------------------------------
+            owner.ChangeState("idle");
 
             return;
         }
