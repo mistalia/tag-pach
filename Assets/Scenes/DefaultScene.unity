@@ -3297,6 +3297,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Oshiro
       objectReference: {fileID: 0}
+    - target: {fileID: 1604986723160072608, guid: 232677dd4831c694eaa1a2086c28b3c5, type: 3}
+      propertyPath: stateList.stateList.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1604986723160072608, guid: 232677dd4831c694eaa1a2086c28b3c5, type: 3}
+      propertyPath: stateList.stateList.Array.data[7].key
+      value: forcePlace
+      objectReference: {fileID: 0}
+    - target: {fileID: 1604986723160072608, guid: 232677dd4831c694eaa1a2086c28b3c5, type: 3}
+      propertyPath: stateList.stateList.Array.data[7].sourceState
+      value: 
+      objectReference: {fileID: 11400000, guid: c1248157f531209488339d6c21161b89, type: 2}
     - target: {fileID: 4771774816506607261, guid: 232677dd4831c694eaa1a2086c28b3c5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6
@@ -13542,6 +13554,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8007467076201401895, guid: c253f323f3c0b7e46974e0912a85afcf, type: 3}
+      propertyPath: stateList.stateList.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8007467076201401895, guid: c253f323f3c0b7e46974e0912a85afcf, type: 3}
+      propertyPath: stateList.stateList.Array.data[7].key
+      value: forcePlace
+      objectReference: {fileID: 0}
+    - target: {fileID: 8007467076201401895, guid: c253f323f3c0b7e46974e0912a85afcf, type: 3}
+      propertyPath: stateList.stateList.Array.data[7].sourceState
+      value: 
+      objectReference: {fileID: 11400000, guid: c1248157f531209488339d6c21161b89, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

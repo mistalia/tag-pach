@@ -49,4 +49,26 @@ public class PlayerStatePlace : PlayerState
     {
         base.ExitState();
     }
+
+    public bool CanPlaceAtFoot(Player player)
+    {
+        if (player == null)
+        {
+            return false;
+        }
+
+        LABPDevice device = player.GetLABPDevice();
+
+        if (device == null ||
+            !device.isActiveAndEnabled ||
+            device.IsPlacing)
+        {
+            return false;
+        }
+
+        return player.TryGetFieldTileBelow(
+                   rayPositionOffset, rayDistance, fieldLayer) &&
+               player.OnStandingPiece != null &&
+               player.OnStandingPiece.CanPutStone();
+    }
 }

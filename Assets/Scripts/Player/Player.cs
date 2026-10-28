@@ -212,13 +212,31 @@ public class Player : MonoBehaviour
 
     private void AnyStateTransition()
     {
-        // 命中情報が届いていたら、操作より優先して吹き飛ばされる状態へ入る。
-        if (IsRepositioning || currentState is PlayerStateSmashed)
+        // 再配置中・被弾中・強制配置スキル中は入力で割り込まない。
+        if (IsRepositioning ||
+            currentState is PlayerStateSmashed ||
+            currentState is PlayerStateForcePlace)
         {
             return;
         }
 
-        if (input.Attack.Pressed &&
+        if (input == null)
+        {
+            return;
+        }
+
+        if (input.ForcePlace != null &&
+            input.ForcePlace.Pressed &&
+            stateList.TryGetRuntimeState("forcePlace", out var skillState) &&
+            skillState is PlayerStateForcePlace forcePlaceState &&
+            forcePlaceState.CanUse(this))
+        {
+            ChangeState("forcePlace");
+            return;
+        }
+
+        if (input.Attack != null &&
+            input.Attack.Pressed &&
             stateList.TryGetRuntimeState("smash", out var attackState) &&
             attackState is PlayerStateSmash smashState &&
             smashState.CanUse(this))
@@ -227,10 +245,46 @@ public class Player : MonoBehaviour
             return;
         }
 
-        // どの状態からでも特定のイベントで遷移するトランジションはここに記述する
-        if (input.Place.Pressed && TurnManager.Instance.IsAttackPlayer(this) && canPlaceStone) 
+        if (input.Place != null &&
+            input.Place.Pressed &&
+            TurnManager.Instance != null &&
+            TurnManager.Instance.IsAttackPlayer(this) &&
+            canPlaceStone)
         {
             ChangeState("place");
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        TryContactForcePlace(collision);
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        TryContactForcePlace(collision);
+    }
+
+    private void TryContactForcePlace(Collision collision)
+    {
+        if (!isActiveAndEnabled ||
+            currentState is not PlayerStateForcePlace forcePlaceState)
+        {
+            return;
+        }
+
+        Player opponent =
+            collision.collider.GetComponentInParent<Player>();
+
+        if (!forcePlaceState.TryHit(opponent))
+        {
+            return;
+        }
+
+        // 命中後も自分が同じステートなら、通常状態へ戻す。
+        if (currentState == forcePlaceState)
+        {
+            ChangeState("idle");
         }
     }
 
@@ -262,6 +316,39 @@ public class Player : MonoBehaviour
         }
         Debug.DrawLine(origin, origin + Vector3.down * rayDistance, Color.green, 1f);
         return false;
+    }
+
+    public bool TryForcePlaceStone()
+    {
+        TurnManager turn = TurnManager.Instance;
+
+        if (!isActiveAndEnabled ||
+            !canPlaceStone ||
+            IsRepositioning ||
+            currentState is PlayerStateSmashed ||
+            turn == null ||
+            !turn.IsBattleStarted() ||
+            turn.IsBattlePaused() ||
+            turn.GetCurrentStateType() != TurnStateType.Playing ||
+            !turn.IsAttackPlayer(this) ||
+            Time.timeScale <= 0f)
+        {
+            return false;
+        }
+
+        if (stateList == null ||
+            !stateList.TryGetRuntimeState("place", out var state) ||
+            state is not PlayerStatePlace placeState ||
+            !placeState.CanPlaceAtFoot(this))
+        {
+            return false;
+        }
+
+        // 通常の配置と同じステートを使う。
+        ChangeState("place");
+
+        // 駒の生成はアニメーション後なので、開始できたか確認する。
+        return labpDevice != null && labpDevice.IsPlacing;
     }
 
 

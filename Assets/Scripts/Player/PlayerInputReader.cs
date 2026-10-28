@@ -58,6 +58,8 @@ public sealed class PlayerInputReader : MonoBehaviour
 
     public InputState Attack => currentOperationInputReader?.Attack;
 
+    public InputState ForcePlace => currentOperationInputReader?.ForcePlace;
+
     public InputState Skill => currentPlacementInputReader?.Skill;
 
     public InputState Place => currentPlacementInputReader?.Place;
