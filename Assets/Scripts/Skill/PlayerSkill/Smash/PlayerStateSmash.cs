@@ -21,7 +21,6 @@ public class PlayerStateSmash : PlayerState
     {
         return player != null &&
                player.isActiveAndEnabled &&
-               !player.IsRepositioning &&
                settings != null &&
                settings.IsValid &&
                Time.timeScale > 0f &&
