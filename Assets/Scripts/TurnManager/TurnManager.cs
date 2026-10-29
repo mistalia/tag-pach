@@ -73,17 +73,6 @@ public class TurnManager : MonoBehaviour
     // Battle結果State
     private TurnResultState resultState;
 
-    private TurnRepositionState repositionState;
-
-    [Header("Reposition Settings")]
-    [Tooltip("両PlayerがReadyにならなかった場合に、一人目が自動でRepositionを終了するまでの時間")]
-    [SerializeField] private float repositionTimeLimit = 10.0f;
-
-    [Tooltip("一人目がRepositionを終了してから、二人目が終了するまでの時間")]
-    [SerializeField] private float secondPlayerExitDelay = 2.0f;
-
-    [Tooltip("何ターンごとにRepositionを行うか")]
-    [SerializeField] private int repositionTurnInterval = 10;
 
     private void Awake()
     {
@@ -102,7 +91,6 @@ public class TurnManager : MonoBehaviour
         playingState = new TurnPlayingState();
         turnEndState = new TurnEndState();
         resultState = new TurnResultState();
-        repositionState = new TurnRepositionState();
     }
 
     private void Update()
@@ -142,8 +130,6 @@ public class TurnManager : MonoBehaviour
         {
             player1 = player;
 
-            player1.SetRepositionColor(player1.TeamColor);
-
             CheckBattleReady();
 
             return;
@@ -153,8 +139,6 @@ public class TurnManager : MonoBehaviour
         if (player2 == null)
         {
             player2 = player;
-
-            player2.SetRepositionColor(player2.TeamColor);
 
             CheckBattleReady();
 
@@ -397,10 +381,6 @@ public class TurnManager : MonoBehaviour
             case TurnStateType.Result:
                 currentState = resultState;
                 break;
-                
-            case TurnStateType.Reposition:
-                currentState = repositionState;
-                break;
         }
 
         currentStateType = stateType;
@@ -478,36 +458,23 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    // Repositionが必要な場合はRepositionへ遷移する
     public void ProceedNextTurn()
     {
         // Attack Player交代 + Turn数加算
         NextTurn();
 
-        // Repositionを行うTurn
-        if (IsRepositionTurn())
-        {
-            ChangeState(TurnStateType.Reposition);
-            return;
-        }
-
         // 通常のTurn開始
         ChangeState(TurnStateType.TurnStart);
-    }
-
-    public void RequestEndReposition(Player player)
-    {
-        if (currentStateType != TurnStateType.Reposition)
-        {
-            return;
-        }
-
-        repositionState.RequestEnd(player, this);
     }
 
     public void RequestEndResult(Player player)
     {
         if (currentStateType != TurnStateType.Result)
+        {
+            return;
+        }
+
+        if (player == null)
         {
             return;
         }
@@ -541,27 +508,6 @@ public class TurnManager : MonoBehaviour
     public int GetTurnCount()
     {
         return turnCount;
-    }
-
-    public float GetRepositionTimeLimit()
-    {
-        return repositionTimeLimit;
-    }
-
-    public float GetSecondPlayerExitDelay()
-    {
-        return secondPlayerExitDelay;
-    }
-
-    // 現在のターンがRepositionを行うターンか確認する
-    public bool IsRepositionTurn()
-    {
-        if (repositionTurnInterval <= 0)
-        {
-            return false;
-        }
-
-        return (turnCount - 1) % repositionTurnInterval == 0;
     }
 
     // Battle中か
@@ -662,10 +608,6 @@ public class TurnManager : MonoBehaviour
         {
             case TurnStateType.Playing:
                 timeLimit = turnTimeLimit;
-                break;
-
-            case TurnStateType.Reposition:
-                timeLimit = repositionTimeLimit;
                 break;
         }
 
