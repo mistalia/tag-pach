@@ -15,6 +15,16 @@ public sealed class PlacementInputReader : MonoBehaviour
 
     private InputAction skillAction;
 
+    //------------------------------------------------------------------------------
+    public InputState Command { get; } = new InputState();
+
+    public InputState Select { get; } = new InputState();
+
+    private InputAction commandAction;
+    private InputAction selectAction;
+    //------------------------------------------------------------------------------
+
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -40,6 +50,18 @@ public sealed class PlacementInputReader : MonoBehaviour
 
         skillAction.performed   += HandleSkill;
         skillAction.canceled    += HandleSkillCanceled;
+
+        //------------------------------------------------------------------------------
+        commandAction = playerInput.actions.FindAction("Placement/Command", true);
+
+        selectAction = playerInput.actions.FindAction("Placement/Select", true);
+
+        commandAction.performed += HandleCommand;
+        commandAction.canceled += HandleCommandCanceled;
+
+        selectAction.performed += HandleSelect;
+        selectAction.canceled += HandleSelectCanceled;
+        //------------------------------------------------------------------------------
     }
 
     private void OnDestroy()
@@ -55,12 +77,32 @@ public sealed class PlacementInputReader : MonoBehaviour
             skillAction.performed -= HandleSkill;
             skillAction.canceled -= HandleSkillCanceled;
         }
+
+        //------------------------------------------------------------------------------
+        if (commandAction != null)
+        {
+            commandAction.performed -= HandleCommand;
+            commandAction.canceled -= HandleCommandCanceled;
+        }
+
+        if (selectAction != null)
+        {
+            selectAction.performed -= HandleSelect;
+            selectAction.canceled -= HandleSelectCanceled;
+        }
+        //------------------------------------------------------------------------------
+
     }
 
     private void LateUpdate()
     {
         Place.ClearFrameFlags();
         Skill.ClearFrameFlags();
+
+        //------------------------------------------------------------------------------
+        Command.ClearFrameFlags();
+        Select.ClearFrameFlags();
+        //------------------------------------------------------------------------------
     }
 
     public void SetInputEnable(bool enable)
@@ -78,6 +120,12 @@ public sealed class PlacementInputReader : MonoBehaviour
 
         Place.ClearAllFlags();
         Skill.ClearAllFlags();
+
+        //------------------------------------------------------------------------------
+        Command.ClearAllFlags();
+        Select.ClearAllFlags();
+        //------------------------------------------------------------------------------
+
     }
 
     private void HandlePlace(InputAction.CallbackContext context)
@@ -99,4 +147,26 @@ public sealed class PlacementInputReader : MonoBehaviour
     {
         Skill.SetReleased();
     }
+
+    //------------------------------------------------------------------------------
+    private void HandleCommand(InputAction.CallbackContext context)
+    {
+        Command.SetPressed();
+    }
+
+    private void HandleCommandCanceled(InputAction.CallbackContext context)
+    {
+        Command.SetReleased();
+    }
+
+    private void HandleSelect(InputAction.CallbackContext context)
+    {
+        Select.SetPressed();
+    }
+
+    private void HandleSelectCanceled(InputAction.CallbackContext context)
+    {
+        Select.SetReleased();
+    }
+    //------------------------------------------------------------------------------
 }

@@ -64,6 +64,12 @@ public sealed class PlayerInputReader : MonoBehaviour
 
     public InputState Place => currentPlacementInputReader?.Place;
 
+    //------------------------------------------------------------------------------
+    public InputState Command => currentPlacementInputReader?.Command;
+
+    public InputState Select => currentPlacementInputReader?.Select;
+    //------------------------------------------------------------------------------
+
     private void Awake()
     {
         UseFourControllersMode();
