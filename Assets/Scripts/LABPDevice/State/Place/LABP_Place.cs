@@ -27,6 +27,8 @@ public class LABP_Place : LABPState
     {
         base.EnterState(owner, animator, player);
 
+        owner.CloseCommand();
+
         currentPlaceState = PlaceState.None;
 
         if(player.OnStandingPiece != null)

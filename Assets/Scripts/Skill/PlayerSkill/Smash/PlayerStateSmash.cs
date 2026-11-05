@@ -14,6 +14,10 @@ public class PlayerStateSmash : PlayerState
     private float nextUseTime;
     private int lastUseFrame = -1;
 
+    [Header("攻撃範囲表示")]
+    [SerializeField, Min(0.01f)]
+    private float rangeDisplayDuration = 0.2f;
+
     public float RemainingCooldown =>
         Mathf.Max(0f, nextUseTime - Time.time);
 
@@ -35,38 +39,17 @@ public class PlayerStateSmash : PlayerState
     {
         base.EnterState(owner, input);
 
-        if (CanUse(owner) &&
-            TryGetOpponent(owner, out var opponent))
+        if (CanUse(owner))
         {
             // 空振りでも消費し、ステートを抜けても再使用時刻を保持する。
             nextUseTime = Time.time + settings.CooldownTime;
             lastUseFrame = Time.frameCount;
 
-            Vector3 direction =
-                opponent.transform.position - owner.transform.position;
+            // 攻撃範囲を表示
+            ShowAttackRange(owner);
 
-            direction.y = 0f;
+            ExecuteHit();
 
-            if (direction.magnitude <= settings.Range)
-            {
-                // 同じ位置に重なった場合は、自分の正面へ押し戻す。
-                if (direction.sqrMagnitude < MinDirectionSqrMagnitude)
-                {
-                    direction = owner.transform.forward;
-                    direction.y = 0f;
-
-                    if (direction.sqrMagnitude < MinDirectionSqrMagnitude)
-                    {
-                        direction = Vector3.forward;
-                    }
-                }
-
-                opponent.AddKnockback(
-                    direction,
-                    settings.KnockbackDistance,
-                    settings.KnockbackSpeed,
-                    settings.StunDuration);
-            }
         }
 
         owner.ChangeState("idle");
@@ -106,5 +89,68 @@ public class PlayerStateSmash : PlayerState
         }
 
         return opponent != null;
+    }
+
+    private void ShowAttackRange(Player owner)
+    {
+        SC_SmashRangeSector sector = owner.GetComponentInChildren<SC_SmashRangeSector>(true);
+
+        if (sector == null)
+        {
+            Debug.LogWarning("SmashRangeSectorが見つかりません");
+            return;
+        }
+
+        sector.gameObject.SetActive(true);
+
+        sector.Init(
+            owner.transform,
+            settings.Range,
+            settings.AttackAngle,
+            rangeDisplayDuration
+        );
+    }
+
+    // 攻撃判定を実行する
+    public void ExecuteHit()
+    {
+        if (owner == null || settings == null)
+            return;
+
+        if (!TryGetOpponent(owner, out var opponent))
+            return;
+
+        Vector3 direction = opponent.transform.position - owner.transform.position;
+
+        direction.y = 0f;
+
+        Vector3 forward = owner.transform.forward;
+        forward.y = 0f;
+
+        if (forward.sqrMagnitude < MinDirectionSqrMagnitude)
+            forward = Vector3.forward;
+
+        forward.Normalize();
+
+        // 距離判定
+        if (direction.magnitude > settings.Range)
+            return;
+
+        if (direction.sqrMagnitude < MinDirectionSqrMagnitude)
+            direction = forward;
+
+        // 角度判定
+        float angle = Vector3.Angle(forward, direction);
+
+        if (angle > settings.AttackAngle * 0.5f)
+            return;
+
+        // ノックバック
+        opponent.AddKnockback(
+            direction,
+            settings.KnockbackDistance,
+            settings.KnockbackSpeed,
+            settings.StunDuration
+        );
     }
 }
