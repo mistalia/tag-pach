@@ -5,5 +5,5 @@ public enum ControllerBindingMode
     FourControllers,
 
     // 1‘ä‚ÅOperationEPlacement‚Ì—¼•û‚ğ’S“–
-    TwoControllersTest
+    TwoControllers
 }

@@ -38,7 +38,7 @@ public sealed class ControllerSessionManager : MonoBehaviour
 
     public int RegisteredControllerCount { get; private set; }
 
-    public int RequiredControllerCount => BindingMode == ControllerBindingMode.TwoControllersTest ? TeamCount : MaxControllerCount;
+    public int RequiredControllerCount => BindingMode == ControllerBindingMode.TwoControllers ? TeamCount : MaxControllerCount;
 
     public bool IsFull => RegisteredControllerCount >= RequiredControllerCount;
 
@@ -46,7 +46,7 @@ public sealed class ControllerSessionManager : MonoBehaviour
     {
         get
         {
-            if (BindingMode == ControllerBindingMode.TwoControllersTest)
+            if (BindingMode == ControllerBindingMode.TwoControllers)
             {
                 return teams[0].FirstControllerSelection != null &&
                        teams[0].FirstControllerSelection.IsReady &&
@@ -58,7 +58,7 @@ public sealed class ControllerSessionManager : MonoBehaviour
         }
     }
 
-    public bool UsesSplitKeyboard =>    BindingMode == ControllerBindingMode.TwoControllersTest && registrationSettings != null 
+    public bool UsesSplitKeyboard =>    BindingMode == ControllerBindingMode.TwoControllers && registrationSettings != null 
                                     &&  registrationSettings.KeyboardMode == KeyboardRegistrationMode.SplitDebug;
 
     private void Awake()
@@ -89,7 +89,7 @@ public sealed class ControllerSessionManager : MonoBehaviour
         if (controllerNumber < 1 || controllerNumber > RequiredControllerCount)
             return -1;
 
-        if (BindingMode == ControllerBindingMode.TwoControllersTest)
+        if (BindingMode == ControllerBindingMode.TwoControllers)
             return controllerNumber - 1;
 
         return (controllerNumber - 1) % TeamCount;
@@ -167,7 +167,7 @@ public sealed class ControllerSessionManager : MonoBehaviour
         if (team == null)
             return;
 
-        if (BindingMode == ControllerBindingMode.TwoControllersTest)
+        if (BindingMode == ControllerBindingMode.TwoControllers)
         {
             bool isReady = team.FirstControllerSelection != null && team.FirstControllerSelection.IsReady;
 
@@ -265,7 +265,7 @@ public sealed class ControllerSessionManager : MonoBehaviour
         if (controllerNumber < 1 || controllerNumber > RequiredControllerCount)
             return null;
 
-        if (BindingMode == ControllerBindingMode.TwoControllersTest)
+        if (BindingMode == ControllerBindingMode.TwoControllers)
             return teams[controllerNumber - 1].FirstController;
 
         int teamIndex = (controllerNumber - 1) % TeamCount;
@@ -322,8 +322,8 @@ public sealed class ControllerSessionManager : MonoBehaviour
         if (device == null || IsRegistered(device) || IsFull)
             return false;
 
-        if (BindingMode == ControllerBindingMode.TwoControllersTest)
-            return RegisterTwoControllersTestDevice(device);
+        if (BindingMode == ControllerBindingMode.TwoControllers)
+            return RegisterTwoControllersDevice(device);
 
         return RegisterFourControllersDevice(device);
     }
@@ -345,7 +345,7 @@ public sealed class ControllerSessionManager : MonoBehaviour
         return true;
     }
 
-    private bool RegisterTwoControllersTestDevice(InputDevice device)
+    private bool RegisterTwoControllersDevice(InputDevice device)
     {
         int controllerNumber = RegisteredControllerCount + 1;
         int teamIndex = RegisteredControllerCount;
@@ -432,7 +432,7 @@ public sealed class ControllerSessionManager : MonoBehaviour
     // åªç›ëIëÇ≥ÇÍÇƒÇ¢ÇÈRoleÇëSTeamÇÃAssignmentÇ÷ämíËîΩâfÇ∑ÇÈ
     public bool CommitCurrentRoleAssignments()
     {
-        if (BindingMode == ControllerBindingMode.TwoControllersTest)
+        if (BindingMode == ControllerBindingMode.TwoControllers)
             return true;
 
         for (int teamIndex = 0; teamIndex < TeamCount; teamIndex++)
@@ -460,7 +460,7 @@ public sealed class ControllerSessionManager : MonoBehaviour
 
             team.ResetReady();
 
-            if (BindingMode == ControllerBindingMode.TwoControllersTest)
+            if (BindingMode == ControllerBindingMode.TwoControllers)
             {
                 ControllerRoleSelection selection = team.FirstControllerSelection;
 

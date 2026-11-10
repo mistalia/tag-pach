@@ -27,7 +27,7 @@ public sealed class TitleScene : MonoBehaviour
         if (Keyboard.current[twoControllersKey].wasPressedThisFrame)
         {
             // ÇQë‰ÉÇÅ[Éhê›íË
-            StartWithMode(ControllerBindingMode.TwoControllersTest);
+            StartWithMode(ControllerBindingMode.TwoControllers);
             return;
         }
 

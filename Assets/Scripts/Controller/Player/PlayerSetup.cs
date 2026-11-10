@@ -135,7 +135,7 @@ public sealed class PlayerSetup : MonoBehaviour
             return;
         }
 
-        if (session.BindingMode == ControllerBindingMode.TwoControllersTest)
+        if (session.BindingMode == ControllerBindingMode.TwoControllers)
         {
             SetupTestModePlayer(session, playerInputSet, teamIndex, playerIndex);
             return;
@@ -216,7 +216,7 @@ public sealed class PlayerSetup : MonoBehaviour
         playerInputSet.SetPlayerActive(true);
 
         // Player–{‘Ì‚ªQÆ‚·‚éReader‚ğTestInput‘¤‚ÖØ‚è‘Ö‚¦‚é
-        playerInputSet.PlayerInputReader.UseTwoControllersTestMode();
+        playerInputSet.PlayerInputReader.UseTwoControllersMode();
 
         PlayerInput playerInput = playerInputSet.TestPlayerInput;
 

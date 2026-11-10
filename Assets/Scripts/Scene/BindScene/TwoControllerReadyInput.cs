@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// TwoControllersTestで各ControllerのReady・Cancel入力を管理する
+// TwoControllersで各ControllerのReady・Cancel入力を管理する
 public sealed class TwoControllerReadyInput : MonoBehaviour
 {
     [Header("Input Actions")]
@@ -32,7 +32,7 @@ public sealed class TwoControllerReadyInput : MonoBehaviour
             return;
         }
 
-        if (session.BindingMode != ControllerBindingMode.TwoControllersTest)
+        if (session.BindingMode != ControllerBindingMode.TwoControllers)
             return;
 
         if (inputActions == null)

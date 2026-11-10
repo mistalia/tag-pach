@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// TwoControllersTest‚Å1‘ä‚ÌController‚ÌReadyó‘Ô‚ğ2‚Â‚Ì˜g‚Ö”½‰f
+// TwoControllers‚Å1‘ä‚ÌController‚ÌReadyó‘Ô‚ğ2‚Â‚Ì˜g‚Ö”½‰f
 public sealed class TwoControllerReadyFrameGroup : MonoBehaviour
 {
     [Header("Controller")]
@@ -26,7 +26,7 @@ public sealed class TwoControllerReadyFrameGroup : MonoBehaviour
             return;
         }
 
-        if (session.BindingMode != ControllerBindingMode.TwoControllersTest)
+        if (session.BindingMode != ControllerBindingMode.TwoControllers)
             return;
 
         session.ControllerReadyChanged += HandleControllerReadyChanged;

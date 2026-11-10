@@ -76,7 +76,7 @@ public sealed class ControllerTeam
         return role == ControllerRole.Operation ? OperationAssignment?.Device : PlacementAssignment?.Device;
     }
 
-    // TwoControllersTest‚Å‚Í1‘ä‚Å—¼Role‚ð’S“–‚·‚é
+    // TwoControllers‚Å‚Í1‘ä‚Å—¼Role‚ð’S“–‚·‚é
     public bool ConfigureSingleControllerMode()
     {
         if (FirstController == null || FirstController.Device == null)
