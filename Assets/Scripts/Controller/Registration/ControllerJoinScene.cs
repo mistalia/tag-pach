@@ -14,6 +14,9 @@ public sealed class ControllerJoinScene : MonoBehaviour
     [SerializeField]
     private InputActionReference proceedAction;
 
+    [SerializeField]
+    private InputActionReference backAction;
+
     private void Start()
     {
         ControllerSessionManager session = ControllerSessionManager.Instance;
@@ -31,6 +34,12 @@ public sealed class ControllerJoinScene : MonoBehaviour
             proceedAction.action.performed += OnProceedPerformed;
             proceedAction.action.Enable();
         }
+
+        if (backAction != null)
+        {
+            backAction.action.performed += OnBackPerformed;
+            backAction.action.Enable();
+        }
     }
 
     private void OnDisable()
@@ -38,6 +47,11 @@ public sealed class ControllerJoinScene : MonoBehaviour
         if (proceedAction != null)
         {
             proceedAction.action.performed -= OnProceedPerformed;
+        }
+
+        if (backAction != null)
+        {
+            backAction.action.performed -= OnBackPerformed;
         }
     }
 
@@ -66,5 +80,10 @@ public sealed class ControllerJoinScene : MonoBehaviour
     private void OnProceedPerformed(InputAction.CallbackContext context)
     {
         LoadNextScene();
+    }
+
+    private void OnBackPerformed(InputAction.CallbackContext context)
+    {
+        SceneTransitionManager.Instance.LoadScene("TitleScene", transitionSettings);
     }
 }

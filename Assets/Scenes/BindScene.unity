@@ -151,6 +151,7 @@ MonoBehaviour:
   nextSceneName: DefaultScene
   transitionSettings: {fileID: 11400000, guid: 93d8b4863f0d0d74da083a36fce197b5, type: 2}
   proceedAction: {fileID: 6747814918030940708, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  backAction: {fileID: 5927897860797073845, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!224 &30228997
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1628,7 +1629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42b713b304272e540848228085a6581f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControllerSessionManager
-  bindingMode: 1
+  bindingMode: 0
   registrationSettings: {fileID: 11400000, guid: 932b15e89fed25e4c8b79fa3f526a8fc, type: 2}
 --- !u!4 &820751211
 Transform:
