@@ -20,6 +20,12 @@ public sealed class PlayerSetup : MonoBehaviour
     private string keyboardControlSchemeName    = "Keyboard&Mouse";
 
     [SerializeField]
+    private string splitKeyboardLeftControlSchemeName   = "KeyboardLeft";
+
+    [SerializeField]
+    private string splitKeyboardRightControlSchemeName  = "KeyboardRight";
+
+    [SerializeField]
     private PlayerControllerInputSet[] players = new PlayerControllerInputSet[ControllerSessionManager.TeamCount];
 
     private void Start()
@@ -188,7 +194,16 @@ public sealed class PlayerSetup : MonoBehaviour
             return;
         }
 
-        string controlSchemeName = GetControlSchemeName(device);
+        string controlSchemeName;
+
+        if (session.UsesSplitKeyboard)
+        {
+            controlSchemeName = teamIndex == 0 ? splitKeyboardLeftControlSchemeName : splitKeyboardRightControlSchemeName;
+        }
+        else
+        {
+            controlSchemeName = GetControlSchemeName(device);
+        }
 
         if (string.IsNullOrEmpty(controlSchemeName))
         {
