@@ -23,14 +23,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Color teamColor = Color.red;
     public Color TeamColor => teamColor;
 
-    //---------------------------------------------------------------
-    [Header("Reposition Visual")]
-    private GameObject repositionMesh;
-
-    private Renderer repositionMeshRenderer;
-
-    //---------------------------------------------------------------
-
     private bool canPlaceStone = true;
     public void SetCanPlaceStone(bool value)
     {
@@ -53,32 +45,6 @@ public class Player : MonoBehaviour
             }
         }
 
-        //---------------------------------------------------------------
-
-        // RepositionPointerを取得
-        Transform repositionMeshTransform = transform.Find("RepositionMesh");
-
-        if (repositionMeshTransform != null)
-        {
-            repositionMesh = repositionMeshTransform.gameObject;
-        }
-        else
-        {
-            Debug.LogError("RepositionPointer is not found");
-            return;
-        }
-
-
-        repositionMeshRenderer = repositionMesh.GetComponent<Renderer>();
-
-        if ( !repositionMeshRenderer)
-        {
-            Debug.LogError("RepositionMesh にRendererがありません。");
-
-            return;
-        }
-        //---------------------------------------------------------------
-
         // ステータスのコピーインスタンスを生成
         stateList.CreateRunTimeCopies();
 
@@ -89,7 +55,6 @@ public class Player : MonoBehaviour
     {
         //---------------------------------------------------------------
         TurnManager.Instance.RegisterPlayer(this);
-        repositionMesh.SetActive(false);
         //---------------------------------------------------------------
 
         ChangeState(initializeStatekey);
@@ -99,6 +64,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         currentState?.UpdateState();
+
+        // Result中の入力処理
+        if (UpdateResultInput())
+        {
+            return;
+        }
 
         AnyStateTransition();
     }
@@ -137,18 +108,13 @@ public class Player : MonoBehaviour
         currentState.EnterState(this, input);
     }
 
-    public bool IsRepositioning =>
-    currentState is PlayerStateReposition ||
-    (TurnManager.Instance != null &&
-     TurnManager.Instance.GetCurrentStateType() == TurnStateType.Reposition);
-
     public void AddKnockback(
         Vector3 direction,
         float distance,
         float speed,
         float stunDuration)
     {
-        if (!isActiveAndEnabled || IsRepositioning)
+        if (!isActiveAndEnabled)
         {
             return;
         }
@@ -213,7 +179,7 @@ public class Player : MonoBehaviour
     private void AnyStateTransition()
     {
         // 再配置中・被弾中・強制配置スキル中は入力で割り込まない。
-        if (IsRepositioning ||
+        if (IsResult() ||
             currentState is PlayerStateSmashed ||
             currentState is PlayerStateForcePlace)
         {
@@ -324,7 +290,6 @@ public class Player : MonoBehaviour
 
         if (!isActiveAndEnabled ||
             !canPlaceStone ||
-            IsRepositioning ||
             currentState is PlayerStateSmashed ||
             turn == null ||
             !turn.IsBattleStarted() ||
@@ -353,36 +318,20 @@ public class Player : MonoBehaviour
 
 
     //---------------------------------------------------------------
-    public void StartReposition()
-    {
-        ChangeState("reposition");
-    }
-
-    public void EndReposition()
-    {
-        ChangeState("idle");
-    }
-
-    public void EnterRepositionVisual()
-    {
-        repositionMesh.SetActive(true);
-        rootDisableObj.SetActive(false);
-    }
-
-    public void ExitRepositionVisual()
-    {
-        repositionMesh.SetActive(false);
-        rootDisableObj.SetActive(true);
-    }
-
-    public void SetRepositionColor(Color color)
-    {
-        repositionMeshRenderer.material.color = color;
-    }
-
     public void StartResult()
     {
-        ChangeState("result");
+        // Result開始時は通常状態へ戻す
+        ChangeState("idle");
+
+        // 石の配置は禁止
+        SetCanPlaceStone(false);
+    }
+
+    public bool IsResult()
+    {
+        return TurnManager.Instance != null &&
+               TurnManager.Instance.GetCurrentStateType()
+                   == TurnStateType.Result;
     }
 
     //プレイヤーリセット
@@ -407,10 +356,24 @@ public class Player : MonoBehaviour
 
         // 通常状態へ戻す
         ChangeState("idle");
-
-        // Reposition用Visualになっている可能性を考慮
-        repositionMesh.SetActive(false);
     }
 
+    // Result中の確認入力
+    private bool UpdateResultInput()
+    {
+        if (!IsResult())
+        {
+            return false;
+        }
+
+        if (input != null &&
+            input.Place != null &&
+            input.Place.Pressed)
+        {
+            TurnManager.Instance.RequestEndResult(this);
+        }
+
+        return true;
+    }
     //---------------------------------------------------------------
 }

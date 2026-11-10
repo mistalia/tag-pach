@@ -37,7 +37,6 @@ public class PlayerStateForcePlace : PlayerState
 
     return player != null &&
            player.isActiveAndEnabled &&
-           !player.IsRepositioning &&
            player.TryGetComponent<Rigidbody>(out _) &&
            settings != null &&
            settings.IsValid &&
