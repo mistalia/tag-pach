@@ -2,6 +2,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Spawn Settings")]
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
+
+    [Header("Fall Respawn Settings")]
+    [SerializeField] private float fallHeight = -10.0f;
+    [SerializeField] private float respawnDelay = 2.0f;
+
+    private float fallTimer;
+    private bool isFalling;
+
     [Header("Reference")]
     [SerializeField] private PlayerInputReader input;
     [SerializeField] private PlayerStateList stateList;
@@ -49,6 +60,9 @@ public class Player : MonoBehaviour
         stateList.CreateRunTimeCopies();
 
         canPlaceStone = true;
+
+        // 初期位置・初期回転を保存
+        InitializeSpawnPoint();
     }
 
     void Start()
@@ -63,6 +77,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 落下・復帰処理
+        if (UpdateFallRespawn())
+        {
+            return;
+        }
+
         currentState?.UpdateState();
 
         // Result中の入力処理
@@ -340,22 +360,7 @@ public class Player : MonoBehaviour
         // 石を置ける状態に戻す
         canPlaceStone = true;
 
-        // 現在立っているTileのハイライト解除
-        if (OnStandingPiece != null)
-        {
-            OnStandingPiece.ResetTileColor();
-            OnStandingPiece = null;
-        }
-
-        // Rigidbody停止
-        if (TryGetComponent<Rigidbody>(out var rb))
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
-
-        // 通常状態へ戻す
-        ChangeState("idle");
+        Respawn();
     }
 
     // Result中の確認入力
@@ -375,5 +380,68 @@ public class Player : MonoBehaviour
 
         return true;
     }
+
+    // 初期位置・初期回転を保存
+    private void InitializeSpawnPoint()
+    {
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
+    }
+
+    private bool UpdateFallRespawn()
+    {
+        // 落下中ではない場合
+        if (!isFalling)
+        {
+            if (transform.position.y < fallHeight)
+            {
+                isFalling = true;
+                fallTimer = respawnDelay;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        // 落下中は復帰時間をカウント
+        fallTimer -= Time.deltaTime;
+
+        if (fallTimer <= 0.0f)
+        {
+            Respawn();
+        }
+
+        // このフレームは通常操作を行わない
+        return true;
+    }
+
+    public void Respawn()
+    {
+        // 落下状態を解除
+        isFalling = false;
+        fallTimer = 0.0f;
+
+        // 現在のステートを終了して通常状態へ
+        ChangeState("idle");
+
+        // Rigidbodyの速度をリセット
+        if (TryGetComponent<Rigidbody>(out var rb))
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        // 初期位置・回転に戻す
+        transform.SetPositionAndRotation(initialPosition, initialRotation);
+
+        // 足元のTileをリセット
+        if (OnStandingPiece != null)
+        {
+            OnStandingPiece.ResetTileColor();
+            OnStandingPiece = null;
+        }
+    }
+
     //---------------------------------------------------------------
 }

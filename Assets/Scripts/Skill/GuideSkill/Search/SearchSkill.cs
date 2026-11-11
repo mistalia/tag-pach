@@ -6,7 +6,7 @@ using UnityEngine;
 public class SearchSkill : MonoBehaviour
 {
     [SerializeField] private SearchSettings settings;
-    [SerializeField] private Transform fieldRoot;
+    private Transform fieldRoot;
     [SerializeField] private SearchWaveView waveView;
 
     private PlayerInputReader input;
@@ -24,6 +24,8 @@ public class SearchSkill : MonoBehaviour
     private void Awake()
     {
         input = GetComponent<PlayerInputReader>();
+
+        FindFieldRoot();
     }
 
     private void Update()
@@ -164,6 +166,27 @@ public class SearchSkill : MonoBehaviour
         if (waveView != null)
         {
             waveView.Hide();
+        }
+    }
+
+    private void FindFieldRoot()
+    {
+        if (fieldRoot != null)
+            return;
+
+        FieldManager manager = FindAnyObjectByType<FieldManager>();
+
+        if (manager == null)
+        {
+            Debug.LogError("FieldManagerÇ™å©Ç¬Ç©ÇËÇ‹ÇπÇÒÅB", this);
+            return;
+        }
+
+        fieldRoot = manager.transform.Find("Generated Fields");
+
+        if (fieldRoot == null)
+        {
+            Debug.LogError("Generated FieldsÇ™å©Ç¬Ç©ÇËÇ‹ÇπÇÒÅB", this);
         }
     }
 }
