@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerInputReader input;
     [SerializeField] private PlayerStateList stateList;
     [SerializeField] private string initializeStatekey = "idle";
-    [SerializeField] private LayerMask fieldLayer; // ƒtƒB[ƒ‹ƒh‚ÌƒŒƒCƒ„[ƒ}ƒXƒN
+    [SerializeField] private LayerMask fieldLayer; // ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒã‚¹ã‚¯
     [SerializeField] private LABPDevice labpDevice;
     [SerializeField] private GameObject rootDisableObj;
 
@@ -56,12 +56,12 @@ public class Player : MonoBehaviour
             }
         }
 
-        // ƒXƒe[ƒ^ƒX‚ÌƒRƒs[ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+        // ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã®ã‚³ãƒ”ãƒ¼ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
         stateList.CreateRunTimeCopies();
 
         canPlaceStone = true;
 
-        // ‰ŠúˆÊ’uE‰Šú‰ñ“]‚ğ•Û‘¶
+        // åˆæœŸä½ç½®ãƒ»åˆæœŸå›è»¢ã‚’ä¿å­˜
         InitializeSpawnPoint();
     }
 
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // —‰ºE•œ‹Aˆ—
+        // è½ä¸‹ãƒ»å¾©å¸°å‡¦ç†
         if (UpdateFallRespawn())
         {
             return;
@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
 
         currentState?.UpdateState();
 
-        // Result’†‚Ì“ü—Íˆ—
+        // Resultä¸­ã®å…¥åŠ›å‡¦ç†
         if (UpdateResultInput())
         {
             return;
@@ -139,7 +139,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        // ƒXƒ^ƒ“’†‚Ì’ÇŒ‚‚Å‚ÍAÅ‰‚Ì–½’†î•ñ‚ğã‘‚«‚µ‚È‚¢B
+        // ã‚¹ã‚¿ãƒ³ä¸­ã®è¿½æ’ƒã§ã¯ã€æœ€åˆã®å‘½ä¸­æƒ…å ±ã‚’ä¸Šæ›¸ãã—ãªã„ã€‚
         if (currentState is PlayerStateSmashed currentSmashed &&
             currentSmashed.IsStunned)
         {
@@ -157,7 +157,7 @@ public class Player : MonoBehaviour
             (distance > 0f && directionSqrMagnitude < 0.0001f))
         {
             Debug.LogWarning(
-                "ƒmƒbƒNƒoƒbƒNî•ñ‚ª•s³‚È‚½‚ßA”í’e‚ğó‚¯•t‚¯‚Ü‚¹‚ñB",
+                "ãƒãƒƒã‚¯ãƒãƒƒã‚¯æƒ…å ±ãŒä¸æ­£ãªãŸã‚ã€è¢«å¼¾ã‚’å—ã‘ä»˜ã‘ã¾ã›ã‚“ã€‚",
                 this);
             return;
         }
@@ -167,7 +167,7 @@ public class Player : MonoBehaviour
             state is not PlayerStateSmashed smashedState)
         {
             Debug.LogError(
-                "knockback‚ÉPlayerStateSmashed‚ª“o˜^‚³‚ê‚Ä‚¢‚Ü‚¹‚ñB",
+                "knockbackã«PlayerStateSmashedãŒç™»éŒ²ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚",
                 this);
             return;
         }
@@ -175,14 +175,14 @@ public class Player : MonoBehaviour
         if (!TryGetComponent<Rigidbody>(out _))
         {
             Debug.LogError(
-                "ƒmƒbƒNƒoƒbƒN‚É•K—v‚ÈRigidbody‚ª‚ ‚è‚Ü‚¹‚ñB",
+                "ãƒãƒƒã‚¯ãƒãƒƒã‚¯ã«å¿…è¦ãªRigidbodyãŒã‚ã‚Šã¾ã›ã‚“ã€‚",
                 this);
             return;
         }
 
         ChangeState("knockback");
 
-        // EnterState‚Å‰Šú‰»‚µ‚½Œã‚ÉA¡‰ñ‚Ì”í’eî•ñ‚ğ“n‚·B
+        // EnterStateã§åˆæœŸåŒ–ã—ãŸå¾Œã«ã€ä»Šå›ã®è¢«å¼¾æƒ…å ±ã‚’æ¸¡ã™ã€‚
         if (currentState == smashedState)
         {
             smashedState.Setup(direction, distance, speed, stunDuration);
@@ -198,7 +198,7 @@ public class Player : MonoBehaviour
 
     private void AnyStateTransition()
     {
-        // Ä”z’u’†E”í’e’†E‹­§”z’uƒXƒLƒ‹’†‚Í“ü—Í‚ÅŠ„‚è‚Ü‚È‚¢B
+        // å†é…ç½®ä¸­ãƒ»è¢«å¼¾ä¸­ãƒ»å¼·åˆ¶é…ç½®ã‚¹ã‚­ãƒ«ä¸­ã¯å…¥åŠ›ã§å‰²ã‚Šè¾¼ã¾ãªã„ã€‚
         if (IsResult() ||
             currentState is PlayerStateSmashed ||
             currentState is PlayerStateForcePlace)
@@ -239,39 +239,8 @@ public class Player : MonoBehaviour
         {
             ChangeState("place");
         }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        TryContactForcePlace(collision);
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        TryContactForcePlace(collision);
-    }
-
-    private void TryContactForcePlace(Collision collision)
-    {
-        if (!isActiveAndEnabled ||
-            currentState is not PlayerStateForcePlace forcePlaceState)
-        {
-            return;
-        }
-
-        Player opponent =
-            collision.collider.GetComponentInParent<Player>();
-
-        if (!forcePlaceState.TryHit(opponent))
-        {
-            return;
-        }
-
-        // –½’†Œã‚à©•ª‚ª“¯‚¶ƒXƒe[ƒg‚È‚çA’Êíó‘Ô‚Ö–ß‚·B
-        if (currentState == forcePlaceState)
-        {
-            ChangeState("idle");
-        }
+        UpdateCommunicationInput();
     }
 
     public bool TryGetFieldTileBelow(float rayStartHeight, float rayDistance, LayerMask fieldLayer)
@@ -329,10 +298,10 @@ public class Player : MonoBehaviour
             return false;
         }
 
-        // ’Êí‚Ì”z’u‚Æ“¯‚¶ƒXƒe[ƒg‚ğg‚¤B
+        // é€šå¸¸ã®é…ç½®ã¨åŒã˜ã‚¹ãƒ†ãƒ¼ãƒˆã‚’ä½¿ã†ã€‚
         ChangeState("place");
 
-        // ‹î‚Ì¶¬‚ÍƒAƒjƒ[ƒVƒ‡ƒ“Œã‚È‚Ì‚ÅAŠJn‚Å‚«‚½‚©Šm”F‚·‚éB
+        // é§’ã®ç”Ÿæˆã¯ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å¾Œãªã®ã§ã€é–‹å§‹ã§ããŸã‹ç¢ºèªã™ã‚‹ã€‚
         return labpDevice != null && labpDevice.IsPlacing;
     }
 
@@ -340,10 +309,10 @@ public class Player : MonoBehaviour
     //---------------------------------------------------------------
     public void StartResult()
     {
-        // ResultŠJn‚Í’Êíó‘Ô‚Ö–ß‚·
+        // Resulté–‹å§‹æ™‚ã¯é€šå¸¸çŠ¶æ…‹ã¸æˆ»ã™
         ChangeState("idle");
 
-        // Î‚Ì”z’u‚Í‹Ö~
+        // çŸ³ã®é…ç½®ã¯ç¦æ­¢
         SetCanPlaceStone(false);
     }
 
@@ -354,16 +323,16 @@ public class Player : MonoBehaviour
                    == TurnStateType.Result;
     }
 
-    //ƒvƒŒƒCƒ„[ƒŠƒZƒbƒg
+    //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒªã‚»ãƒƒãƒˆ
     public void ResetBattle()
     {
-        // Î‚ğ’u‚¯‚éó‘Ô‚É–ß‚·
+        // çŸ³ã‚’ç½®ã‘ã‚‹çŠ¶æ…‹ã«æˆ»ã™
         canPlaceStone = true;
 
         Respawn();
     }
 
-    // Result’†‚ÌŠm”F“ü—Í
+    // Resultä¸­ã®ç¢ºèªå…¥åŠ›
     private bool UpdateResultInput()
     {
         if (!IsResult())
@@ -381,7 +350,7 @@ public class Player : MonoBehaviour
         return true;
     }
 
-    // ‰ŠúˆÊ’uE‰Šú‰ñ“]‚ğ•Û‘¶
+    // åˆæœŸä½ç½®ãƒ»åˆæœŸå›è»¢ã‚’ä¿å­˜
     private void InitializeSpawnPoint()
     {
         initialPosition = transform.position;
@@ -390,7 +359,7 @@ public class Player : MonoBehaviour
 
     private bool UpdateFallRespawn()
     {
-        // —‰º’†‚Å‚Í‚È‚¢ê‡
+        // è½ä¸‹ä¸­ã§ã¯ãªã„å ´åˆ
         if (!isFalling)
         {
             if (transform.position.y < fallHeight)
@@ -404,7 +373,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        // —‰º’†‚Í•œ‹AŠÔ‚ğƒJƒEƒ“ƒg
+        // è½ä¸‹ä¸­ã¯å¾©å¸°æ™‚é–“ã‚’ã‚«ã‚¦ãƒ³ãƒˆ
         fallTimer -= Time.deltaTime;
 
         if (fallTimer <= 0.0f)
@@ -412,34 +381,70 @@ public class Player : MonoBehaviour
             Respawn();
         }
 
-        // ‚±‚ÌƒtƒŒ[ƒ€‚Í’Êí‘€ì‚ğs‚í‚È‚¢
+        // ã“ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã¯é€šå¸¸æ“ä½œã‚’è¡Œã‚ãªã„
         return true;
     }
 
     public void Respawn()
     {
-        // —‰ºó‘Ô‚ğ‰ğœ
+        // è½ä¸‹çŠ¶æ…‹ã‚’è§£é™¤
         isFalling = false;
         fallTimer = 0.0f;
 
-        // Œ»İ‚ÌƒXƒe[ƒg‚ğI—¹‚µ‚Ä’Êíó‘Ô‚Ö
+        // ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ãƒˆã‚’çµ‚äº†ã—ã¦é€šå¸¸çŠ¶æ…‹ã¸
         ChangeState("idle");
 
-        // Rigidbody‚Ì‘¬“x‚ğƒŠƒZƒbƒg
+        // Rigidbodyã®é€Ÿåº¦ã‚’ãƒªã‚»ãƒƒãƒˆ
         if (TryGetComponent<Rigidbody>(out var rb))
         {
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
 
-        // ‰ŠúˆÊ’uE‰ñ“]‚É–ß‚·
+        // åˆæœŸä½ç½®ãƒ»å›è»¢ã«æˆ»ã™
         transform.SetPositionAndRotation(initialPosition, initialRotation);
 
-        // ‘«Œ³‚ÌTile‚ğƒŠƒZƒbƒg
+        // è¶³å…ƒã®Tileã‚’ãƒªã‚»ãƒƒãƒˆ
         if (OnStandingPiece != null)
         {
             OnStandingPiece.ResetTileColor();
             OnStandingPiece = null;
+    // Deviceã¸ã®æŒ‡ç¤ºå…¥åŠ›
+    private void UpdateCommunicationInput()
+    {
+        if (labpDevice == null || input == null)
+        {
+            return;
+        }
+
+        // Commandãƒœã‚¿ãƒ³ã§é–‹é–‰ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
+        if (input.Command.Pressed)
+        {
+            if (labpDevice.IsCommandOpen())
+            {
+                labpDevice.CloseCommand();
+            }
+            else
+            {
+                labpDevice.OpenCommand();
+            }
+
+            return;
+        }
+
+        // æŒ‡ç¤ºUIãŒé–‰ã˜ã¦ã„ã‚‹å ´åˆ
+        if (!labpDevice.IsCommandOpen())
+        {
+            return;
+        }
+
+        // ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã§æ–¹å‘ã‚’é¸æŠ
+        labpDevice.SelectCommandDirection(input.MoveValue);
+
+        // ç¢ºå®šãƒœã‚¿ãƒ³
+        if (input.Select.Pressed)
+        {
+            labpDevice.ConfirmCommand();
         }
     }
 

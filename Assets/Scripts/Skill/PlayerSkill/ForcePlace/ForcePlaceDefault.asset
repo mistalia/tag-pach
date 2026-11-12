@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff402051e0a05de48957d134704435b3, type: 3}
   m_Name: ForcePlaceDefault
   m_EditorClassIdentifier: Assembly-CSharp::ForcePlaceSettings
-  activeDuration: 3
+  chargeDuration: 0.5
+  endDuration: 0.5
+  hitRadius: 1
+  hitForwardOffset: 1.5
   cooldownTime: 8

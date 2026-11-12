@@ -5,77 +5,75 @@ using UnityEngine;
     menuName = "PlayerState/ForcePlace")]
 public class PlayerStateForcePlace : PlayerState
 {
+    private enum ForcePlaceState
+    {
+        Charge,
+        Activate,
+        End
+    }
+
+    private ForcePlaceState currentPhase;
+    private float phaseTimer;
+
     [Header("スキル設定")]
     [SerializeField]
     private ForcePlaceSettings settings;
 
-    [Header("移動")]
-    [SerializeField, Min(0f)]
-    private float moveSpeed = 5f;
+    private SC_ForcePlaceRangeCircle rangeCircle;
 
-    [SerializeField, Min(0f)]
-    private float rotationSpeed = 10f;
-
-    private Rigidbody body;
-    private float remainingDuration;
     private float nextUseTime;
     private int lastUseFrame = -1;
     private int activeTurn;
     private bool resolvingHit;
-
+    private bool skillActive;
     private GameObject skillVisual;
 
-
-    public float RemainingDuration => remainingDuration;
-
-    public float RemainingCooldown =>
+    public float RemainingCooldown => 
         Mathf.Max(0f, nextUseTime - Time.time);
 
     public bool CanUse(Player player)
-{
-    TurnManager turn = TurnManager.Instance;
+    {
+        TurnManager turn = TurnManager.Instance;
 
-    return player != null &&
-           player.isActiveAndEnabled &&
-           player.TryGetComponent<Rigidbody>(out _) &&
-           settings != null &&
-           settings.IsValid &&
-           Time.timeScale > 0f &&
-           Time.time >= nextUseTime &&
-           lastUseFrame != Time.frameCount &&
-           turn != null &&
-           turn.IsBattleStarted() &&
-           !turn.IsBattlePaused() &&
-           turn.GetCurrentStateType() == TurnStateType.Playing &&
-           turn.GetDefendPlayer() == player &&
-           turn.GetAttackPlayer() != null;
+        return player != null &&
+            player.isActiveAndEnabled &&
+            settings != null &&
+            settings.IsValid &&
+            Time.timeScale > 0f &&
+            Time.time >= nextUseTime &&
+            lastUseFrame != Time.frameCount &&
+            turn != null &&
+            turn.IsBattleStarted() &&
+            !turn.IsBattlePaused() &&
+            turn.GetCurrentStateType() == TurnStateType.Playing &&
+            turn.GetDefendPlayer() == player &&
+            turn.GetAttackPlayer() != null;
 
-}
+    }
 
-    public override void EnterState(
-        Player owner,
-        PlayerInputReader input)
+    public override void EnterState(Player owner,PlayerInputReader input)
     {
         base.EnterState(owner, input);
         Debug.Log("強制配置ステートに入った", owner);
 
-        //if (!CanUse(owner) || input == null || !input.IsConfigured)
-        //{
-        //    owner.ChangeState("idle");
-        //    return;
-        //}
+        if (!CanUse(owner))
+        {
+            owner.ChangeState("idle");
+            return;
+        }
 
-        body = owner.GetComponent<Rigidbody>();
-
-        remainingDuration = settings.ActiveDuration;
         activeTurn = TurnManager.Instance.GetTurnCount();
 
         // ステート終了後も再使用時刻を保持する。
         nextUseTime = Time.time + settings.CooldownTime;
         lastUseFrame = Time.frameCount;
 
-        Debug.Log("強制配置スキル発動", owner);
+        resolvingHit = false;
+        skillActive = true;
 
+        // チャージ開始
+        currentPhase = ForcePlaceState.Charge;
+        phaseTimer = settings.ChargeDuration;
 
         Transform visual = owner.transform.Find("ForcePlaceVisual");
 
@@ -85,10 +83,25 @@ public class PlayerStateForcePlace : PlayerState
         {
             skillVisual.SetActive(true);
         }
+
+        // 円形の攻撃範囲を取得
+        rangeCircle = owner.GetComponentInChildren<SC_ForcePlaceRangeCircle>(true);
+
+        if (rangeCircle != null)
+        {
+            rangeCircle.gameObject.SetActive(true);
+
+            rangeCircle.Init(settings.HitRadius, settings.HitForwardOffset);
+        }
     }
 
     public override void UpdateState()
     {
+        if (!skillActive)
+        {
+            return;
+        }
+
         TurnManager turn = TurnManager.Instance;
 
         if (!IsActiveTurn(turn))
@@ -102,71 +115,95 @@ public class PlayerStateForcePlace : PlayerState
             return;
         }
 
-        remainingDuration = Mathf.Max(
-            0f, remainingDuration - Time.deltaTime);
-
-        if (remainingDuration <= 0f)
+        switch (currentPhase)
         {
-            owner.ChangeState("idle");
+            case ForcePlaceState.Charge:
+                UpdateCharge();
+                break;
+
+            case ForcePlaceState.Activate:
+                ActivateSkill();
+                break;
+
+            case ForcePlaceState.End:
+                UpdateEnd();
+                break;
         }
     }
 
-    public override void FixedUpdateState()
+    private void UpdateCharge()
     {
-        TurnManager turn = TurnManager.Instance;
+        phaseTimer -= Time.deltaTime;
 
-        if (body == null || input == null ||
-            remainingDuration <= 0f ||
-            !IsActiveTurn(turn) ||
-            Time.timeScale <= 0f || turn.IsBattlePaused())
+        if (phaseTimer > 0f)
         {
             return;
         }
 
-        Vector2 moveInput = input.MoveValue;
-        Vector3 direction = new Vector3(
-            moveInput.x, 0f, moveInput.y);
+        currentPhase = ForcePlaceState.Activate;
 
-        body.MovePosition(
-            body.position +
-            direction * moveSpeed * Time.fixedDeltaTime);
+        Debug.Log("ForcePlace：Activate", owner);
 
-        if (direction != Vector3.zero)
+        // チャージ終了後、直ちに攻撃判定
+        ActivateSkill();
+    }
+
+    private void ActivateSkill()
+    {
+        if (!skillActive ||
+            currentPhase != ForcePlaceState.Activate)
         {
-            Quaternion targetRotation =
-                Quaternion.LookRotation(direction);
-
-            body.MoveRotation(
-                Quaternion.Slerp(
-                    body.rotation,
-                    targetRotation,
-                    rotationSpeed * Time.fixedDeltaTime));
+            return;
         }
+
+        // 攻撃判定を1回だけ実行
+        ExecuteHit();
+
+        // 命中・空振りにかかわらずENDへ移行
+        currentPhase = ForcePlaceState.End;
+        phaseTimer = settings.EndDuration;
+
+        Debug.Log("ForcePlace：End開始", owner);
+    }
+
+    private void UpdateEnd()
+    {
+        phaseTimer -= Time.deltaTime;
+
+        if (phaseTimer > 0f)
+        {
+            return;
+        }
+
+        owner.ChangeState("idle");
     }
 
     public override void ExitState()
     {
+        skillActive = false;
+        resolvingHit = false;
+        phaseTimer = 0f;
+
         if (skillVisual != null)
         {
             skillVisual.SetActive(false);
         }
 
-        remainingDuration = 0f;
-
-        if (body != null)
+        if (rangeCircle != null)
         {
-            body.linearVelocity = Vector3.zero;
+            rangeCircle.gameObject.SetActive(false);
         }
     }
 
-
     public bool TryHit(Player opponent)
     {
-        if (resolvingHit ||
-            remainingDuration <= 0f ||
+        if (!skillActive ||
+            currentPhase != ForcePlaceState.Activate ||
+            resolvingHit ||
             opponent == null ||
             opponent == owner ||
-            !opponent.isActiveAndEnabled)
+            !opponent.isActiveAndEnabled ||
+            !IsInHitRange(opponent))
         {
             return false;
         }
@@ -185,16 +222,13 @@ public class PlayerStateForcePlace : PlayerState
 
         try
         {
-            // 前回Player.csに追加した関数を、相手側で呼ぶ。
             if (!opponent.TryForcePlaceStone())
             {
                 return false;
             }
 
-            // 配置できたら、スキルの効果を終了する。
-            remainingDuration = 0f;
+            Debug.Log("ForcePlace命中：相手の駒を強制配置",owner);
 
-            Debug.Log("接触成功：相手の駒を強制配置", owner);
             return true;
         }
         finally
@@ -210,5 +244,63 @@ public class PlayerStateForcePlace : PlayerState
                turn.GetCurrentStateType() == TurnStateType.Playing &&
                turn.GetTurnCount() == activeTurn &&
                turn.GetDefendPlayer() == owner;
+    }
+
+    private bool IsInHitRange(Player opponent)
+    {
+        if (opponent == null || owner == null)
+        {
+            return false;
+        }
+
+        Vector3 forward = owner.transform.forward;
+        forward.y = 0f;
+
+        if (forward.sqrMagnitude < 0.0001f)
+        {
+            forward = Vector3.forward;
+        }
+
+        forward.Normalize();
+
+        // 円の中心
+        Vector3 center = owner.transform.position + forward * settings.HitForwardOffset;
+
+        Vector3 direction = opponent.transform.position - center;
+
+        // 水平方向の距離で判定
+        direction.y = 0f;
+
+        return direction.sqrMagnitude <= settings.HitRadius * settings.HitRadius;
+    }
+
+    // 攻撃判定を実行
+    public void ExecuteHit()
+    {
+        if (!skillActive ||
+            currentPhase != ForcePlaceState.Activate ||
+            owner == null ||
+            settings == null)
+        {
+            return;
+        }
+
+        TurnManager turn = TurnManager.Instance;
+
+        if (!IsActiveTurn(turn) ||
+            turn.IsBattlePaused() ||
+            Time.timeScale <= 0f)
+        {
+            return;
+        }
+
+        Player opponent = turn.GetAttackPlayer();
+
+        if (opponent == null)
+        {
+            return;
+        }
+
+        TryHit(opponent);
     }
 }

@@ -10,6 +10,10 @@ public class SmashSettings : ScriptableObject
     [Tooltip("相手に届く距離。プレイヤー同士の水平距離で判定する")]
     private float range = 3f;
 
+    [SerializeField, Range(0f, 360f)]
+    [Tooltip("正面を中心とした攻撃範囲の角度")]
+    private float attackAngle = 90f;
+
     [Header("ノックバック")]
     [SerializeField, Min(0f)]
     [Tooltip("相手を吹き飛ばす距離")]
@@ -30,6 +34,7 @@ public class SmashSettings : ScriptableObject
     private float cooldownTime = 2f;
 
     public float Range => range;
+    public float AttackAngle => attackAngle;
     public float KnockbackDistance => knockbackDistance;
     public float KnockbackSpeed => knockbackSpeed;
     public float StunDuration => knockbackDuration;
@@ -43,7 +48,8 @@ public class SmashSettings : ScriptableObject
         IsFinite(knockbackDistance) && knockbackDistance >= 0f &&
         IsFinite(knockbackSpeed) && knockbackSpeed > 0f &&
         IsFinite(knockbackDuration) && knockbackDuration >= 0f &&
-        IsFinite(cooldownTime) && cooldownTime >= 0f;
+        IsFinite(cooldownTime) && cooldownTime >= 0f &&
+        IsFinite(attackAngle) && attackAngle >= 0f && attackAngle <= 360f;
 
     private static bool IsFinite(float value)
     {
