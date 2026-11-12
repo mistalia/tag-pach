@@ -81,7 +81,7 @@ public sealed class PlayerInputReader : MonoBehaviour
         currentPlacementInputReader = placementInputReader;
     }
 
-    public void UseTwoControllersTestMode()
+    public void UseTwoControllersMode()
     {
         currentOperationInputReader = testOperationInputReader;
         currentPlacementInputReader = testPlacementInputReader;
