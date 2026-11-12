@@ -35,6 +35,8 @@ public sealed class BombFeverManager : MonoBehaviour
 
     private void Awake()
     {
+        FindFieldRoot();
+
         if (!ValidateReferences())
             enabled = false;
     }
@@ -395,5 +397,26 @@ public sealed class BombFeverManager : MonoBehaviour
         bombTiles.Clear();
         bombOccupiedTiles.Clear();
         candidateTiles.Clear();
+    }
+
+    private void FindFieldRoot()
+    {
+        if (fieldRoot != null)
+            return;
+
+        FieldManager manager = FindAnyObjectByType<FieldManager>();
+
+        if (manager == null)
+        {
+            Debug.LogError("FieldManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñB", this);
+            return;
+        }
+
+        fieldRoot = manager.transform.Find("Generated Fields");
+
+        if (fieldRoot == null)
+        {
+            Debug.LogError("Generated Fields‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñB", this);
+        }
     }
 }
