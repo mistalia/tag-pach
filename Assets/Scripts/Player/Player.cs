@@ -219,39 +219,8 @@ public class Player : MonoBehaviour
         {
             ChangeState("place");
         }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        TryContactForcePlace(collision);
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        TryContactForcePlace(collision);
-    }
-
-    private void TryContactForcePlace(Collision collision)
-    {
-        if (!isActiveAndEnabled ||
-            currentState is not PlayerStateForcePlace forcePlaceState)
-        {
-            return;
-        }
-
-        Player opponent =
-            collision.collider.GetComponentInParent<Player>();
-
-        if (!forcePlaceState.TryHit(opponent))
-        {
-            return;
-        }
-
-        // 命中後も自分が同じステートなら、通常状態へ戻す。
-        if (currentState == forcePlaceState)
-        {
-            ChangeState("idle");
-        }
+        UpdateCommunicationInput();
     }
 
     public bool TryGetFieldTileBelow(float rayStartHeight, float rayDistance, LayerMask fieldLayer)
@@ -375,5 +344,45 @@ public class Player : MonoBehaviour
 
         return true;
     }
+
+    // Deviceへの指示入力
+    private void UpdateCommunicationInput()
+    {
+        if (labpDevice == null || input == null)
+        {
+            return;
+        }
+
+        // Commandボタンで開閉を切り替える
+        if (input.Command.Pressed)
+        {
+            if (labpDevice.IsCommandOpen())
+            {
+                labpDevice.CloseCommand();
+            }
+            else
+            {
+                labpDevice.OpenCommand();
+            }
+
+            return;
+        }
+
+        // 指示UIが閉じている場合
+        if (!labpDevice.IsCommandOpen())
+        {
+            return;
+        }
+
+        // スティックで方向を選択
+        labpDevice.SelectCommandDirection(input.MoveValue);
+
+        // 確定ボタン
+        if (input.Select.Pressed)
+        {
+            labpDevice.ConfirmCommand();
+        }
+    }
+
     //---------------------------------------------------------------
 }
