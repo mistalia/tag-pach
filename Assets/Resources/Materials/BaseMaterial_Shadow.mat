@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BaseMaterial_SSStest
+  m_Name: BaseMaterial_Shadow
   m_Shader: {fileID: -6465566751694194690, guid: ab3c821442d966c4ab9e1d59062d49f2, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -116,9 +116,9 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
-    - _BoundaryIntensity: 1.801
-    - _BoundarySoftness: 0.0479
-    - _BoundaryWidth: 0.066
+    - _BoundaryIntensity: 2
+    - _BoundarySoftness: 0.2
+    - _BoundaryWidth: 0.108
     - _BumpScale: 1
     - _CastShadows: 1
     - _ClearCoatMask: 0
@@ -149,7 +149,7 @@ Material:
     - _SSS_Power: 1
     - _SSS_Shadow_Influence: 0
     - _SSS_Strength: 0.194
-    - _ShadowThreshold: 0.104
+    - _ShadowThreshold: 0.258
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
