@@ -43,6 +43,15 @@ public class Player : MonoBehaviour
     private PlayerState currentState;
     public FieldTile OnStandingPiece { get; private set; }
 
+    public enum CommandType
+    {
+        Direction, // 旧：8方向指定
+        Point      // 新：位置指定
+    }
+
+    [Header("Command Settings")]
+    [SerializeField] private CommandType commandType = CommandType.Point;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -240,7 +249,16 @@ public class Player : MonoBehaviour
             ChangeState("place");
         }
 
-        UpdateCommunicationInput();
+        switch (commandType)
+        {
+            case CommandType.Direction:
+                UpdateCommunicationInput();
+                break;
+
+            case CommandType.Point:
+                UpdatePointCommandInput();
+                break;
+        }
     }
 
     public bool TryGetFieldTileBelow(float rayStartHeight, float rayDistance, LayerMask fieldLayer)
@@ -409,9 +427,10 @@ public class Player : MonoBehaviour
         {
             OnStandingPiece.ResetTileColor();
             OnStandingPiece = null;
-        // Deviceへの指示入力
         }
     }
+
+    // Deviceへの指示入力
     private void UpdateCommunicationInput()
     {
         if (labpDevice == null || input == null)
@@ -447,6 +466,44 @@ public class Player : MonoBehaviour
         if (input.Select.Pressed)
         {
             labpDevice.ConfirmCommand();
+        }
+    }
+
+
+    private void UpdatePointCommandInput()
+    {
+        if (labpDevice == null || input == null)
+        {
+            return;
+        }
+
+        // コマンドボタンで開閉
+        if (input.Command.Pressed)
+        {
+            if (labpDevice.IsPointCommandOpen())
+            {
+                labpDevice.ClosePointCommand();
+            }
+            else
+            {
+                labpDevice.OpenPointCommand();
+            }
+
+            return;
+        }
+
+        if (!labpDevice.IsPointCommandOpen())
+        {
+            return;
+        }
+
+        // マーカーを移動
+        labpDevice.SelectPointPosition(input.CommandMoveValue);
+
+        // 確定
+        if (input.Select.Pressed)
+        {
+            labpDevice.ConfirmPointCommand();
         }
     }
 

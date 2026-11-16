@@ -10,6 +10,8 @@ public class LABPDevice : MonoBehaviour
 
     private LABPCommunication communication;
 
+    private LABPCommandPointController pointController;
+
     private LABPState currentState;
 
     public bool IsPlacing => currentState is LABP_Place;
@@ -37,6 +39,13 @@ public class LABPDevice : MonoBehaviour
         if (communication == null)
         {
             Debug.LogError("LABPDevice: LABPCommunication is not found", this);
+        }
+
+        pointController = GetComponent<LABPCommandPointController>();
+
+        if (pointController == null)
+        {
+            Debug.LogError("LABPDevice: LABPCommandPointController is not found", this);
         }
         //-------------------------------------------------------------------
     }
@@ -150,6 +159,61 @@ public class LABPDevice : MonoBehaviour
     public bool IsCommanding()
     {
         return currentState is LABP_Command;
+    }
+
+
+    // =====================================
+    // 新しい位置指定コマンド
+    // =====================================
+
+    public void OpenPointCommand()
+    {
+        if (IsCommanding() || IsPlacing ||
+            IsCommandOpen())
+        {
+            return;
+        }
+
+        pointController?.OpenCommand();
+    }
+
+    public void SelectPointPosition(Vector2 input)
+    {
+        pointController?.SelectPosition(input);
+    }
+
+    public void ConfirmPointCommand()
+    {
+        pointController?.ConfirmCommand();
+    }
+
+    public void ClosePointCommand()
+    {
+        pointController?.CloseCommand();
+    }
+
+    public bool IsPointCommandOpen()
+    {
+        return pointController != null &&
+               pointController.IsCommandOpen;
+    }
+
+    public bool HasConfirmedPoint()
+    {
+        return pointController != null &&
+               pointController.HasConfirmedPosition();
+    }
+
+    public Vector3 GetCommandPointPosition()
+    {
+        return pointController != null
+            ? pointController.GetTargetPosition()
+            : Vector3.zero;
+    }
+
+    public Player GetPlayer()
+    {
+        return player;
     }
     //-------------------------------------------------------------------
 }
