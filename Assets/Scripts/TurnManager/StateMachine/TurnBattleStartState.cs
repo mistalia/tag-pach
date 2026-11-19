@@ -12,7 +12,7 @@ public class TurnBattleStartState : TurnBaseState
         ARScanController.Instance?.OnBattleStart();
 
         // UIŽæ“¾
-        gameStartUI = Object.FindFirstObjectByType<GameStartUI>();
+        gameStartUI = Object.FindAnyObjectByType<GameStartUI>();
 
         if (gameStartUI == null)
         {

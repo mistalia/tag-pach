@@ -6,8 +6,10 @@ public class TurnResultState : TurnBaseState
     private bool player2Ready;
 
     private bool resultFinished;
+    private bool isUIFinished;
 
     private Player winner;
+    private GameEndUI gameEndUI;
 
     public override void Enter(TurnManager manager)
     {
@@ -28,6 +30,27 @@ public class TurnResultState : TurnBaseState
 
         manager.GetPlayer1().StartResult();
         manager.GetPlayer2().StartResult();
+
+        // UIŽæ“¾
+        gameEndUI = Object.FindAnyObjectByType<GameEndUI>();
+
+        if (gameEndUI == null)
+        {
+            Debug.LogWarning("GameEndUI‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñB");
+
+            isUIFinished = true;
+            return;
+        }
+
+        // ‡A XV‚³‚ê‚½Ÿ—˜”‚ðŽæ“¾
+        int player1Wins = BattleManager.Instance.GetPlayer1Wins();
+        int player2Wins = BattleManager.Instance.GetPlayer2Wins();
+
+        // ‡B ŸŽÒ–¼‚ðŽæ“¾
+        string winnerName = manager.GetPlayerName(winner);
+
+        // Œ‹‰ÊUI•\Ž¦
+        gameEndUI.Show(winner,manager.GetPlayer1(),manager.GetPlayer2(),player1Wins,player2Wins,() =>{isUIFinished = true;});
     }
 
 
@@ -45,6 +68,8 @@ public class TurnResultState : TurnBaseState
 
     public override void Exit(TurnManager manager)
     {
+        gameEndUI?.Hide();
+        gameEndUI = null;
     }
 
     // ========================================
@@ -79,6 +104,9 @@ public class TurnResultState : TurnBaseState
         }
 
         resultFinished = true;
+
+        // UI‚ð•Â‚¶‚é
+        gameEndUI?.Hide();
 
         BattleManager.Instance.OnBattleFinished();
     }
