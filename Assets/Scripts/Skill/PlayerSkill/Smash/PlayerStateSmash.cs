@@ -48,9 +48,9 @@ public class PlayerStateSmash : PlayerState
         return TryGetOpponent(player, out _);
     }
 
-    public override void EnterState(Player owner, PlayerInputReader input)
+    public override void EnterState(Player owner, PlayerInputReader input, Animator animator)
     {
-        base.EnterState(owner, input);
+        base.EnterState(owner, input, animator);
 
         // クールタイム設定
         nextUseTime = Time.time + settings.CooldownTime;

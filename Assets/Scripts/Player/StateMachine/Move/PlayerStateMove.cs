@@ -5,9 +5,11 @@ public class PlayerStateMove : PlayerState
 {
     [SerializeField] private float moveSpeed = 5f;
 
-    public override void EnterState(Player owner, PlayerInputReader input)
+    public override void EnterState(Player owner, PlayerInputReader input, Animator animator)
     {
-        base.EnterState(owner, input);
+        base.EnterState(owner, input, animator);
+
+        animator?.SetBool("bRun", true);
     }
 
     public override void UpdateState()
@@ -41,6 +43,8 @@ public class PlayerStateMove : PlayerState
     {
         base.ExitState();
         var rb = owner.GetComponent<Rigidbody>();
+
+        animator?.SetBool("bRun", false);
 
         rb.linearVelocity = Vector3.zero;
     }

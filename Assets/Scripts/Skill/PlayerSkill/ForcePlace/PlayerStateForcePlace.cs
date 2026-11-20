@@ -64,9 +64,9 @@ public class PlayerStateForcePlace : PlayerState
                turn.GetAttackPlayer() != null;
     }
 
-    public override void EnterState(Player owner,PlayerInputReader input)
+    public override void EnterState(Player owner,PlayerInputReader input, Animator animator)
     {
-        base.EnterState(owner, input);
+        base.EnterState(owner, input, animator);
         Debug.Log("強制配置ステートに入った", owner);
 
         // ステート終了後も再使用時刻を保持する。

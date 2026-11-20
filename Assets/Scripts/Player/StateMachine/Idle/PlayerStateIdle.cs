@@ -3,9 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerStateIdle", menuName = "PlayerState/Idle")]
 public class PlayerStateIdle : PlayerState
 {
-    public override void EnterState(Player owner, PlayerInputReader input)
+    public override void EnterState(Player owner, PlayerInputReader input, Animator animator)
     {
-        base.EnterState(owner, input);
+        base.EnterState(owner, input, animator);
     }
 
     public override void UpdateState()

@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 
     [Header("Reference")]
     [SerializeField] private PlayerInputReader input;
+    [SerializeField] private Animator animator;
     [SerializeField] private PlayerStateList stateList;
     [SerializeField] private string initializeStatekey = "idle";
     [SerializeField] private LayerMask fieldLayer; // フィールドのレイヤーマスク
@@ -65,6 +66,16 @@ public class Player : MonoBehaviour
             if (!input)
             {
                 Debug.LogError("PlayerInputReader is not found");
+                return;
+            }
+        }
+
+        if(animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+            if (animator == null)
+            {
+                Debug.LogError("Animator is not found");
                 return;
             }
         }
@@ -161,7 +172,7 @@ public class Player : MonoBehaviour
         }
 
         currentState = newState;
-        currentState.EnterState(this, input);
+        currentState.EnterState(this, input, animator);
     }
 
     public void AddKnockback(
