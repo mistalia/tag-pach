@@ -12,6 +12,12 @@ public class PlayerStateIdle : PlayerState
     {
         base.UpdateState();
 
+        // バトル開始演出中は移動禁止
+        if (owner.IsBattleStart())
+        {
+            return;
+        }
+
         // 入力があれば移動状態に遷移
         if (input.MoveValue != Vector2.zero)
         {

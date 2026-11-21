@@ -23,6 +23,13 @@ public class PlayerStateSmashed : PlayerState
     private float remainingDistance;
     private float stunEndTime;
 
+    private Collider playerCollider;
+
+    private Collider wallLeft;
+    private Collider wallRight;
+    private Collider wallNear;
+    private Collider wallFar;
+
     // 吹き飛ばしの終了とは別に、追加被弾を無視する期間を表す。
     public bool IsStunned => Time.time < stunEndTime;
 
@@ -51,6 +58,25 @@ public class PlayerStateSmashed : PlayerState
         }
 
         playerRigidbody.linearVelocity = Vector3.zero;
+
+        playerCollider = owner.GetComponentInChildren<Collider>();
+
+        wallLeft = GameObject.Find("Barrier_Left")?.GetComponent<Collider>();
+        wallRight = GameObject.Find("Barrier_Right")?.GetComponent<Collider>();
+        wallNear = GameObject.Find("Barrier_Near")?.GetComponent<Collider>();
+        wallFar = GameObject.Find("Barrier_Far")?.GetComponent<Collider>();
+
+        if (playerCollider == null ||
+            wallLeft == null ||
+            wallRight == null ||
+            wallNear == null ||
+            wallFar == null)
+        {
+            Debug.LogWarning(
+                "プレイヤーまたは壁のColliderが取得できません。",
+                owner
+            );
+        }
     }
 
     // Playerがこのステートへ切り替えた直後に呼ぶ。
@@ -95,6 +121,18 @@ public class PlayerStateSmashed : PlayerState
             return;
         }
 
+        // 現在位置も壁の内側に補正する
+        Vector3 currentPosition = playerRigidbody.position;
+
+        Vector3 safePosition = ClampInsideWalls(currentPosition);
+
+        if (Vector3.Distance( currentPosition, safePosition) > 0.0001f)
+        {
+            playerRigidbody.MovePosition(safePosition);
+            remainingDistance = 0f;
+            return;
+        }
+
         if (remainingDistance <= 0f)
         {
             if (!IsStunned)
@@ -112,6 +150,23 @@ public class PlayerStateSmashed : PlayerState
         bool hitWall = TryGetWallDistance(
             moveDistance,
             out float allowedDistance);
+
+        // 移動先を計算
+        Vector3 targetPosition =
+            currentPosition + knockbackDirection * allowedDistance;
+
+        // 壁の内側に制限
+        Vector3 clampedPosition = ClampInsideWalls(targetPosition);
+
+        // 壁によって移動が制限されたか
+        bool blockedByBoundary =
+            Vector3.Distance(targetPosition, clampedPosition) > 0.0001f;
+
+        // 実際に移動した距離
+        float actualDistance = Vector3.Distance(
+            currentPosition,
+            clampedPosition);
+
 
         if (allowedDistance > 0f)
         {
@@ -203,5 +258,73 @@ public class PlayerStateSmashed : PlayerState
     private static bool IsFinite(float value)
     {
         return !float.IsNaN(value) && !float.IsInfinity(value);
+    }
+
+    private Vector3 ClampInsideWalls(Vector3 targetPosition)
+    {
+        if (playerCollider == null ||
+            wallLeft == null ||
+            wallRight == null ||
+            wallNear == null ||
+            wallFar == null)
+        {
+            return targetPosition;
+        }
+
+        // プレイヤーColliderの大きさ
+        Bounds playerBounds = playerCollider.bounds;
+
+        Vector3 extents = playerBounds.extents;
+
+        // Rigidbodyの原点とCollider中心のずれ
+        Vector3 centerOffset =
+            playerBounds.center - playerRigidbody.position;
+
+        // 左右の壁を位置から判別
+        Collider left = wallLeft.bounds.center.x <
+                        wallRight.bounds.center.x
+                        ? wallLeft : wallRight;
+
+        Collider right = left == wallLeft
+                         ? wallRight : wallLeft;
+
+        // 前後の壁を位置から判別
+        Collider lower = wallNear.bounds.center.z <
+                         wallFar.bounds.center.z
+                         ? wallNear : wallFar;
+
+        Collider upper = lower == wallNear
+                         ? wallFar : wallNear;
+
+        // 壁の内側の境界を計算
+        float minX =
+            left.bounds.max.x + extents.x + wallPadding;
+
+        float maxX =
+            right.bounds.min.x - extents.x - wallPadding;
+
+        float minZ =
+            lower.bounds.max.z + extents.z + wallPadding;
+
+        float maxZ =
+            upper.bounds.min.z - extents.z - wallPadding;
+
+        // 範囲が不正な場合は制限しない
+        if (minX > maxX || minZ > maxZ)
+        {
+            return targetPosition;
+        }
+
+        // Collider中心を壁の内側に制限
+        Vector3 targetCenter = targetPosition + centerOffset;
+
+        targetCenter.x = Mathf.Clamp(
+            targetCenter.x, minX, maxX);
+
+        targetCenter.z = Mathf.Clamp(
+            targetCenter.z, minZ, maxZ);
+
+        // Rigidbodyの原点に戻す
+        return targetCenter - centerOffset;
     }
 }
