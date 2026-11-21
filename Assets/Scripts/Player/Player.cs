@@ -235,7 +235,7 @@ public class Player : MonoBehaviour
     private void AnyStateTransition()
     {
         // 再配置中・被弾中・強制配置スキル中は入力で割り込まない。
-        if (IsResult() ||
+        if (IsResult() || IsBattleStart() ||
             currentState is PlayerStateSmashed ||
             currentState is PlayerStateForcePlace)
         {
@@ -254,8 +254,6 @@ public class Player : MonoBehaviour
             ChangeState("forcePlace");
             return;
         }
-
-
 
         if (input.Attack != null &&
             input.Attack.Pressed &&
@@ -353,6 +351,13 @@ public class Player : MonoBehaviour
         return TurnManager.Instance != null &&
                TurnManager.Instance.GetCurrentStateType()
                    == TurnStateType.Result;
+    }
+
+    public bool IsBattleStart()
+    {
+        return TurnManager.Instance != null &&
+               TurnManager.Instance.GetCurrentStateType()
+                   == TurnStateType.BattleStart;
     }
 
     //プレイヤーリセット

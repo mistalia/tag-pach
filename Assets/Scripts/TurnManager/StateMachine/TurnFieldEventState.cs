@@ -17,6 +17,8 @@ public class TurnFieldEventState : TurnBaseState
 
         // 特殊イベントを開始
         eventStarted = eventManager.StartTurnEvent(manager.GetTurnCount());
+
+        manager.GetAttackPlayer().SetCanPlaceStone(false);
     }
 
     public override void UpdateState(TurnManager manager)
@@ -82,5 +84,6 @@ public class TurnFieldEventState : TurnBaseState
 
     public override void Exit(TurnManager manager)
     {
+        manager.GetAttackPlayer().SetCanPlaceStone(true);
     }
 }

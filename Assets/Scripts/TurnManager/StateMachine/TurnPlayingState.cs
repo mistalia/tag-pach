@@ -4,7 +4,8 @@ public class TurnPlayingState : TurnBaseState
 {
     public override void Enter(TurnManager manager)
     {
-        
+        manager.GetAttackPlayer().SetCanPlaceStone(true);
+        manager.GetDefendPlayer().SetCanPlaceStone(false);
     }
 
 
@@ -23,6 +24,6 @@ public class TurnPlayingState : TurnBaseState
 
     public override void Exit(TurnManager manager)
     {
-
+        manager.GetAttackPlayer().SetCanPlaceStone(false);
     }
 }

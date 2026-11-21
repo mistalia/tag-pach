@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TutorialIntroduction
   m_EditorClassIdentifier: Assembly-CSharp::TutorialIntroduction
   startDialogue: {fileID: 11400000, guid: 2d8fdb7a1353b224faf3600cce5dbb8d, type: 2}
-  secondDialogue: {fileID: 11400000, guid: fb81aa9fdb031724cbd57fbb664fa7af, type: 2}
+  secondDialogue: {fileID: 11400000, guid: 612643ed185a9f84d86e073e4f226d84, type: 2}
   scanDuration: 4
