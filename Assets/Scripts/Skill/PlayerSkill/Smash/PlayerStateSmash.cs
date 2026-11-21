@@ -70,7 +70,7 @@ public class PlayerStateSmash : PlayerState
         }
 
         owner.ChangeState("idle");
-        animator.SetTrigger("tSmash");
+        animator?.SetTrigger("tSmash");
     }
 
     private bool TryGetOpponent(
