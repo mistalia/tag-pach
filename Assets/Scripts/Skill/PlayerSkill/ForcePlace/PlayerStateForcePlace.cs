@@ -98,6 +98,8 @@ public class PlayerStateForcePlace : PlayerState
 
             rangeCircle.Init(settings.HitRadius, settings.HitForwardOffset);
         }
+
+        animator.SetTrigger("tForcePlace");
     }
 
     public override void UpdateState()
