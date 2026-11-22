@@ -49,3 +49,19 @@ MonoBehaviour:
     effectPrefab: {fileID: 8045971022094838590, guid: 60688409e91923140a042474bfc8b52b, type: 3}
     defaultCapacity: 1
     maxCapacity: 5
+  - effectKey: Spawn_Gasha
+    effectPrefab: {fileID: 8554915844643629224, guid: 6cb20a92d633c7b4fac0e62c33ee0a25, type: 3}
+    defaultCapacity: 1
+    maxCapacity: 2
+  - effectKey: Spawn_Penta
+    effectPrefab: {fileID: 3169995675445202497, guid: c47b1cb09dfdbfe44a56fd6a8116d103, type: 3}
+    defaultCapacity: 1
+    maxCapacity: 2
+  - effectKey: Place_Gasha
+    effectPrefab: {fileID: 2112415062869088371, guid: bd8651572da40b249aac450cc9d7f5c3, type: 3}
+    defaultCapacity: 10
+    maxCapacity: 15
+  - effectKey: Place_Penta
+    effectPrefab: {fileID: 9157587105558329540, guid: 9fec9615db4762446bad518d5a6ccdf9, type: 3}
+    defaultCapacity: 10
+    maxCapacity: 15

@@ -6,6 +6,8 @@ public class TurnPlayingState : TurnBaseState
     {
         manager.GetAttackPlayer().SetCanPlaceStone(true);
         manager.GetDefendPlayer().SetCanPlaceStone(false);
+
+        manager.SetTimerStopped(false);
     }
 
 

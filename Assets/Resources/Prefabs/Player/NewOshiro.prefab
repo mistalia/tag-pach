@@ -336,6 +336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   fallHeight: -10
   respawnDelay: 2
+  placeEffectKey: Place_Penta
   input: {fileID: 4017418924714245317}
   animator: {fileID: 5147859080103345178}
   stateList:

@@ -9,7 +9,8 @@ public class LABP_Place : LABPState
         None,
         StartUp,
         Dropping,
-        EndDrop
+        EndDrop,
+        EffectWait
     }
 
     private PlaceState currentPlaceState = PlaceState.None;
@@ -17,12 +18,14 @@ public class LABP_Place : LABPState
     [Header("Settings")]
     [SerializeField] private float MoveDuration = 0.5f;
     [SerializeField] private GameObject stonePrefab; // 石のプレハブ
+    [SerializeField] private float waitTimeAfterDrop = 0.2f; // ドロップ後の待機時間
 
     private Vector3 startPosition = Vector3.zero;
     private Vector3 targetPosition = Vector3.zero;
 
     private FieldTile targetField = null;
 
+    private float dropTimer = 0f;
     public override void EnterState(LABPDevice owner, Animator animator, Player player)
     {
         base.EnterState(owner, animator, player);
@@ -31,10 +34,10 @@ public class LABP_Place : LABPState
 
         currentPlaceState = PlaceState.None;
 
-        if(player.OnStandingPiece != null)
+        if (player.OnStandingPiece != null)
         {
             targetField = player.OnStandingPiece;
-            targetPosition = targetField.transform.position + Vector3.up * (owner.transform.localScale.y * 0.5f); 
+            targetPosition = targetField.transform.position + Vector3.up * (owner.transform.localScale.y * 0.5f);
             startPosition = targetPosition;
             startPosition.y += owner.transform.position.y;
         }
@@ -44,7 +47,7 @@ public class LABP_Place : LABPState
             owner.ChangeState("chase");
         }
 
-        if(stonePrefab == null)
+        if (stonePrefab == null)
             stonePrefab = Resources.Load<GameObject>("Prefabs/Stone_Komanoko");
         {
             if (stonePrefab == null)
@@ -53,6 +56,8 @@ public class LABP_Place : LABPState
                 owner.ChangeState("chase");
             }
         }
+
+        TurnManager.Instance?.SetTimerStopped(true);
     }
 
 
@@ -111,13 +116,23 @@ public class LABP_Place : LABPState
                     if (clamp >= 1.0f)
                     {
                         owner.transform.position = targetPosition;
+                        dropTimer = 0f;
+                        EffectManager.Instance.PlayEffect(owner.GetPlaceEffectKey(), targetPosition, Quaternion.identity);
                         currentPlaceState = PlaceState.EndDrop;
                     }
                 }
                 break;
-            
-            case PlaceState.EndDrop:
 
+            case PlaceState.EndDrop:
+                dropTimer += Time.fixedDeltaTime;
+                if (dropTimer >= waitTimeAfterDrop)
+                {
+                    currentPlaceState = PlaceState.EffectWait;
+                }
+                break;
+
+
+            case PlaceState.EffectWait:
                 Stone stone = Instantiate(stonePrefab).GetComponent<Stone>();
                 stone.SetOwner(player);
                 targetField.PutStone(stone);
