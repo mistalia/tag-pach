@@ -8,6 +8,15 @@ public class OpeMove_Tutorial : TutorialState
     [SerializeField] private DialogueData DialogueData_2;
 
     [SerializeField] private Vector2Int[] lightingTileCordinate;
+    [SerializeField] private float lightColorChangeInterval = 0.5f;
+
+    private bool mag_OnTile = false;
+    private bool osh_OnTile = false;
+
+    private float[] lightTimer = new float[2];
+    private bool[]  lightColor_red = new bool[2];
+
+    private int currentTileIndex = 0;
 
     public override void EnterState(TutorialManager tutorialManager)
     {
@@ -15,6 +24,9 @@ public class OpeMove_Tutorial : TutorialState
 
         Dialogue.Instance.DisplayDialogue(startDialogueData);
         currentStep = TutorialStep.Step1;
+
+        lightTimer = new float[lightingTileCordinate.Length];
+        lightColor_red = new bool[lightingTileCordinate.Length];
     }
 
     public override void UpdateState()
@@ -26,6 +38,7 @@ public class OpeMove_Tutorial : TutorialState
             case TutorialStep.Step1: // ダイアログ1が終了 -> ミッションの表示
                 if (startDialogueData.IsFinished)
                 {// ダイアログが消えて且つまだミッションを表示していないならミッションを表示する
+                    currentTileIndex = 0;
                     Mission.Instance.DisplayMission("光っているマスに乗る");
                     HelpIcon.Instance.Move.gameObject.SetActive(true);
                     ChangeStep(TutorialStep.Step2);
@@ -36,8 +49,8 @@ public class OpeMove_Tutorial : TutorialState
 
                 HelpIcon.Instance.Move.SetInput(tutorialManager.GetPlayerInputOsh().MoveValue, tutorialManager.GetPlayerInputMag().MoveValue);
 
-                bool mag_OnTile = false;
-                bool osh_OnTile = false;
+                mag_OnTile = false;
+                osh_OnTile = false;
 
                 foreach (Vector2Int coordinate in lightingTileCordinate)
                 {
@@ -45,7 +58,21 @@ public class OpeMove_Tutorial : TutorialState
 
                     if (tile != null)
                     {
-                        tile.SetSpotLightMaterial();
+                        lightTimer[currentTileIndex] += Time.deltaTime;
+                        if(lightTimer[currentTileIndex] >= lightColorChangeInterval)
+                        {
+                            if(lightColor_red[currentTileIndex])
+                            {
+                                EffectManager.Instance.PlayEffect("Field_Red", tile.transform.position + new Vector3(0, (tile.transform.localScale.y * 0.5f), 0), Quaternion.identity);
+                            }
+                            else
+                            {
+                                EffectManager.Instance.PlayEffect("Field_Blue", tile.transform.position + new Vector3(0, (tile.transform.localScale.y * 0.5f), 0), Quaternion.identity);
+                            }
+
+                            lightTimer[currentTileIndex] = 0f;
+                            lightColor_red[currentTileIndex] = !lightColor_red[currentTileIndex];
+                        }
                     }
 
                     var playerMag = tutorialManager.GetPlayerMag();
@@ -54,10 +81,14 @@ public class OpeMove_Tutorial : TutorialState
                     {
                         mag_OnTile = true;
                     }
-                    if(tile != null && (playerOsh.OnStandingPiece == tile))
+
+                    if (tile != null && (playerOsh.OnStandingPiece == tile))
                     {
                         osh_OnTile = true;
                     }
+
+                    currentTileIndex++;
+                    currentTileIndex %= lightingTileCordinate.Length;
                 }
 
                 if(mag_OnTile && osh_OnTile)
