@@ -135,7 +135,7 @@ public class LABP_Place : LABPState
             case PlaceState.EffectWait:
                 Stone stone = Instantiate(stonePrefab).GetComponent<Stone>();
                 stone.SetOwner(player);
-                targetField.PutStone(stone);
+                targetField.PutStone(stone,player.TeamColor.r > player.TeamColor.b ? "Red" : "Blue");
                 //---------------------------------------------------------------
                 if (TurnManager.Instance != null)
                     TurnManager.Instance.ConsumeTurn(player);

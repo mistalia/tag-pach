@@ -7,7 +7,6 @@ public class LABPDevice : MonoBehaviour
     [SerializeField] private string initializeStateKey = "chase";
     [SerializeField] private Animator animator;
     [SerializeField] private Player player;
-    public Player GetPlayer() => player;
     [SerializeField] private ParticleSystem MoveEffect;
     [SerializeField] private string spawnEffectKey = "Spawn_";
     public string GetSpawnEffectKey() => spawnEffectKey;

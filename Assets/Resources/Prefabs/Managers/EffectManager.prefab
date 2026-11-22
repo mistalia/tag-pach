@@ -59,9 +59,17 @@ MonoBehaviour:
     maxCapacity: 2
   - effectKey: Place_Gasha
     effectPrefab: {fileID: 2112415062869088371, guid: bd8651572da40b249aac450cc9d7f5c3, type: 3}
-    defaultCapacity: 10
-    maxCapacity: 15
+    defaultCapacity: 1
+    maxCapacity: 2
   - effectKey: Place_Penta
     effectPrefab: {fileID: 9157587105558329540, guid: 9fec9615db4762446bad518d5a6ccdf9, type: 3}
+    defaultCapacity: 1
+    maxCapacity: 2
+  - effectKey: Field_Red
+    effectPrefab: {fileID: 3214407194154188544, guid: 3877a3be69cf6e4458421ec9cc361aee, type: 3}
+    defaultCapacity: 10
+    maxCapacity: 15
+  - effectKey: Field_Blue
+    effectPrefab: {fileID: 9038255276488315499, guid: 378f4a050b844934cac44437790744c0, type: 3}
     defaultCapacity: 10
     maxCapacity: 15

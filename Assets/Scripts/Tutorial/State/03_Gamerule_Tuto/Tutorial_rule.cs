@@ -68,7 +68,7 @@ public class Tutorial_rule : TutorialState
 
                     Stone data = Instantiate(stonePrefub).GetComponent<Stone>();
                     data.SetOwner(tutorialManager.GetPlayerMag());
-                    tile.PutStone(data);
+                    tile.PutStone(data, "Red");
                 }
 
                 foreach (var tileCord in oshSampleLine)
@@ -77,7 +77,7 @@ public class Tutorial_rule : TutorialState
 
                     Stone data = Instantiate(stonePrefub).GetComponent<Stone>();
                     data.SetOwner(tutorialManager.GetPlayerOsh());
-                    tile.PutStone(data);
+                    tile.PutStone(data, "Blue");
                 }
 
                 MatchStorage.Instance.ClearMatchData();

@@ -11,7 +11,12 @@ public class FieldTile : MonoBehaviour
 
     private bool holo = false;
 
+    [Header("Effet key")]
+    [SerializeField] private string effect_Red = "Field_Red";
+    [SerializeField] private string effect_Blue = "Field_Blue";
+
     // À•Wî•ñ
+    [Header("Coordinate")]
     [SerializeField]private Vector2Int coordinate;
     public Stone PutedStone {get; private set; } = null;
 
@@ -36,7 +41,7 @@ public class FieldTile : MonoBehaviour
         }
     }
 
-    public bool PutStone(Stone stone)
+    public bool PutStone(Stone stone, string effectColor = null)
     {
         const int MATCH_COUNT = 3;
         if (PutedStone != null)
@@ -44,7 +49,18 @@ public class FieldTile : MonoBehaviour
             return false;
         }
         PutedStone = stone;
-        PutedStone.transform.position = this.transform.position + new Vector3(0, (this.transform.localScale.y * 0.5f) , 0);
+
+        var position = this.transform.position + new Vector3(0, (this.transform.localScale.y * 0.5f), 0);
+        PutedStone.transform.position = position;
+
+        if(effectColor == "Red")
+        {
+            EffectManager.Instance.PlayEffect(effect_Red, position);
+        }
+        else if(effectColor == "Blue")
+        {
+            EffectManager.Instance.PlayEffect(effect_Blue, position);
+        }
 
         FieldManager.Instance.AddStoneCount();
 
