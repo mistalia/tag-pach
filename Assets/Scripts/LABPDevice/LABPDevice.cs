@@ -169,7 +169,6 @@ public class LABPDevice : MonoBehaviour
     {
         if (MoveEffect && !MoveEffect.isPlaying)
         {
-            Debug.Log("PlayMoveEffect");
             MoveEffect.Play();
         }
     }
@@ -178,7 +177,6 @@ public class LABPDevice : MonoBehaviour
     {
         if (MoveEffect && MoveEffect.isPlaying)
         {
-            Debug.Log("StopMoveEffect");
             MoveEffect.Stop();
         }
     }

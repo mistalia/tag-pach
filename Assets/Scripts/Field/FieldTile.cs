@@ -2,10 +2,9 @@ using UnityEngine;
 
 public class FieldTile : MonoBehaviour
 {
-    [Header("Material")]
-    [SerializeField] private Material defaultMaterial;
-    [SerializeField] private Material highlightMaterial;
-    [SerializeField] private Material spotLightMaterial;
+    [Header("View")]
+    [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private Color highlightColor;
 
     [SerializeField] private Material holoMaterial;
 
@@ -15,14 +14,25 @@ public class FieldTile : MonoBehaviour
     [SerializeField] private string effect_Red = "Field_Red";
     [SerializeField] private string effect_Blue = "Field_Blue";
 
-    // À•Wî•ñ
     [Header("Coordinate")]
     [SerializeField]private Vector2Int coordinate;
     public Stone PutedStone {get; private set; } = null;
 
+    private Material defaultMaterial;
+    private Color defaultColor;
+
     private void Start()
     {
-        this.gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
+       if(meshRenderer == null)
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+        }
+
+        if(meshRenderer != null)
+        {
+            defaultMaterial = meshRenderer.material;
+            defaultColor = defaultMaterial.GetColor("_Base_Color");
+        }
     }
 
     private void Update()
@@ -36,7 +46,7 @@ public class FieldTile : MonoBehaviour
         {
             if(PutedStone.IsTransitioning)
             {
-                this.gameObject.GetComponent<MeshRenderer>().material.color = Color.Lerp(PutedStone.Owner.TeamColor, defaultMaterial.color,PutedStone.CurrentProg);
+                meshRenderer.material.color = Color.Lerp(PutedStone.Owner.TeamColor, defaultColor,PutedStone.CurrentProg);
             }
         }
     }
@@ -120,12 +130,11 @@ public class FieldTile : MonoBehaviour
 
         if (PutedStone && PutedStone.IsTransitioning)
         {
-            this.gameObject.GetComponent<MeshRenderer>().material.color = Color.Lerp(PutedStone.Owner.TeamColor, highlightMaterial.color,PutedStone.CurrentProg);
+            meshRenderer.material.color = Color.Lerp(PutedStone.Owner.TeamColor, highlightColor, PutedStone.CurrentProg);
+            
         }
-        else if (highlightMaterial != null)
-        {
-            this.gameObject.GetComponent<MeshRenderer>().material = highlightMaterial;
-        }
+        
+        meshRenderer.material.SetColor("_Base_Color", highlightColor);
     }
 
     public void ResetTileColor()
@@ -138,7 +147,7 @@ public class FieldTile : MonoBehaviour
 
         if (defaultMaterial != null)
         {
-            this.gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
+            meshRenderer.material.SetColor("_Base_Color", defaultColor);
         }
     }
 
@@ -173,13 +182,5 @@ public class FieldTile : MonoBehaviour
 
         holo = active;
         
-    }
-    
-    public void SetSpotLightMaterial()
-    {
-        if (spotLightMaterial != null)
-        {
-            this.gameObject.GetComponent<MeshRenderer>().material = spotLightMaterial;
-        }
     }
 }

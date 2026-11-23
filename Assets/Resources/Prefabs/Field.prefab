@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 3d69beacd209d6249ad12326534eb720, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3d69beacd209d6249ad12326534eb720, type: 3}
       propertyPath: m_Name
       value: Field
@@ -105,4 +109,6 @@ MonoBehaviour:
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
   spotLightMaterial: {fileID: 2100000, guid: 70140a1aa0b6782418638a915382c4aa, type: 2}
   holoMaterial: {fileID: 2100000, guid: 5e005dc7c7542c64e995ab82dd85e1b1, type: 2}
+  effect_Red: Field_Red
+  effect_Blue: Field_Blue
   coordinate: {x: 0, y: 0}
