@@ -46,7 +46,7 @@ public class FieldTile : MonoBehaviour
         {
             if(PutedStone.IsTransitioning)
             {
-                meshRenderer.material.color = Color.Lerp(PutedStone.Owner.TeamColor, defaultColor,PutedStone.CurrentProg);
+                meshRenderer.material.SetColor("_Base_Color", Color.Lerp(PutedStone.Owner.TeamColor, defaultColor,PutedStone.CurrentProg));
             }
         }
     }
@@ -130,7 +130,7 @@ public class FieldTile : MonoBehaviour
 
         if (PutedStone && PutedStone.IsTransitioning)
         {
-            meshRenderer.material.color = Color.Lerp(PutedStone.Owner.TeamColor, highlightColor, PutedStone.CurrentProg);
+            meshRenderer.material.SetColor("_Base_Color", Color.Lerp(PutedStone.Owner.TeamColor, highlightColor, PutedStone.CurrentProg));
             
         }
         
@@ -168,19 +168,22 @@ public class FieldTile : MonoBehaviour
             return;
         }
 
-        MeshRenderer renderer = GetComponent<MeshRenderer>();
-
         if (active)
         {
-            renderer.material = holoMaterial;
+            meshRenderer.material = holoMaterial;
         }
         else
         {
             // ホログラム終了時は必ず通常マテリアルへ
-            renderer.material = defaultMaterial;
+            meshRenderer.material = defaultMaterial;
         }
 
         holo = active;
         
+    }
+
+    public void SetFrameColor(Color color)
+    {
+        meshRenderer.material.SetColor("_Frame_Color", color);
     }
 }

@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldTile
   meshRenderer: {fileID: 7814605070360586730}
-  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   holoMaterial: {fileID: 2100000, guid: 5e005dc7c7542c64e995ab82dd85e1b1, type: 2}
   effect_Red: Field_Red
   effect_Blue: Field_Blue
