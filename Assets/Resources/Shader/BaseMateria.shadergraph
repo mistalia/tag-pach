@@ -3350,8 +3350,8 @@
     "m_ObjectId": "24c06928fd1d4c3ca17b31a9842d6a26",
     "m_Title": "Base Color",
     "m_Position": {
-        "x": -1055.2001953125,
-        "y": -644.0000610351563
+        "x": -1055.0,
+        "y": -642.0
     }
 }
 
@@ -3415,8 +3415,8 @@
     "m_ObjectId": "2650491dea3547469ca127a7a4fb71f0",
     "m_Title": "Emission",
     "m_Position": {
-        "x": -1340.8001708984375,
-        "y": 511.2000732421875
+        "x": -1340.0,
+        "y": 513.0
     }
 }
 
@@ -3906,8 +3906,8 @@
     "m_ObjectId": "386a87fa42374723b1299f6fd9e78f85",
     "m_Title": "Subsurface Scattering",
     "m_Position": {
-        "x": -1667.2001953125,
-        "y": 1058.39990234375
+        "x": -1667.0,
+        "y": 1060.0
     }
 }
 
@@ -5736,8 +5736,8 @@
     "m_ObjectId": "6002a117fcf24ad2a5e0faaa5ddb84ab",
     "m_Title": "Normal",
     "m_Position": {
-        "x": -1530.4000244140625,
-        "y": -391.9999694824219
+        "x": -1530.0,
+        "y": -390.0
     }
 }
 
@@ -7144,8 +7144,8 @@
     "m_ObjectId": "76565411da6541ffbada2d56fb927843",
     "m_Title": "RimRight",
     "m_Position": {
-        "x": -1119.2001953125,
-        "y": 820.0
+        "x": -1119.0,
+        "y": 822.0
     }
 }
 
@@ -7232,8 +7232,8 @@
     "m_ObjectId": "7728e3de156e4f24849e084748814cb4",
     "m_Title": "Roughness",
     "m_Position": {
-        "x": -1118.4000244140625,
-        "y": 265.6000061035156
+        "x": -1118.0,
+        "y": 267.0
     }
 }
 
@@ -8197,8 +8197,8 @@
     "m_ObjectId": "8e9196efebbd45d2aa22841dd752fae7",
     "m_Title": "BoundaryTint",
     "m_Position": {
-        "x": -2011.1998291015625,
-        "y": -1440.7998046875
+        "x": -2011.0,
+        "y": -1439.0
     }
 }
 
@@ -8404,8 +8404,8 @@
     "m_ObjectId": "9165f54262bb4868abb977e5bc9ed72a",
     "m_Title": "Metallic",
     "m_Position": {
-        "x": -959.2000122070313,
-        "y": 19.199981689453126
+        "x": -959.0,
+        "y": 21.0
     }
 }
 
@@ -9638,7 +9638,7 @@
     "useTexelSize": true,
     "isHDR": false,
     "m_Modifiable": true,
-    "m_DefaultType": 0
+    "m_DefaultType": 3
 }
 
 {
