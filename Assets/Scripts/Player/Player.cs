@@ -265,6 +265,7 @@ public class Player : MonoBehaviour
             input.ForcePlace.Pressed && 
             forcePlaceEnable)
         {
+            //animator?.SetTrigger("tForcePlace");
             ChangeState("forcePlace");
             return;
         }
@@ -273,6 +274,7 @@ public class Player : MonoBehaviour
             input.Attack.Pressed &&
             smashEnable)
         {
+
             ChangeState("smash");
             return;
         }

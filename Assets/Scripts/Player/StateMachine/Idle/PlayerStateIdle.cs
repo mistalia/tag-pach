@@ -7,6 +7,7 @@ public class PlayerStateIdle : PlayerState
     public override void EnterState(Player owner, PlayerInputReader input, Animator animator)
     {
         base.EnterState(owner, input, animator);
+        animator?.SetBool("bRun", false);
     }
 
     public override void UpdateState()

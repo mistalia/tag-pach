@@ -55,6 +55,8 @@ public class PlayerStateSmash : PlayerState
         // クールタイム設定
         nextUseTime = Time.time + settings.CooldownTime;
         lastUseFrame = Time.frameCount;
+        
+        animator?.SetTrigger("tSmash");
 
         // 攻撃範囲を表示
         ShowAttackRange(owner);
@@ -70,7 +72,6 @@ public class PlayerStateSmash : PlayerState
         }
 
         owner.ChangeState("idle");
-        animator?.SetTrigger("tSmash");
     }
 
     private bool TryGetOpponent(
