@@ -5,9 +5,12 @@ public class PlayerStateMove : PlayerState
 {
     [SerializeField] private float moveSpeed = 5f;
 
-    public override void EnterState(Player owner, PlayerInputReader input)
+    public override void EnterState(Player owner, PlayerInputReader input, Animator animator)
     {
-        base.EnterState(owner, input);
+        base.EnterState(owner, input, animator);
+
+        animator?.SetBool("bRun", true);
+        owner.StartRunEffect();
     }
 
     public override void UpdateState()
@@ -27,10 +30,11 @@ public class PlayerStateMove : PlayerState
         var rb = owner.GetComponent<Rigidbody>();
         var moveDirection = new Vector3(input.MoveValue.x, 0.0f, input.MoveValue.y);
 
-        rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
+        moveDirection.Normalize();
+        rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);;
 
         // Rotate the player to face the movement direction
-        if (moveDirection != Vector3.zero)
+        if (moveDirection.magnitude != owner.moveDeadzone)
         {
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, 10f * Time.fixedDeltaTime));
@@ -41,6 +45,10 @@ public class PlayerStateMove : PlayerState
     {
         base.ExitState();
         var rb = owner.GetComponent<Rigidbody>();
+
+        animator?.SetBool("bRun", false);
+
+        owner.StopRunEffect();
 
         rb.linearVelocity = Vector3.zero;
     }

@@ -75,6 +75,11 @@ public class TurnManager : MonoBehaviour
     // Battle結果State
     private TurnResultState resultState;
 
+    private bool timerStopped = false;
+    public void SetTimerStopped(bool stopped)
+    {
+        timerStopped = stopped;
+    }
 
     private void Awake()
     {
@@ -414,6 +419,11 @@ public class TurnManager : MonoBehaviour
     // Turnタイマーを更新する
     public void UpdateTurnTimer()
     {
+        if(timerStopped)
+        {
+            return;
+        }
+
         turnTimer -= Time.deltaTime;
 
         if (turnTimer < 0.0f)

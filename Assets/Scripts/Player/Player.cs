@@ -15,12 +15,15 @@ public class Player : MonoBehaviour
 
     [Header("Reference")]
     [SerializeField] private PlayerInputReader input;
+    [SerializeField] private Animator animator;
     [SerializeField] private PlayerStateList stateList;
     [SerializeField] private string initializeStatekey = "idle";
     [SerializeField] private LayerMask fieldLayer; // フィールドのレイヤーマスク
     [SerializeField] private LABPDevice labpDevice;
     [SerializeField] private GameObject rootDisableObj;
+    [SerializeField] private ParticleSystem runEffect;
 
+    public readonly float moveDeadzone = 0.3f; // 移動入力のデッドゾーン
 
     public void SetLABPDevice(LABPDevice device)
     {
@@ -69,6 +72,16 @@ public class Player : MonoBehaviour
             }
         }
 
+        if(animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+            if (animator == null)
+            {
+                Debug.LogError("Animator is not found");
+                return;
+            }
+        }
+
         // ステータスのコピーインスタンスを生成
         stateList.CreateRunTimeCopies();
 
@@ -85,6 +98,7 @@ public class Player : MonoBehaviour
         //---------------------------------------------------------------
 
         ChangeState(initializeStatekey);
+        StopRunEffect();
     }
 
     // Update is called once per frame
@@ -161,7 +175,7 @@ public class Player : MonoBehaviour
         }
 
         currentState = newState;
-        currentState.EnterState(this, input);
+        currentState.EnterState(this, input, animator);
     }
 
     public void AddKnockback(
@@ -286,7 +300,7 @@ public class Player : MonoBehaviour
             {
                 OnStandingPiece?.ResetTileColor();
                 OnStandingPiece = FieldTile;
-                OnStandingPiece.LightUpTile();
+                //OnStandingPiece.LightUpTile();
 
                 Debug.DrawLine(origin, hit.point, Color.red, 1f);
                 return true;
@@ -488,4 +502,20 @@ public class Player : MonoBehaviour
     }
 
     //---------------------------------------------------------------
+
+    public void StartRunEffect()
+    {
+        if (runEffect != null && !runEffect.isPlaying)
+        {
+            runEffect.Play();
+        }
+    }
+
+    public void StopRunEffect()
+    {
+        if (runEffect != null && runEffect.isPlaying)
+        {
+            runEffect.Stop();
+        }
+    }
 }

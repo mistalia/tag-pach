@@ -35,9 +35,10 @@ public class PlayerStateSmashed : PlayerState
 
     public override void EnterState(
         Player owner,
-        PlayerInputReader input)
+        PlayerInputReader input,
+        Animator animator)
     {
-        base.EnterState(owner, input);
+        base.EnterState(owner, input, animator);
 
         playerRigidbody = owner.GetComponent<Rigidbody>();
 

@@ -7,6 +7,11 @@ public class LABPDevice : MonoBehaviour
     [SerializeField] private string initializeStateKey = "chase";
     [SerializeField] private Animator animator;
     [SerializeField] private Player player;
+    [SerializeField] private ParticleSystem MoveEffect;
+    [SerializeField] private string spawnEffectKey = "Spawn_";
+    public string GetSpawnEffectKey() => spawnEffectKey;
+    [SerializeField] private string placeEffectKey = "Place_";
+    public string GetPlaceEffectKey() => placeEffectKey;
 
     private LABPCommunication communication;
 
@@ -39,6 +44,8 @@ public class LABPDevice : MonoBehaviour
             Debug.LogError("LABPDevice: LABPCommunication is not found", this);
         }
         //-------------------------------------------------------------------
+
+        StopMoveEffect();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -157,4 +164,20 @@ public class LABPDevice : MonoBehaviour
         return currentState is LABP_Command;
     }
     //-------------------------------------------------------------------
+
+    public void PlayMoveEffect()
+    {
+        if (MoveEffect && !MoveEffect.isPlaying)
+        {
+            MoveEffect.Play();
+        }
+    }
+
+    public void StopMoveEffect()
+    {
+        if (MoveEffect && MoveEffect.isPlaying)
+        {
+            MoveEffect.Stop();
+        }
+    }
 }
