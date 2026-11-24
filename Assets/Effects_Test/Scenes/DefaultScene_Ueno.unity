@@ -168,6 +168,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 7, y: 7}
 --- !u!65 &5652647
 BoxCollider:
@@ -296,6 +298,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 2, y: 1}
 --- !u!65 &16103915
 BoxCollider:
@@ -747,73 +751,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7174263590472531532, guid: 1f887cfb6d089884aad62bc37d8f1f8d, type: 3}
   m_PrefabInstance: {fileID: 37639279}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &41169472
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3411347551681412325, guid: 903d3db844075be4aa93beb885321190, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 9.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 3411347551681412325, guid: 903d3db844075be4aa93beb885321190, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.58
-      objectReference: {fileID: 0}
-    - target: {fileID: 3411347551681412325, guid: 903d3db844075be4aa93beb885321190, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3411347551681412325, guid: 903d3db844075be4aa93beb885321190, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3411347551681412325, guid: 903d3db844075be4aa93beb885321190, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3411347551681412325, guid: 903d3db844075be4aa93beb885321190, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3411347551681412325, guid: 903d3db844075be4aa93beb885321190, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3411347551681412325, guid: 903d3db844075be4aa93beb885321190, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3411347551681412325, guid: 903d3db844075be4aa93beb885321190, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 3411347551681412325, guid: 903d3db844075be4aa93beb885321190, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3637016206335106409, guid: 903d3db844075be4aa93beb885321190, type: 3}
-      propertyPath: m_Name
-      value: gasha_root
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 903d3db844075be4aa93beb885321190, type: 3}
---- !u!95 &41169473 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 6516162074868893363, guid: 903d3db844075be4aa93beb885321190, type: 3}
-  m_PrefabInstance: {fileID: 41169472}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &41169474 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 6298479175916631265, guid: 903d3db844075be4aa93beb885321190, type: 3}
-  m_PrefabInstance: {fileID: 41169472}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &56314138
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1123,6 +1060,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 0, y: 1}
 --- !u!65 &112974028
 BoxCollider:
@@ -1375,6 +1314,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 9, y: 6}
 --- !u!65 &135313233
 BoxCollider:
@@ -1604,6 +1545,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 8, y: 7}
 --- !u!65 &158734126
 BoxCollider:
@@ -1794,6 +1737,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 7, y: 5}
 --- !u!65 &159224856
 BoxCollider:
@@ -1922,6 +1867,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 11, y: 3}
 --- !u!65 &172637148
 BoxCollider:
@@ -2050,6 +1997,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 0, y: 3}
 --- !u!65 &179527783
 BoxCollider:
@@ -2240,6 +2189,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 5, y: 4}
 --- !u!65 &193485275
 BoxCollider:
@@ -2368,6 +2319,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 5, y: 6}
 --- !u!65 &212024506
 BoxCollider:
@@ -2496,6 +2449,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 6, y: 4}
 --- !u!65 &212378396
 BoxCollider:
@@ -2624,6 +2579,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 8, y: 1}
 --- !u!65 &221400628
 BoxCollider:
@@ -2814,6 +2771,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 6, y: 1}
 --- !u!65 &236082381
 BoxCollider:
@@ -2942,6 +2901,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 2, y: 0}
 --- !u!65 &242277381
 BoxCollider:
@@ -3070,6 +3031,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 1, y: 1}
 --- !u!65 &245904367
 BoxCollider:
@@ -3260,6 +3223,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 9, y: 1}
 --- !u!65 &259050944
 BoxCollider:
@@ -3388,6 +3353,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 10, y: 0}
 --- !u!65 &259136877
 BoxCollider:
@@ -3516,6 +3483,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 5, y: 5}
 --- !u!65 &269196784
 BoxCollider:
@@ -3706,6 +3675,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 8, y: 2}
 --- !u!65 &292614701
 BoxCollider:
@@ -4113,6 +4084,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 5, y: 7}
 --- !u!65 &345787646
 BoxCollider:
@@ -4467,17 +4440,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2000302104}
   m_SourcePrefab: {fileID: 100100000, guid: 47c36415a5d72f04ca28f3eda64b69ae, type: 3}
---- !u!114 &356258850 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 382034522736798548, guid: 47c36415a5d72f04ca28f3eda64b69ae, type: 3}
-  m_PrefabInstance: {fileID: 356258849}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2000302097}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
 --- !u!1001 &356428837
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4589,6 +4551,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 7, y: 6}
 --- !u!65 &371266345
 BoxCollider:
@@ -4717,6 +4681,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 0, y: 5}
 --- !u!65 &383308277
 BoxCollider:
@@ -5044,17 +5010,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2016495218}
   m_SourcePrefab: {fileID: 100100000, guid: 47c36415a5d72f04ca28f3eda64b69ae, type: 3}
---- !u!114 &411976976 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 382034522736798548, guid: 47c36415a5d72f04ca28f3eda64b69ae, type: 3}
-  m_PrefabInstance: {fileID: 411976975}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2016495211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
 --- !u!1 &420980953
 GameObject:
   m_ObjectHideFlags: 0
@@ -5104,6 +5059,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 11, y: 2}
 --- !u!65 &420980956
 BoxCollider:
@@ -5232,6 +5189,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 2, y: 3}
 --- !u!65 &422419967
 BoxCollider:
@@ -5360,6 +5319,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 3, y: 3}
 --- !u!65 &427111871
 BoxCollider:
@@ -5488,6 +5449,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 7, y: 4}
 --- !u!65 &434152536
 BoxCollider:
@@ -5616,6 +5579,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 1, y: 0}
 --- !u!65 &453826170
 BoxCollider:
@@ -5868,6 +5833,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 4, y: 3}
 --- !u!65 &479720125
 BoxCollider:
@@ -5996,6 +5963,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 8, y: 4}
 --- !u!65 &483366469
 BoxCollider:
@@ -6124,6 +6093,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 1, y: 3}
 --- !u!65 &499927546
 BoxCollider:
@@ -6290,6 +6261,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 10, y: 5}
 --- !u!65 &515095886
 BoxCollider:
@@ -6759,6 +6732,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 11, y: 1}
 --- !u!65 &597658654
 BoxCollider:
@@ -6949,6 +6924,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 5, y: 1}
 --- !u!65 &612296282
 BoxCollider:
@@ -7118,13 +7095,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63522e4f0c772e347baf9f52e9997e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSetup
-  gameplayActionMapName: Player
+  operationActionMapName: Operation
+  placementActionMapName: Placement
   gamepadControlSchemeName: Gamepad
   joystickControlSchemeName: Joystick
   keyboardControlSchemeName: Keyboard&Mouse
+  splitKeyboardLeftControlSchemeName: KeyboardLeft
+  splitKeyboardRightControlSchemeName: KeyboardRight
   players:
-  - {fileID: 411976976}
-  - {fileID: 356258850}
+  - playerObject: {fileID: 0}
+    operationPlayerInput: {fileID: 0}
+    placementPlayerInput: {fileID: 0}
+    testPlayerInput: {fileID: 0}
+    playerInputReader: {fileID: 0}
+  - playerObject: {fileID: 0}
+    operationPlayerInput: {fileID: 0}
+    placementPlayerInput: {fileID: 0}
+    testPlayerInput: {fileID: 0}
+    playerInputReader: {fileID: 0}
 --- !u!1001 &626086212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7337,6 +7325,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 8, y: 3}
 --- !u!65 &632886722
 BoxCollider:
@@ -7854,6 +7844,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 9, y: 4}
 --- !u!65 &668839544
 BoxCollider:
@@ -8054,6 +8046,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 7, y: 3}
 --- !u!65 &729908400
 BoxCollider:
@@ -8306,6 +8300,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 3, y: 6}
 --- !u!65 &753705141
 BoxCollider:
@@ -8885,6 +8881,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 3, y: 5}
 --- !u!65 &855722837
 BoxCollider:
@@ -9273,17 +9271,17 @@ PlayableDirector:
   m_InitialTime: 0
   m_SceneBindings:
   - key: {fileID: -1874658106693784289, guid: 83b0e50ccd18a0b44ac226fcf6f20fec, type: 2}
-    value: {fileID: 41169474}
+    value: {fileID: 0}
   - key: {fileID: -1993716615497705236, guid: 83b0e50ccd18a0b44ac226fcf6f20fec, type: 2}
-    value: {fileID: 41169473}
+    value: {fileID: 0}
   - key: {fileID: 7020861187801094983, guid: 83b0e50ccd18a0b44ac226fcf6f20fec, type: 2}
-    value: {fileID: 928620596}
+    value: {fileID: 0}
   - key: {fileID: 1461138373154443305, guid: 83b0e50ccd18a0b44ac226fcf6f20fec, type: 2}
-    value: {fileID: 928620595}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References:
     - fe74cc2a559554f4a920a2d28383bd36: {fileID: 632030311}
-    - 1b116ee7d112a4145b2f0683936bc510: {fileID: 919284954}
+    - 1b116ee7d112a4145b2f0683936bc510: {fileID: 0}
 --- !u!4 &890115137
 Transform:
   m_ObjectHideFlags: 0
@@ -9348,6 +9346,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 7, y: 2}
 --- !u!65 &891751131
 BoxCollider:
@@ -9476,6 +9476,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 4, y: 5}
 --- !u!65 &903500694
 BoxCollider:
@@ -9555,68 +9557,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 903500691}
   m_Mesh: {fileID: 4068373912626513877, guid: 3d69beacd209d6249ad12326534eb720, type: 3}
---- !u!1001 &919284953
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2324321658441529210, guid: 1ec5205851af0b84daaf4408e22d8322, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 9.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 2324321658441529210, guid: 1ec5205851af0b84daaf4408e22d8322, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.58
-      objectReference: {fileID: 0}
-    - target: {fileID: 2324321658441529210, guid: 1ec5205851af0b84daaf4408e22d8322, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.07
-      objectReference: {fileID: 0}
-    - target: {fileID: 2324321658441529210, guid: 1ec5205851af0b84daaf4408e22d8322, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2324321658441529210, guid: 1ec5205851af0b84daaf4408e22d8322, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2324321658441529210, guid: 1ec5205851af0b84daaf4408e22d8322, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2324321658441529210, guid: 1ec5205851af0b84daaf4408e22d8322, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2324321658441529210, guid: 1ec5205851af0b84daaf4408e22d8322, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2324321658441529210, guid: 1ec5205851af0b84daaf4408e22d8322, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2324321658441529210, guid: 1ec5205851af0b84daaf4408e22d8322, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8946516498743716344, guid: 1ec5205851af0b84daaf4408e22d8322, type: 3}
-      propertyPath: m_Name
-      value: eff_panel_shock
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1ec5205851af0b84daaf4408e22d8322, type: 3}
---- !u!1 &919284954 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8946516498743716344, guid: 1ec5205851af0b84daaf4408e22d8322, type: 3}
-  m_PrefabInstance: {fileID: 919284953}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &926701154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9728,6 +9668,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 4, y: 1}
 --- !u!65 &928318708
 BoxCollider:
@@ -9807,73 +9749,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 928318705}
   m_Mesh: {fileID: 4068373912626513877, guid: 3d69beacd209d6249ad12326534eb720, type: 3}
---- !u!1001 &928620594
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4758151498397212741, guid: 581a0b508fb53d44f9473a5fa57ad509, type: 3}
-      propertyPath: m_Name
-      value: koma_root
-      objectReference: {fileID: 0}
-    - target: {fileID: 4982494485973618931, guid: 581a0b508fb53d44f9473a5fa57ad509, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 9.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 4982494485973618931, guid: 581a0b508fb53d44f9473a5fa57ad509, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.58
-      objectReference: {fileID: 0}
-    - target: {fileID: 4982494485973618931, guid: 581a0b508fb53d44f9473a5fa57ad509, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4982494485973618931, guid: 581a0b508fb53d44f9473a5fa57ad509, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4982494485973618931, guid: 581a0b508fb53d44f9473a5fa57ad509, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4982494485973618931, guid: 581a0b508fb53d44f9473a5fa57ad509, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4982494485973618931, guid: 581a0b508fb53d44f9473a5fa57ad509, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4982494485973618931, guid: 581a0b508fb53d44f9473a5fa57ad509, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4982494485973618931, guid: 581a0b508fb53d44f9473a5fa57ad509, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 4982494485973618931, guid: 581a0b508fb53d44f9473a5fa57ad509, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 581a0b508fb53d44f9473a5fa57ad509, type: 3}
---- !u!95 &928620595 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 3136986770783992484, guid: 581a0b508fb53d44f9473a5fa57ad509, type: 3}
-  m_PrefabInstance: {fileID: 928620594}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &928620596 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 1633936789374632284, guid: 581a0b508fb53d44f9473a5fa57ad509, type: 3}
-  m_PrefabInstance: {fileID: 928620594}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &935254101
 GameObject:
   m_ObjectHideFlags: 0
@@ -9966,6 +9841,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 9, y: 5}
 --- !u!65 &945519964
 BoxCollider:
@@ -10094,6 +9971,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 4, y: 7}
 --- !u!65 &958303481
 BoxCollider:
@@ -10284,6 +10163,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 2, y: 2}
 --- !u!65 &974594238
 BoxCollider:
@@ -10644,6 +10525,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8f31cc6150ec9489d6750211d07b1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FieldManager
+  removeInterval: 0.1
+  removeStartDelay: 1.5
 --- !u!114 &997618648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10706,6 +10589,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 2, y: 6}
 --- !u!65 &1004736328
 BoxCollider:
@@ -10958,6 +10843,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 0, y: 0}
 --- !u!65 &1024180655
 BoxCollider:
@@ -11210,6 +11097,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 10, y: 3}
 --- !u!65 &1046209463
 BoxCollider:
@@ -11338,6 +11227,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 11, y: 0}
 --- !u!65 &1051280335
 BoxCollider:
@@ -11590,6 +11481,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 10, y: 6}
 --- !u!65 &1091771945
 BoxCollider:
@@ -11780,6 +11673,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 2, y: 7}
 --- !u!65 &1152505279
 BoxCollider:
@@ -11970,6 +11865,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 9, y: 0}
 --- !u!65 &1158964259
 BoxCollider:
@@ -12162,6 +12059,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: bf75489385c86d1419a3890620900cf5, type: 3}
       propertyPath: m_Name
       value: fbx_pillar_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bf75489385c86d1419a3890620900cf5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12375,6 +12276,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 6, y: 0}
 --- !u!65 &1198235261
 BoxCollider:
@@ -12728,6 +12631,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 6, y: 5}
 --- !u!65 &1239704174
 BoxCollider:
@@ -12856,6 +12761,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 11, y: 7}
 --- !u!65 &1241936646
 BoxCollider:
@@ -13198,6 +13105,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 7, y: 0}
 --- !u!65 &1279342866
 BoxCollider:
@@ -13450,6 +13359,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 3, y: 4}
 --- !u!65 &1310354745
 BoxCollider:
@@ -13679,6 +13590,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 7, y: 1}
 --- !u!65 &1344273752
 BoxCollider:
@@ -13869,6 +13782,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 3, y: 2}
 --- !u!65 &1347813139
 BoxCollider:
@@ -14100,6 +14015,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 4, y: 2}
 --- !u!65 &1358205882
 BoxCollider:
@@ -14290,6 +14207,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 1, y: 2}
 --- !u!65 &1366134802
 BoxCollider:
@@ -14418,6 +14337,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 4, y: 4}
 --- !u!65 &1369685319
 BoxCollider:
@@ -14608,6 +14529,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 2, y: 4}
 --- !u!65 &1409003021
 BoxCollider:
@@ -14829,6 +14752,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 1, y: 5}
 --- !u!65 &1438735232
 BoxCollider:
@@ -15019,6 +14944,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 0, y: 2}
 --- !u!65 &1446823104
 BoxCollider:
@@ -15209,6 +15136,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 3, y: 7}
 --- !u!65 &1492252979
 BoxCollider:
@@ -15337,6 +15266,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 0, y: 6}
 --- !u!65 &1495314028
 BoxCollider:
@@ -15682,6 +15613,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fbx_deck_01
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f5eef15be901a744cba0b06f712a05d4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15736,6 +15671,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 1, y: 4}
 --- !u!65 &1566121230
 BoxCollider:
@@ -16008,9 +15945,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnManager
   turnTimeLimit: 20
-  repositionTimeLimit: 10
-  secondPlayerExitDelay: 2
-  repositionTurnInterval: 10
 --- !u!4 &1593052694
 Transform:
   m_ObjectHideFlags: 0
@@ -16137,6 +16071,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 9, y: 3}
 --- !u!65 &1636148591
 BoxCollider:
@@ -16389,6 +16325,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 11, y: 6}
 --- !u!65 &1684993048
 BoxCollider:
@@ -16517,6 +16455,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 6, y: 2}
 --- !u!65 &1687127309
 BoxCollider:
@@ -16645,6 +16585,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 10, y: 1}
 --- !u!65 &1689946168
 BoxCollider:
@@ -16773,6 +16715,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 0, y: 7}
 --- !u!65 &1693497107
 BoxCollider:
@@ -16901,6 +16845,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 10, y: 7}
 --- !u!65 &1701192502
 BoxCollider:
@@ -17029,6 +16975,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 4, y: 6}
 --- !u!65 &1715821909
 BoxCollider:
@@ -17247,6 +17195,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 6, y: 6}
 --- !u!65 &1723784895
 BoxCollider:
@@ -17375,6 +17325,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 10, y: 2}
 --- !u!65 &1734355066
 BoxCollider:
@@ -17503,6 +17455,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 5, y: 2}
 --- !u!65 &1750526536
 BoxCollider:
@@ -17794,6 +17748,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 3, y: 1}
 --- !u!65 &1765242262
 BoxCollider:
@@ -17922,6 +17878,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 2, y: 5}
 --- !u!65 &1772777034
 BoxCollider:
@@ -18050,6 +18008,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 10, y: 4}
 --- !u!65 &1785735797
 BoxCollider:
@@ -18302,6 +18262,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 6, y: 7}
 --- !u!65 &1799514313
 BoxCollider:
@@ -18430,6 +18392,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 0, y: 4}
 --- !u!65 &1805255219
 BoxCollider:
@@ -18651,6 +18615,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 9, y: 2}
 --- !u!65 &1814222040
 BoxCollider:
@@ -18903,6 +18869,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 8, y: 0}
 --- !u!65 &1831838806
 BoxCollider:
@@ -19093,6 +19061,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 5, y: 0}
 --- !u!65 &1844526492
 BoxCollider:
@@ -19221,6 +19191,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 9, y: 7}
 --- !u!65 &1859455350
 BoxCollider:
@@ -19411,6 +19383,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 8, y: 6}
 --- !u!65 &1929965231
 BoxCollider:
@@ -19539,6 +19513,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 11, y: 4}
 --- !u!65 &1932382423
 BoxCollider:
@@ -19782,6 +19758,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 3, y: 0}
 --- !u!65 &1952044641
 BoxCollider:
@@ -19910,6 +19888,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 6, y: 3}
 --- !u!65 &1960111637
 BoxCollider:
@@ -20380,7 +20360,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SearchSkill
   settings: {fileID: 11400000, guid: 3acd0a955ae1d81479bd875c8801a2e1, type: 2}
-  fieldRoot: {fileID: 997618646}
   waveView: {fileID: 1197084256}
 --- !u!1001 &2009386772
 PrefabInstance:
@@ -20493,6 +20472,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 11, y: 5}
 --- !u!65 &2010754408
 BoxCollider:
@@ -20595,7 +20576,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SearchSkill
   settings: {fileID: 11400000, guid: 3acd0a955ae1d81479bd875c8801a2e1, type: 2}
-  fieldRoot: {fileID: 997618646}
   waveView: {fileID: 347103773}
 --- !u!1001 &2018849020
 PrefabInstance:
@@ -20708,6 +20688,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 1, y: 6}
 --- !u!65 &2027325305
 BoxCollider:
@@ -20898,6 +20880,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 8, y: 5}
 --- !u!65 &2057095256
 BoxCollider:
@@ -21105,6 +21089,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 4, y: 0}
 --- !u!65 &2068895429
 BoxCollider:
@@ -21233,6 +21219,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 1, y: 7}
 --- !u!65 &2076668496
 BoxCollider:
@@ -21485,6 +21473,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FieldPiece
   defaultMaterial: {fileID: 2100000, guid: 5279f41a74cb52144821b829ff077aa5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 1ca02fc47b582b642ac9d91ccd14fd3f, type: 2}
+  spotLightMaterial: {fileID: 0}
+  holoMaterial: {fileID: 0}
   coordinate: {x: 5, y: 3}
 --- !u!65 &2105878473
 BoxCollider:
@@ -21626,63 +21616,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7174263590472531532, guid: 1f887cfb6d089884aad62bc37d8f1f8d, type: 3}
   m_PrefabInstance: {fileID: 2110188317}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &2113286364
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1293581295742940432, guid: 011746e1b0a9b844da09c1334489b161, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1293581295742940432, guid: 011746e1b0a9b844da09c1334489b161, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1293581295742940432, guid: 011746e1b0a9b844da09c1334489b161, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1293581295742940432, guid: 011746e1b0a9b844da09c1334489b161, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1293581295742940432, guid: 011746e1b0a9b844da09c1334489b161, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1293581295742940432, guid: 011746e1b0a9b844da09c1334489b161, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1293581295742940432, guid: 011746e1b0a9b844da09c1334489b161, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1293581295742940432, guid: 011746e1b0a9b844da09c1334489b161, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1293581295742940432, guid: 011746e1b0a9b844da09c1334489b161, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1293581295742940432, guid: 011746e1b0a9b844da09c1334489b161, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030464552194882948, guid: 011746e1b0a9b844da09c1334489b161, type: 3}
-      propertyPath: m_Name
-      value: Panel_02
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 011746e1b0a9b844da09c1334489b161, type: 3}
 --- !u!1 &2113868314
 GameObject:
   m_ObjectHideFlags: 0
@@ -22129,6 +22062,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Background_model
       objectReference: {fileID: 0}
+    - target: {fileID: 6181077690988282735, guid: 915b94a94df07ec4c978bf6aefb08619, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6825717105284656945, guid: 915b94a94df07ec4c978bf6aefb08619, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -22169,6 +22106,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7041630275188461188, guid: 915b94a94df07ec4c978bf6aefb08619, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4
+      objectReference: {fileID: 0}
     - target: {fileID: 7847796314523847989, guid: 915b94a94df07ec4c978bf6aefb08619, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.94
@@ -22205,9 +22146,5 @@ SceneRoots:
   - {fileID: 109811177}
   - {fileID: 700509706}
   - {fileID: 935254102}
-  - {fileID: 41169472}
-  - {fileID: 928620594}
   - {fileID: 890115137}
-  - {fileID: 919284953}
   - {fileID: 632030310}
-  - {fileID: 2113286364}
