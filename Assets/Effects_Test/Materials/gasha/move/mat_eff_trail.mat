@@ -65,7 +65,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AlphaTransitionMapSecondTexture:
-        m_Texture: {fileID: 2800000, guid: e17f433e77af52a4bb11fda5dafc51e0, type: 3}
+        m_Texture: {fileID: 2800000, guid: 72ad2364ba7bb8145877e955b22a9f3f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AlphaTransitionMapSecondTexture2DArray:
@@ -217,7 +217,7 @@ Material:
     - _AlphaTransitionProgress: 0
     - _AlphaTransitionProgressCoord: 31
     - _AlphaTransitionProgressCoordSecondTexture: 0
-    - _AlphaTransitionProgressSecondTexture: 0.4
+    - _AlphaTransitionProgressSecondTexture: 0.55
     - _AlphaTransitionSecondTextureBlendMode: 2
     - _BaseMapChannel: 0
     - _BaseMapMirrorSampling: 0

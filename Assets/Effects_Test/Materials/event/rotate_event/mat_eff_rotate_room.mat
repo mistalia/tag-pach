@@ -35,7 +35,7 @@ Material:
   - _EMISSION_MAP_MODE_2D
   - _PARALLAX_MAP_MODE_2D
   - _TINT_AREA_ALL
-  - _TINT_MAP_ENABLED
+  - _TINT_COLOR_ENABLED
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -75,7 +75,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 1811cc6cb7edc2f4faae02cffba94cbf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap2DArray:
@@ -155,7 +155,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TintMap:
-        m_Texture: {fileID: 2800000, guid: 1811cc6cb7edc2f4faae02cffba94cbf, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TintMap2DArray:
@@ -342,7 +342,7 @@ Material:
     - _TintAreaMode: 1
     - _TintBlendRate: 1
     - _TintBlendRateCoord: 0
-    - _TintColorMode: 1
+    - _TintColorMode: 0
     - _TintMap3DProgress: 0
     - _TintMap3DProgressCoord: 0
     - _TintMapOffsetXCoord: 0
@@ -388,7 +388,7 @@ Material:
     - _EmissionMapRotationOffsets: {r: 0, g: 0, b: 0, a: 0}
     - _FlowMapRotationOffsets: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _TintColor: {r: 0, g: 6.093569, b: 8, a: 1}
+    - _TintColor: {r: 3.566013, g: 7.956921, b: 9.310283, a: 1}
     - _TintMapRotationOffsets: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
