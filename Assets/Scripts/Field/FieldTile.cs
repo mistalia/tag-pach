@@ -18,6 +18,10 @@ public class FieldTile : MonoBehaviour
     [SerializeField]private Vector2Int coordinate;
     public Stone PutedStone {get; private set; } = null;
 
+    [Header("フレームの発光")]
+    [SerializeField, Min(0f)]
+    private float frameIntensity = 3f;
+
     private Material defaultMaterial;
     private Color defaultColor;
 
@@ -190,6 +194,8 @@ public class FieldTile : MonoBehaviour
 
     public void SetFrameColor(Color color)
     {
-        meshRenderer.material.SetColor("_Frame_Color", color);
+        Color hdrCol = new Color(color.r * frameIntensity, color.g * frameIntensity, color.b * frameIntensity);
+
+        meshRenderer.material.SetColor("_Frame_Color", hdrCol);
     }
 }
