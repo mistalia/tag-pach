@@ -40,13 +40,14 @@ public class FieldMaker : MonoBehaviour
 
     const float oversize = 1f;
     const float barrierHeight = 10f;
+    const float barrierThickness = 3f;
 
     private bool isGenerating = false;
     private bool rebuildQueued = false;
 
     private void Start()
     {
-        if(!Application.isPlaying)
+        if (!Application.isPlaying)
         {
             return;
         }
@@ -66,14 +67,14 @@ public class FieldMaker : MonoBehaviour
         cameraobject.GetComponent<FieldCamera>()?.SetChaseBox(center, new Vector3(fieldSize.x * 1.5f, 4.0f, fieldSize.y * 1.5f), new Vector3(fieldSize.x * fieldSpacing, 4.0f, fieldSize.y * fieldSpacing));
     }
 
-    public void  RegisterFieldManager()
+    public void RegisterFieldManager()
     {
-        if(fieldManager == null)
+        if (fieldManager == null)
         {
             return;
         }
 
-        if(fieldManager == null || generatedRoot == null)
+        if (fieldManager == null || generatedRoot == null)
         {
             return;
         }
@@ -93,14 +94,14 @@ public class FieldMaker : MonoBehaviour
     [ContextMenu("Generate Field")]
     public void GenerateField()
     {
-        if(fieldManager == null)
+        if (fieldManager == null)
         {
             fieldManager = this.GetComponent<FieldManager>();
-            if(fieldManager == null)
+            if (fieldManager == null)
             {
                 fieldManager = this.gameObject.AddComponent<FieldManager>();
 
-                if(fieldManager == null)
+                if (fieldManager == null)
                 {
                     Debug.LogError("FieldManagerコンポーネントを追加できませんでした。");
                     return;
@@ -108,7 +109,7 @@ public class FieldMaker : MonoBehaviour
             }
         }
 
-        if(field == null || isGenerating)
+        if (field == null || isGenerating)
         {
             return;
         }
@@ -172,8 +173,8 @@ public class FieldMaker : MonoBehaviour
                     GameObject barrierInstans = Instantiate(barrierBlock, generatedRoot);
 
                     barrierInstans.name = $"Barrier_Left";
-                    barrierInstans.transform.localPosition = new Vector3(-1.5f, 5.0f, (fieldSize.y - 1) * fieldSpacing * 0.5f );
-                    barrierInstans.transform.localScale = new Vector3(1.0f, barrierHeight, fieldSize.y * fieldSpacing + (fieldSpacing * oversize));
+                    barrierInstans.transform.localPosition = new Vector3(-((fieldSpacing * 0.5f) + (barrierThickness * 0.5f)), barrierHeight * 0.5f, (fieldSize.y - 1) * fieldSpacing * 0.5f);
+                    barrierInstans.transform.localScale = new Vector3(barrierThickness, barrierHeight, fieldSize.y * fieldSpacing + (fieldSpacing * barrierThickness));
                     barrierInstans.tag = "BarrierBlock";
                 }
 
@@ -181,8 +182,8 @@ public class FieldMaker : MonoBehaviour
                     GameObject barrierInstans = Instantiate(barrierBlock, generatedRoot);
 
                     barrierInstans.name = $"Barrier_Far";
-                    barrierInstans.transform.localPosition = new Vector3((fieldSize.x - 1) * fieldSpacing * 0.5f,5.0f,fieldSize.y * fieldSpacing - 0.5f);
-                    barrierInstans.transform.localScale = new Vector3(fieldSize.x * fieldSpacing + (fieldSpacing * oversize), barrierHeight, 1.0f);
+                    barrierInstans.transform.localPosition = new Vector3((fieldSize.x - 1) * fieldSpacing * 0.5f, barrierHeight * 0.5f, (((fieldSize.y - 1) * fieldSpacing) + fieldSpacing * 0.5f) + (barrierThickness * 0.5f));
+                    barrierInstans.transform.localScale = new Vector3(fieldSize.x * fieldSpacing + (fieldSpacing * barrierThickness), barrierHeight, barrierThickness);
                     barrierInstans.tag = "BarrierBlock";
                 }
 
@@ -190,17 +191,17 @@ public class FieldMaker : MonoBehaviour
                     GameObject barrierInstans = Instantiate(barrierBlock, generatedRoot);
 
                     barrierInstans.name = $"Barrier_Right";
-                    barrierInstans.transform.localPosition = new Vector3(fieldSize.x * fieldSpacing - 0.5f, 5.0f, (fieldSize.y - 1) * fieldSpacing * 0.5f);
-                    barrierInstans.transform.localScale = new Vector3(1.0f, barrierHeight, fieldSize.y * fieldSpacing + (fieldSpacing * oversize));
+                    barrierInstans.transform.localPosition = new Vector3((((fieldSize.x - 1) * fieldSpacing) + fieldSpacing * 0.5f) + (barrierThickness * 0.5f), barrierHeight * 0.5f, (fieldSize.y - 1) * fieldSpacing * 0.5f);
+                    barrierInstans.transform.localScale = new Vector3(barrierThickness, barrierHeight, fieldSize.y * fieldSpacing + (fieldSpacing * barrierThickness));
                     barrierInstans.tag = "BarrierBlock";
                 }
 
-                {//奥面
+                {//手前面
                     GameObject barrierInstans = Instantiate(barrierBlock, generatedRoot);
 
                     barrierInstans.name = $"Barrier_Near";
-                    barrierInstans.transform.localPosition = new Vector3((fieldSize.x - 1) * fieldSpacing * 0.5f, 5.0f, -1.5f);
-                    barrierInstans.transform.localScale = new Vector3(fieldSize.x * fieldSpacing + (fieldSpacing * oversize), barrierHeight, 1.0f);
+                    barrierInstans.transform.localPosition = new Vector3((fieldSize.x - 1) * fieldSpacing * 0.5f, barrierHeight * 0.5f, -((fieldSpacing * 0.5f) + (barrierThickness * 0.5f)));
+                    barrierInstans.transform.localScale = new Vector3(fieldSize.x * fieldSpacing + (fieldSpacing * barrierThickness), barrierHeight, barrierThickness);
                     barrierInstans.tag = "BarrierBlock";
                 }
             }
@@ -211,7 +212,7 @@ public class FieldMaker : MonoBehaviour
             if (cameraobject != null)
             {
                 float height;
-                if(fieldSize.x > fieldSize.y)
+                if (fieldSize.x > fieldSize.y)
                 {
                     height = fieldSize.x * 1.25f;
                 }
@@ -233,7 +234,7 @@ public class FieldMaker : MonoBehaviour
 
     private void CreateGenerateRoot()
     {
-        if(generatedRoot != null)
+        if (generatedRoot != null)
         {
             return;
         }
@@ -248,13 +249,13 @@ public class FieldMaker : MonoBehaviour
 
     private void ClearField()
     {
-        if(generatedRoot == null)
+        if (generatedRoot == null)
         {
             return;
         }
 
 
-        for(int i = generatedRoot.childCount - 1; i >= 0; i--)
+        for (int i = generatedRoot.childCount - 1; i >= 0; i--)
         {
             GameObject tgt = generatedRoot.GetChild(i).gameObject;
 
@@ -324,6 +325,10 @@ public class FieldMaker : MonoBehaviour
         GenerateField();
     }
 
+    public float GetFieldSpacing()
+    {
+        return fieldSpacing;
+    }
     private void QueueGenerateField()
     {
 #if UNITY_EDITOR

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3bac49a727ac1439b107d23d638cbe, type: 3}
+  m_Name: End_Tutorial
+  m_EditorClassIdentifier: Assembly-CSharp::End_Tutorial
+  StartDialogue: {fileID: 11400000, guid: 5a1684672c13cd74a87a320b232b317e, type: 2}
+  transitionSettings: {fileID: 11400000, guid: 93d8b4863f0d0d74da083a36fce197b5, type: 2}
+  sceneName: DefaultScene

@@ -6,11 +6,20 @@ public class TurnStartState : TurnBaseState
     {
         manager.ResetTurnTimer();
         TurnUI.Instance.SetColor(manager.GetAttackPlayer().TeamColor);
+        FieldManager.Instance.SetFrameColor(manager.GetAttackPlayer().TeamColor);
     }
 
 
     public override void UpdateState(TurnManager manager)
     {
+        FieldEventManager eventManager = FieldEventManager.Instance;
+
+        if (eventManager != null && eventManager.HasTurnEvent(manager.GetTurnCount()))
+        {
+            manager.ChangeState(TurnStateType.FieldEvent);
+            return;
+        }
+
         manager.ChangeState(TurnStateType.Playing);
     }
 

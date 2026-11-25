@@ -53,3 +53,7 @@ MonoBehaviour:
     managerPrefab: {fileID: 8823283371552667480, guid: d103cddc5eca21d449baf6d6059b933a, type: 3}
   - managerName: BattleManager
     managerPrefab: {fileID: 8824057607491060923, guid: 5ac79c1d83e80aa42b5f21d3a84bfaa0, type: 3}
+  - managerName: BonbFeaverManager
+    managerPrefab: {fileID: 2610677158045485901, guid: 3ba380e0e07de504c919f00e42563b09, type: 3}
+  - managerName: FieldEventManager
+    managerPrefab: {fileID: 1027909358295688633, guid: 77bc65ecd8a3fa043baa364c15bb04fd, type: 3}

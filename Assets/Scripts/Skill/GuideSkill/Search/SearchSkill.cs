@@ -20,6 +20,7 @@ public class SearchSkill : MonoBehaviour
     private bool isSearching;
 
     public float RemainingCooldown => remainingCooldown;
+    public float CooldownTime => settings != null ? settings.CooldownTime : 0f;
 
     private void Awake()
     {
@@ -30,28 +31,30 @@ public class SearchSkill : MonoBehaviour
 
     private void Update()
     {
-        TurnManager turn = TurnManager.Instance;
-
-        if (turn == null || !turn.IsBattleStarted())
+        if (TutorialManager.Instance == null)
         {
-            isSearching = false;
-            return;
+            TurnManager turn = TurnManager.Instance;
+
+            if (turn == null || !turn.IsBattleStarted())
+            {
+                isSearching = false;
+                return;
+            }
+
+            if (Time.timeScale <= 0f || turn.IsBattlePaused())
+            {
+                return;
+            }
+
+            if (turn.GetCurrentStateType() == TurnStateType.Reposition ||
+                turn.GetCurrentStateType() == TurnStateType.Result)
+            {
+                isSearching = false;
+                return;
+            }
         }
 
-        if (Time.timeScale <= 0f || turn.IsBattlePaused())
-        {
-            return;
-        }
-
-        remainingCooldown = Mathf.Max(
-            0f, remainingCooldown - Time.deltaTime);
-
-        if (turn.GetCurrentStateType() == TurnStateType.Reposition ||
-            turn.GetCurrentStateType() == TurnStateType.Result)
-        {
-            isSearching = false;
-            return;
-        }
+        remainingCooldown = Mathf.Max( 0f, remainingCooldown - Time.deltaTime);
 
         if (input != null && input.isActiveAndEnabled &&
             input.Skill.Pressed)
@@ -102,20 +105,31 @@ public class SearchSkill : MonoBehaviour
             return false;
         }
 
-        TurnManager turn = TurnManager.Instance;
-
-        if (turn == null || !turn.IsBattleStarted() ||
-            turn.IsBattlePaused() || Time.timeScale <= 0f ||
-            turn.GetCurrentStateType() != TurnStateType.Playing)
+        if (TutorialManager.Instance == null)
         {
-            return false;
+            TurnManager turn = TurnManager.Instance;
+
+            if (turn == null || !turn.IsBattleStarted() ||
+                turn.IsBattlePaused() || Time.timeScale <= 0f ||
+                turn.GetCurrentStateType() != TurnStateType.Playing)
+            {
+                return false;
+            }
         }
 
         tiles = fieldRoot.GetComponentsInChildren<FieldTile>();
 
         searchCenter = transform.position;
         currentRadius = 0f;
-        remainingCooldown = Mathf.Max(0f, settings.CooldownTime);
+
+        if (TutorialManager.Instance != null)
+        {
+            remainingCooldown = 5.0f;
+        }
+        else
+        {
+            remainingCooldown = Mathf.Max(0f, settings.CooldownTime);
+        }
 
         revealedStones.Clear();
         isSearching = true;

@@ -2,31 +2,56 @@ using UnityEngine;
 
 public class FieldTile : MonoBehaviour
 {
-    [Header("Material")]
-    [SerializeField] private Material defaultMaterial;
-    [SerializeField] private Material highlightMaterial;
+    [Header("View")]
+    [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private Color highlightColor;
 
-    // À•Wî•ñ
+    [SerializeField] private Material holoMaterial;
+
+    private bool holo = false;
+
+    [Header("Effet key")]
+    [SerializeField] private string effect_Red = "Field_Red";
+    [SerializeField] private string effect_Blue = "Field_Blue";
+
+    [Header("Coordinate")]
     [SerializeField]private Vector2Int coordinate;
     public Stone PutedStone {get; private set; } = null;
 
+    private Material defaultMaterial;
+    private Color defaultColor;
+
     private void Start()
     {
-        this.gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
+       if(meshRenderer == null)
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+        }
+
+        if(meshRenderer != null)
+        {
+            defaultMaterial = meshRenderer.material;
+            defaultColor = defaultMaterial.GetColor("_Base_Color");
+        }
     }
 
     private void Update()
     {
-        if(PutedStone != null)
+        if (holo)
+        {
+            return;
+        }
+
+        if (PutedStone != null)
         {
             if(PutedStone.IsTransitioning)
             {
-                this.gameObject.GetComponent<MeshRenderer>().material.color = Color.Lerp(PutedStone.Owner.TeamColor, defaultMaterial.color,PutedStone.CurrentProg);
+                meshRenderer.material.SetColor("_Base_Color", Color.Lerp(PutedStone.Owner.TeamColor, defaultColor,PutedStone.CurrentProg));
             }
         }
     }
 
-    public bool PutStone(Stone stone)
+    public bool PutStone(Stone stone, string effectColor = null)
     {
         const int MATCH_COUNT = 3;
         if (PutedStone != null)
@@ -34,13 +59,24 @@ public class FieldTile : MonoBehaviour
             return false;
         }
         PutedStone = stone;
-        PutedStone.transform.position = this.transform.position + new Vector3(0, (this.transform.localScale.y * 0.5f) , 0);
+
+        var position = this.transform.position + new Vector3(0, (this.transform.localScale.y * 0.5f), 0);
+        PutedStone.transform.position = position;
+
+        if(effectColor == "Red")
+        {
+            EffectManager.Instance.PlayEffect(effect_Red, position);
+        }
+        else if(effectColor == "Blue")
+        {
+            EffectManager.Instance.PlayEffect(effect_Blue, position);
+        }
 
         FieldManager.Instance.AddStoneCount();
 
         MatchCount count = FieldManager.Instance.CheckMatch(this.coordinate);
 
-        FieldCamera.Instance.CameraShake(0.1f, 0.2f);
+        FieldCamera.Instance?.CameraShake(0.1f, 0.2f);
 
         if (count.lineDir_x1_y0 >= MATCH_COUNT)
         {
@@ -87,21 +123,31 @@ public class FieldTile : MonoBehaviour
 
     public void LightUpTile()
     {
+        if (holo)
+        {
+            return;
+        }
+
         if (PutedStone && PutedStone.IsTransitioning)
         {
-            this.gameObject.GetComponent<MeshRenderer>().material.color = Color.Lerp(PutedStone.Owner.TeamColor, highlightMaterial.color,PutedStone.CurrentProg);
+            meshRenderer.material.SetColor("_Base_Color", Color.Lerp(PutedStone.Owner.TeamColor, highlightColor, PutedStone.CurrentProg));
+            
         }
-        else if (highlightMaterial != null)
-        {
-            this.gameObject.GetComponent<MeshRenderer>().material = highlightMaterial;
-        }
+        
+        meshRenderer.material.SetColor("_Base_Color", highlightColor);
     }
 
     public void ResetTileColor()
     {
+        // ホログラム表示中は変更しない
+        if (holo)
+        {
+            return;
+        }
+
         if (defaultMaterial != null)
         {
-            this.gameObject.GetComponent<MeshRenderer>().material = defaultMaterial;
+            meshRenderer.material.SetColor("_Base_Color", defaultColor);
         }
     }
 
@@ -113,5 +159,31 @@ public class FieldTile : MonoBehaviour
             Destroy(PutedStone.gameObject);
             PutedStone = null;
         }
+    }
+
+    public void SetHolo(bool active)
+    {
+        if (holo == active)
+        {
+            return;
+        }
+
+        if (active)
+        {
+            meshRenderer.material = holoMaterial;
+        }
+        else
+        {
+            // ホログラム終了時は必ず通常マテリアルへ
+            meshRenderer.material = defaultMaterial;
+        }
+
+        holo = active;
+        
+    }
+
+    public void SetFrameColor(Color color)
+    {
+        meshRenderer.material.SetColor("_Frame_Color", color);
     }
 }

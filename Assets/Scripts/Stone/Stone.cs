@@ -31,11 +31,14 @@ public class Stone : MonoBehaviour
     [SerializeField] private float fadeDuration = 3f;
 
     [Header("色付け用メッシュの登録")]
-    [SerializeField]private List<MeshRenderer> meshRenderer;
-    [SerializeField] private List<MeshRenderer> holoMesh;
+    [SerializeField]private List<Renderer> meshRenderer;
+    [SerializeField] private List<Renderer> holoMesh;
 
     [Header("ホロマテリアル")]
     [SerializeField] private Material holoMaterial;
+
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
 
     // この駒だけの表示を変更するために使用する。
     private MaterialPropertyBlock propertyBlock;
@@ -53,6 +56,8 @@ public class Stone : MonoBehaviour
 
     private Material defaultMaterial;
 
+    private bool holo = false;
+
     public float CurrentProg { get; private set; } = 0f;
     public bool IsTransitioning => isTransitioning;
 
@@ -62,6 +67,13 @@ public class Stone : MonoBehaviour
 
         holoMaterial = Resources.Load<Material>("Materials/HologramMaterial");
         defaultMaterial = holoMesh[0].material;
+
+        if(animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+
+        animator?.SetBool("bLightUp", false);
     }
 
     /// <summary>
@@ -214,6 +226,7 @@ public class Stone : MonoBehaviour
         if (CurrentProg >= 1f)
         {
             isTransitioning = false;
+            animator?.SetBool("bLightUp", false);
         }
     }
 
@@ -229,22 +242,45 @@ public class Stone : MonoBehaviour
             propertyBlock.SetColor(colorPropertyId, color);
             renderer.SetPropertyBlock(propertyBlock);
         }
+
+        animator?.SetBool("bLightUp", color != neutralColor);
+    }
+
+    public void ResetColor()
+    {
+        ApplyColor(neutralColor);
+        isTransitioning = false;
+        elapsedTime = 0f;
+        CurrentProg = 0f;
+
+        animator?.SetBool("bLightUp", false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        foreach (var renderer in holoMesh)
-        {
-            renderer.material = holoMaterial;
-        }
+        SetHolo(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        foreach (var renderer in holoMesh)
+        // 回転中はホログラムを解除しない
+        if (FieldEventManager.Instance != null &&
+            FieldEventManager.Instance.IsRotating)
         {
-            renderer.material = defaultMaterial;
+            return;
         }
+
+        SetHolo(false);
     }
 
+    public void SetHolo(bool active)
+    {
+        holo = active;
+
+        foreach (var renderer in holoMesh)
+        {
+            renderer.material =
+                holo ? holoMaterial : defaultMaterial;
+        }
+    }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(
@@ -18,41 +19,58 @@ public class PlayerStateSmash : PlayerState
     [SerializeField, Min(0.01f)]
     private float rangeDisplayDuration = 0.2f;
 
+    public float CooldownTime => settings != null ? settings.CooldownTime : 0f;
+
     public float RemainingCooldown =>
         Mathf.Max(0f, nextUseTime - Time.time);
 
     public bool CanUse(Player player)
     {
-        return player != null &&
-               player.isActiveAndEnabled &&
-               settings != null &&
-               settings.IsValid &&
-               Time.timeScale > 0f &&
-               Time.time >= nextUseTime &&
-               lastUseFrame != Time.frameCount &&
-               TryGetOpponent(player, out _);
+        // 共通条件
+        if (player == null ||
+            !player.isActiveAndEnabled ||
+            settings == null ||
+            !settings.IsValid ||
+            Time.timeScale <= 0f ||
+            Time.time < nextUseTime ||
+            lastUseFrame == Time.frameCount)
+        {
+            return false;
+        }
+
+        // チュートリアル
+        if (TutorialManager.Instance != null)
+        {
+            return true;
+        }
+
+        // 通常戦闘
+        return TryGetOpponent(player, out _);
     }
 
-    public override void EnterState(
-        Player owner,
-        PlayerInputReader input)
+    public override void EnterState(Player owner, PlayerInputReader input, Animator animator)
     {
-        base.EnterState(owner, input);
+        base.EnterState(owner, input, animator);
 
-        if (CanUse(owner))
+        // クールタイム設定
+        nextUseTime = Time.time + settings.CooldownTime;
+        lastUseFrame = Time.frameCount;
+
+        // 攻撃範囲を表示
+        ShowAttackRange(owner);
+
+        // 攻撃実行
+        if (TutorialManager.Instance != null)
         {
-            // 空振りでも消費し、ステートを抜けても再使用時刻を保持する。
-            nextUseTime = Time.time + settings.CooldownTime;
-            lastUseFrame = Time.frameCount;
-
-            // 攻撃範囲を表示
-            ShowAttackRange(owner);
-
+            ExecuteAttackDummy();
+        }
+        else
+        {
             ExecuteHit();
-
         }
 
         owner.ChangeState("idle");
+        animator?.SetTrigger("tSmash");
     }
 
     private bool TryGetOpponent(
@@ -111,16 +129,15 @@ public class PlayerStateSmash : PlayerState
         );
     }
 
-    // 攻撃判定を実行する
-    public void ExecuteHit()
+    private bool IsInAttackRange(Transform target)
     {
-        if (owner == null || settings == null)
-            return;
+        if (owner == null || target == null)
+        {
+            return false;
+        }
 
-        if (!TryGetOpponent(owner, out var opponent))
-            return;
-
-        Vector3 direction = opponent.transform.position - owner.transform.position;
+        Vector3 direction =
+            target.position - owner.transform.position;
 
         direction.y = 0f;
 
@@ -128,29 +145,83 @@ public class PlayerStateSmash : PlayerState
         forward.y = 0f;
 
         if (forward.sqrMagnitude < MinDirectionSqrMagnitude)
+        {
             forward = Vector3.forward;
+        }
 
         forward.Normalize();
 
         // 距離判定
-        if (direction.magnitude > settings.Range)
-            return;
-
-        if (direction.sqrMagnitude < MinDirectionSqrMagnitude)
-            direction = forward;
+        if (direction.sqrMagnitude > settings.Range * settings.Range)
+        {
+            return false;
+        }
 
         // 角度判定
+        if (direction.sqrMagnitude < MinDirectionSqrMagnitude)
+        {
+            direction = forward;
+        }
+
         float angle = Vector3.Angle(forward, direction);
 
-        if (angle > settings.AttackAngle * 0.5f)
-            return;
+        return angle <= settings.AttackAngle * 0.5f;
+    }
 
-        // ノックバック
+    // 攻撃判定を実行する
+    private void ExecuteHit()
+    {
+        if (!TryGetOpponent(owner, out var opponent))
+        {
+            return;
+        }
+
+        if (!IsInAttackRange(opponent.transform))
+        {
+            return;
+        }
+
+        Vector3 direction =
+            opponent.transform.position - owner.transform.position;
+
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude < MinDirectionSqrMagnitude)
+        {
+            direction = owner.transform.forward;
+            direction.y = 0f;
+
+            if (direction.sqrMagnitude < MinDirectionSqrMagnitude)
+            {
+                direction = Vector3.forward;
+            }
+        }
+
         opponent.AddKnockback(
             direction,
             settings.KnockbackDistance,
             settings.KnockbackSpeed,
             settings.StunDuration
         );
+    }
+
+
+    // リュートリアル用
+
+    private void ExecuteAttackDummy()
+    {
+        Dummy_Player[] dummies = Object.FindObjectsByType<Dummy_Player>();
+
+        foreach (var dummy in dummies)
+        {
+            if (dummy == null ||
+                !dummy.isActiveAndEnabled ||
+                !IsInAttackRange(dummy.transform))
+            {
+                continue;
+            }
+
+            dummy.HitAttack(owner);
+        }
     }
 }

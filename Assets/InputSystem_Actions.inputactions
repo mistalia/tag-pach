@@ -45,6 +45,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "ForcePlace",
+                    "type": "Button",
+                    "id": "856aa133-5579-462b-b5bd-16cac9707b63",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -322,6 +332,28 @@
                     "action": "Skill",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2a6e2551-e9b8-4e56-b108-d3e747849dc3",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ForcePlace",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a94c481f-40a3-422b-8983-5c3732aacaee",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "ForcePlace",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -587,7 +619,29 @@
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";KeyboardLeft",
+                    "groups": ";KeyboardLeft;Keyboard&Mouse",
+                    "action": "ForcePlace",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f8058b72-326b-422f-9605-c31c415f1548",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse;Gamepad",
+                    "action": "ForcePlace",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "467c9444-1606-4995-ba37-5fd27e181b6f",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardRight;KeyboardLeft",
                     "action": "ForcePlace",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -745,6 +799,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";KeyboardRight",
+                    "action": "Skill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "897639cf-3650-451f-8977-b35e70aed184",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "Skill",
                     "isComposite": false,
                     "isPartOfComposite": false

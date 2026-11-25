@@ -63,6 +63,8 @@ public class TurnManager : MonoBehaviour
 
     // Turn開始State
     private TurnStartState turnStartState;
+    
+    private TurnFieldEventState fieldEventState;
 
     // Player操作中State
     private TurnPlayingState playingState;
@@ -73,6 +75,11 @@ public class TurnManager : MonoBehaviour
     // Battle結果State
     private TurnResultState resultState;
 
+    private bool timerStopped = false;
+    public void SetTimerStopped(bool stopped)
+    {
+        timerStopped = stopped;
+    }
 
     private void Awake()
     {
@@ -88,6 +95,7 @@ public class TurnManager : MonoBehaviour
         // Turn State生成
         battleStartState = new TurnBattleStartState();
         turnStartState = new TurnStartState();
+        fieldEventState = new TurnFieldEventState();
         playingState = new TurnPlayingState();
         turnEndState = new TurnEndState();
         resultState = new TurnResultState();
@@ -213,6 +221,9 @@ public class TurnManager : MonoBehaviour
 
         turnCount = 1;
 
+        // イベントの実行履歴をリセット
+        FieldEventManager.Instance?.ResetTurnEvent();
+
         isBattleStarted = true;
         isBattlePaused = false;
         hasFirstPlayer = false;
@@ -305,10 +316,12 @@ public class TurnManager : MonoBehaviour
     // ランダムで先攻Playerを決定する
     private void DecideRandomFirstPlayer()
     {
-        currentAttackPlayer =
+        Player temp =
             Random.Range(0, 2) == 0
                 ? player1
                 : player2;
+
+        SetCurrentAttackPlayer(temp);
 
         hasFirstPlayer = true;
     }
@@ -331,7 +344,7 @@ public class TurnManager : MonoBehaviour
             return;
         }
 
-        currentAttackPlayer = player;
+        SetCurrentAttackPlayer(player);
 
         hasFirstPlayer = true;
     }
@@ -370,6 +383,10 @@ public class TurnManager : MonoBehaviour
                 currentState = turnStartState;
                 break;
 
+            case TurnStateType.FieldEvent:
+                currentState = fieldEventState;
+                break;
+
             case TurnStateType.Playing:
                 currentState = playingState;
                 break;
@@ -402,6 +419,11 @@ public class TurnManager : MonoBehaviour
     // Turnタイマーを更新する
     public void UpdateTurnTimer()
     {
+        if(timerStopped)
+        {
+            return;
+        }
+
         turnTimer -= Time.deltaTime;
 
         if (turnTimer < 0.0f)
@@ -450,11 +472,11 @@ public class TurnManager : MonoBehaviour
     {
         if (currentAttackPlayer == player1)
         {
-            currentAttackPlayer = player2;
+            SetCurrentAttackPlayer(player2);
         }
         else
         {
-            currentAttackPlayer = player1;
+            SetCurrentAttackPlayer(player1);
         }
     }
 
@@ -594,6 +616,13 @@ public class TurnManager : MonoBehaviour
     public Player GetBattleWinner()
     {
         return battleWinner;
+    }
+
+    private void SetCurrentAttackPlayer(Player player)
+    {
+        currentAttackPlayer?.SetCanPlaceStone(false);
+        currentAttackPlayer = player;
+        currentAttackPlayer.SetCanPlaceStone(true);
     }
 
 #if UNITY_EDITOR

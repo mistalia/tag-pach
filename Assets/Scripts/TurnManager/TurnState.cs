@@ -3,6 +3,7 @@ public enum TurnStateType
 {
     BattleStart,
     TurnStart,
+    FieldEvent,
     Playing,
     TurnEnd,
     Result,

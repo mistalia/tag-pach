@@ -15,11 +15,15 @@ public class Player : MonoBehaviour
 
     [Header("Reference")]
     [SerializeField] private PlayerInputReader input;
+    [SerializeField] private Animator animator;
     [SerializeField] private PlayerStateList stateList;
     [SerializeField] private string initializeStatekey = "idle";
     [SerializeField] private LayerMask fieldLayer; // フィールドのレイヤーマスク
     [SerializeField] private LABPDevice labpDevice;
     [SerializeField] private GameObject rootDisableObj;
+    [SerializeField] private ParticleSystem runEffect;
+
+    public readonly float moveDeadzone = 0.3f; // 移動入力のデッドゾーン
 
     public void SetLABPDevice(LABPDevice device)
     {
@@ -38,6 +42,18 @@ public class Player : MonoBehaviour
     public void SetCanPlaceStone(bool value)
     {
         canPlaceStone = value;
+    }
+
+    private bool smashEnable = true;
+    public void SetSmashEnable(bool value)
+    {
+        smashEnable = value;
+    }
+
+    private bool forcePlaceEnable = true;
+    public void SetForcePlaceEnable(bool value)
+    {
+        forcePlaceEnable = value;
     }
 
     private PlayerState currentState;
@@ -65,10 +81,20 @@ public class Player : MonoBehaviour
             }
         }
 
+        if(animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+            if (animator == null)
+            {
+                Debug.LogError("Animator is not found");
+                return;
+            }
+        }
+
         // ステータスのコピーインスタンスを生成
         stateList.CreateRunTimeCopies();
 
-        canPlaceStone = true;
+        SetCanPlaceStone(true);
 
         // 初期位置・初期回転を保存
         InitializeSpawnPoint();
@@ -77,10 +103,11 @@ public class Player : MonoBehaviour
     void Start()
     {
         //---------------------------------------------------------------
-        TurnManager.Instance.RegisterPlayer(this);
+        TurnManager.Instance?.RegisterPlayer(this);
         //---------------------------------------------------------------
 
         ChangeState(initializeStatekey);
+        StopRunEffect();
     }
 
     // Update is called once per frame
@@ -121,6 +148,13 @@ public class Player : MonoBehaviour
         stateList.DestroyRunTimeCopies();
     }
 
+    // Read-only access to this player's runtime state for skill UI.
+    public bool TryGetRuntimeState(string key, out PlayerState state)
+    {
+        state = null;
+        return stateList != null && stateList.TryGetRuntimeState(key, out state);
+    }
+
     public void ChangeState(string newStateKey)
     {
         if(!stateList.TryGetRuntimeState(newStateKey, out var newState))
@@ -129,12 +163,28 @@ public class Player : MonoBehaviour
             return;
         }
 
+        // CanUseが必要なStateだけチェック
+        if (newState is PlayerStateForcePlace forcePlace &&
+            !forcePlace.CanUse(this))
+        {
+            Debug.LogError("ForcePlace state CanUse is false ");
+            return;
+        }
+
+        if (newState is PlayerStateSmash smash &&
+            !smash.CanUse(this))
+        {
+            Debug.LogError("Smash state CanUse is false ");
+            return;
+        }
+
         if (currentState != null)
         {
             currentState.ExitState();
         }
+
         currentState = newState;
-        currentState.EnterState(this, input);
+        currentState.EnterState(this, input, animator);
     }
 
     public void AddKnockback(
@@ -208,7 +258,7 @@ public class Player : MonoBehaviour
     private void AnyStateTransition()
     {
         // 再配置中・被弾中・強制配置スキル中は入力で割り込まない。
-        if (IsResult() ||
+        if (IsResult() || IsBattleStart() ||
             currentState is PlayerStateSmashed ||
             currentState is PlayerStateForcePlace)
         {
@@ -221,10 +271,8 @@ public class Player : MonoBehaviour
         }
 
         if (input.ForcePlace != null &&
-            input.ForcePlace.Pressed &&
-            stateList.TryGetRuntimeState("forcePlace", out var skillState) &&
-            skillState is PlayerStateForcePlace forcePlaceState &&
-            forcePlaceState.CanUse(this))
+            input.ForcePlace.Pressed && 
+            forcePlaceEnable)
         {
             ChangeState("forcePlace");
             return;
@@ -232,19 +280,15 @@ public class Player : MonoBehaviour
 
         if (input.Attack != null &&
             input.Attack.Pressed &&
-            stateList.TryGetRuntimeState("smash", out var attackState) &&
-            attackState is PlayerStateSmash smashState &&
-            smashState.CanUse(this))
+            smashEnable)
         {
             ChangeState("smash");
             return;
         }
 
-        if (input.Place != null &&
-            input.Place.Pressed &&
-            TurnManager.Instance != null &&
-            TurnManager.Instance.IsAttackPlayer(this) &&
-            canPlaceStone)
+        if (input.Place != null 
+            && input.Place.Pressed 
+            && canPlaceStone)
         {
             ChangeState("place");
         }
@@ -274,7 +318,7 @@ public class Player : MonoBehaviour
             {
                 OnStandingPiece?.ResetTileColor();
                 OnStandingPiece = FieldTile;
-                OnStandingPiece.LightUpTile();
+                //OnStandingPiece.LightUpTile();
 
                 Debug.DrawLine(origin, hit.point, Color.red, 1f);
                 return true;
@@ -341,11 +385,18 @@ public class Player : MonoBehaviour
                    == TurnStateType.Result;
     }
 
+    public bool IsBattleStart()
+    {
+        return TurnManager.Instance != null &&
+               TurnManager.Instance.GetCurrentStateType()
+                   == TurnStateType.BattleStart;
+    }
+
     //プレイヤーリセット
     public void ResetBattle()
     {
-        // 石を置ける状態に戻す
-        canPlaceStone = true;
+        // �΂�u�����Ԃɖ߂�
+        SetCanPlaceStone(true);
 
         Respawn();
     }
@@ -508,4 +559,20 @@ public class Player : MonoBehaviour
     }
 
     //---------------------------------------------------------------
+
+    public void StartRunEffect()
+    {
+        if (runEffect != null && !runEffect.isPlaying)
+        {
+            runEffect.Play();
+        }
+    }
+
+    public void StopRunEffect()
+    {
+        if (runEffect != null && runEffect.isPlaying)
+        {
+            runEffect.Stop();
+        }
+    }
 }

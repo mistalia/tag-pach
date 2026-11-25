@@ -24,6 +24,8 @@ public class FieldCamera : MonoBehaviour
     private Vector3 defBoxOffset;
     private Vector3 defBoxSize;
 
+    private Player player1 = null;
+    private Player player2 = null;
 
     void Start()
     {
@@ -43,13 +45,21 @@ public class FieldCamera : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if(TurnManager.Instance == null)
+        if (TurnManager.Instance)
+        {
+            player1 = TurnManager.Instance.GetPlayer1();
+            player2 = TurnManager.Instance.GetPlayer2();
+        }
+        else if(TutorialManager.Instance)
+        {
+            player1 = TutorialManager.Instance.GetPlayerMag();
+            player2 = TutorialManager.Instance.GetPlayerOsh();
+        }
+
+        if(player1 == null || player2 == null)
         {
             return;
         }
-
-        var player1 = TurnManager.Instance.GetPlayer1();
-        var player2 = TurnManager.Instance.GetPlayer2();
 
         Bounds defBox = new Bounds(defBoxOffset, defBoxSize);
         Bounds chaseBox = new Bounds(chaseBoxOffset, chaseBoxSize);

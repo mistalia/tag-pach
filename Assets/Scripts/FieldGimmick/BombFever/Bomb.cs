@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 爆弾1個の落下・起爆演出・爆発処理を管理する
+// 爆弾1個の飛来・起爆演出・爆発処理を管理する
 public sealed class Bomb : MonoBehaviour
 {
     private const float MinDirectionSqrMagnitude = 0.0001f;
@@ -15,56 +15,50 @@ public sealed class Bomb : MonoBehaviour
     [SerializeField]
     private Transform explosionRangeVisual;
 
-    private BombPool                pool;
-    private BombSettings            settings;
-    private MaterialPropertyBlock   propertyBlock;
-
+    private BombPool pool;
+    private BombSettings settings;
+    private MaterialPropertyBlock propertyBlock;
     private int colorPropertyId;
-
     private bool hasColorProperty;
     private bool hasNotifiedRemoval;
 
-    // Bombが爆発またはPoolへ戻ることを通知する
     public event Action<Bomb> Removed;
 
-    // このBombを管理するPoolを設定する
     public void SetPool(BombPool ownerPool)
     {
         pool = ownerPool;
     }
 
-    // マス上へ直接生成されたBombの動作を開始する
-    public void Initialize(BombSettings bombSettings)
+    public void InitializeFlying(BombSettings bombSettings, Vector3 landingPosition, float arcHeight, float flightDuration)
     {
         if (!TryInitialize(bombSettings))
             return;
 
-        StartCoroutine(ExplosionSequence());
-    }
-
-    // 上空から指定位置へ落下するBombの動作を開始する
-    public void InitializeFalling(BombSettings bombSettings, Vector3 landingPosition, float fallingSpeed)
-    {
-        if (!TryInitialize(bombSettings))
-            return;
-
-        if (!IsPositiveFinite(fallingSpeed))
+        if (!IsNonNegativeFinite(arcHeight))
         {
-            Debug.LogError("[Bomb] Falling Speedは0より大きい値にしてください。", this);
+            Debug.LogError("[Bomb] Arc Heightは0以上の値にしてください。", this);
             Release();
             return;
         }
 
-        StartCoroutine(FallingSequence(landingPosition, fallingSpeed));
+        if (!IsPositiveFinite(flightDuration))
+        {
+            Debug.LogError("[Bomb] Flight Durationは0より大きい値にしてください。", this);
+            Release();
+            return;
+        }
+
+        StartCoroutine(FlyingSequence(landingPosition, arcHeight, flightDuration));
     }
 
-    // Poolへ戻る前に実行する
     public void ResetForPool()
     {
         StopAllCoroutines();
 
-        settings                = null;
-        hasNotifiedRemoval      = false;
+        settings = null;
+        hasColorProperty = false;
+        hasNotifiedRemoval = false;
+
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
 
@@ -72,13 +66,13 @@ public sealed class Bomb : MonoBehaviour
             explosionRangeVisual.localScale = Vector3.zero;
     }
 
-    // 共通の初期化処理
     private bool TryInitialize(BombSettings bombSettings)
     {
         StopAllCoroutines();
 
-        settings            = bombSettings;
-        hasNotifiedRemoval  = false;
+        settings = bombSettings;
+        hasColorProperty = false;
+        hasNotifiedRemoval = false;
 
         if (settings == null || !settings.IsValid)
         {
@@ -94,11 +88,9 @@ public sealed class Bomb : MonoBehaviour
         }
 
         InitializeExplosionRangeVisual();
-
         return true;
     }
 
-    // Bomb本体の色変更に必要な情報を初期化する
     private bool TryInitializeBombVisual()
     {
         if (bombRenderer == null)
@@ -108,7 +100,6 @@ public sealed class Bomb : MonoBehaviour
         }
 
         Material material = bombRenderer.sharedMaterial;
-
         if (material == null)
         {
             Debug.LogError("[Bomb] Materialが設定されていません。", this);
@@ -135,11 +126,9 @@ public sealed class Bomb : MonoBehaviour
             propertyBlock = new MaterialPropertyBlock();
 
         ApplyColor(settings.StartColor);
-
         return true;
     }
 
-    // 爆発範囲表示を最小サイズから開始する
     private void InitializeExplosionRangeVisual()
     {
         if (explosionRangeVisual == null)
@@ -151,21 +140,29 @@ public sealed class Bomb : MonoBehaviour
         explosionRangeVisual.localScale = Vector3.zero;
     }
 
-    // 指定位置まで落下し、着地後に起爆処理を開始する
-    private IEnumerator FallingSequence(Vector3 landingPosition, float fallingSpeed)
+    private IEnumerator FlyingSequence(Vector3 landingPosition, float arcHeight, float flightDuration)
     {
-        while ((transform.position - landingPosition).sqrMagnitude > MinDirectionSqrMagnitude)
+        Vector3 startPosition = transform.position;
+        float elapsedTime = 0.0f;
+
+        while (elapsedTime < flightDuration)
         {
-            transform.position = Vector3.MoveTowards(transform.position, landingPosition, fallingSpeed * Time.deltaTime);
+            elapsedTime += Time.deltaTime;
+
+            float progress = Mathf.Clamp01(elapsedTime / flightDuration);
+            Vector3 position = Vector3.Lerp(startPosition, landingPosition, progress);
+            float height = 4.0f * arcHeight * progress * (1.0f - progress);
+
+            position.y += height;
+            transform.position = position;
+
             yield return null;
         }
 
         transform.position = landingPosition;
-
         yield return ExplosionSequence();
     }
 
-    // 爆発までの時間に合わせて警告演出を進める
     private IEnumerator ExplosionSequence()
     {
         float explosionDelay = Mathf.Max(0.0f, settings.ExplosionDelay);
@@ -182,7 +179,6 @@ public sealed class Bomb : MonoBehaviour
         while (elapsedTime < explosionDelay)
         {
             elapsedTime += Time.deltaTime;
-
             float progress = Mathf.Clamp01(elapsedTime / explosionDelay);
             UpdateWarningVisual(progress);
 
@@ -193,14 +189,12 @@ public sealed class Bomb : MonoBehaviour
         Explode();
     }
 
-    // 起爆までの進行度に応じて色と爆発範囲を更新
     private void UpdateWarningVisual(float progress)
     {
         UpdateBombColor(progress);
         UpdateExplosionRangeVisual(progress);
     }
 
-    // 爆発直前の表示へ確実に合わせる
     private void ApplyWarningVisual()
     {
         ApplyColor(settings.WarningColor);
@@ -218,7 +212,7 @@ public sealed class Bomb : MonoBehaviour
         if (explosionRangeVisual == null)
             return;
 
-        float diameter                  = settings.ExplosionRadius * 2.0f;
+        float diameter = settings.ExplosionRadius * 2.0f;
         explosionRangeVisual.localScale = Vector3.one * diameter * Mathf.Clamp01(progress);
     }
 
@@ -232,11 +226,12 @@ public sealed class Bomb : MonoBehaviour
         bombRenderer.SetPropertyBlock(propertyBlock);
     }
 
-    // 爆発範囲内のPlayerへノックバックを与える
     private void Explode()
     {
-        Collider[] hitColliders     = Physics.OverlapSphere(transform.position, settings.ExplosionRadius);
-        HashSet<Player> hitPlayers  = new HashSet<Player>();
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, settings.ExplosionRadius);
+
+        // 複数のColliderを持つPlayerへノックバックを重複適用しないため
+        HashSet<Player> hitPlayers = new HashSet<Player>();
 
         foreach (Collider hitCollider in hitColliders)
         {
@@ -252,25 +247,23 @@ public sealed class Bomb : MonoBehaviour
         Release();
     }
 
-    // BombからPlayerへ向かう吹き飛ばし方向を取得
     private Vector3 GetKnockbackDirection(Player targetPlayer)
     {
-        Vector3 direction   = targetPlayer.transform.position - transform.position;
-        direction.y         = 0.0f;
-
-        if (direction.sqrMagnitude >= MinDirectionSqrMagnitude)
-            return direction;
-
-        direction   = targetPlayer.transform.forward;
+        Vector3 direction = targetPlayer.transform.position - transform.position;
         direction.y = 0.0f;
 
         if (direction.sqrMagnitude >= MinDirectionSqrMagnitude)
-            return direction;
+            return direction.normalized;
+
+        direction = targetPlayer.transform.forward;
+        direction.y = 0.0f;
+
+        if (direction.sqrMagnitude >= MinDirectionSqrMagnitude)
+            return direction.normalized;
 
         return Vector3.forward;
     }
 
-    // Managerへ消滅を通知し、BombをPoolへ戻す
     private void Release()
     {
         NotifyRemoved();
@@ -284,7 +277,6 @@ public sealed class Bomb : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Bombの消滅を一度だけ通知
     private void NotifyRemoved()
     {
         if (hasNotifiedRemoval)
@@ -305,7 +297,11 @@ public sealed class Bomb : MonoBehaviour
         return !float.IsNaN(value) && !float.IsInfinity(value) && value > 0.0f;
     }
 
-    // Sceneビューで実際の爆発範囲を確認
+    private static bool IsNonNegativeFinite(float value)
+    {
+        return !float.IsNaN(value) && !float.IsInfinity(value) && value >= 0.0f;
+    }
+
     private void OnDrawGizmosSelected()
     {
         if (settings == null)

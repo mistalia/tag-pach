@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a42aaf209b3134a98cbf78fdda50da, type: 3}
+  m_Name: PlaPlace_Tutorial
+  m_EditorClassIdentifier: Assembly-CSharp::PlaPlace_Tutorials
+  startDialogueData: {fileID: 11400000, guid: 97c44ffb8724f1945b7569f20a292a58, type: 2}
+  DialogueData_2: {fileID: 11400000, guid: be38b2436165f0b4fadf77dd1795894e, type: 2}

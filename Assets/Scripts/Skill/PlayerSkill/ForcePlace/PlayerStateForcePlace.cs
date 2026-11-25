@@ -1,3 +1,4 @@
+using System.Xml.Serialization;
 using UnityEngine;
 
 [CreateAssetMenu(
@@ -23,46 +24,50 @@ public class PlayerStateForcePlace : PlayerState
 
     private float nextUseTime;
     private int lastUseFrame = -1;
-    private int activeTurn;
     private bool resolvingHit;
     private bool skillActive;
     private GameObject skillVisual;
+
+    public float CooldownTime => settings != null ? settings.CooldownTime : 0f;
 
     public float RemainingCooldown => 
         Mathf.Max(0f, nextUseTime - Time.time);
 
     public bool CanUse(Player player)
     {
-        TurnManager turn = TurnManager.Instance;
-
-        return player != null &&
-            player.isActiveAndEnabled &&
-            settings != null &&
-            settings.IsValid &&
-            Time.timeScale > 0f &&
-            Time.time >= nextUseTime &&
-            lastUseFrame != Time.frameCount &&
-            turn != null &&
-            turn.IsBattleStarted() &&
-            !turn.IsBattlePaused() &&
-            turn.GetCurrentStateType() == TurnStateType.Playing &&
-            turn.GetDefendPlayer() == player &&
-            turn.GetAttackPlayer() != null;
-
-    }
-
-    public override void EnterState(Player owner,PlayerInputReader input)
-    {
-        base.EnterState(owner, input);
-        Debug.Log("強制配置ステートに入った", owner);
-
-        if (!CanUse(owner))
+        // 共通条件
+        if (player == null ||
+            !player.isActiveAndEnabled ||
+            settings == null ||
+            !settings.IsValid ||
+            Time.timeScale <= 0f ||
+            Time.time < nextUseTime ||
+            lastUseFrame == Time.frameCount)
         {
-            owner.ChangeState("idle");
-            return;
+            return false;
         }
 
-        activeTurn = TurnManager.Instance.GetTurnCount();
+        // チュートリアル
+        if (TutorialManager.Instance != null)
+        {
+            return true;
+        }
+
+        // 通常戦闘
+        TurnManager turn = TurnManager.Instance;
+
+        return turn != null &&
+               turn.IsBattleStarted() &&
+               !turn.IsBattlePaused() &&
+               turn.GetCurrentStateType() == TurnStateType.Playing &&
+               turn.GetDefendPlayer() == player &&
+               turn.GetAttackPlayer() != null;
+    }
+
+    public override void EnterState(Player owner,PlayerInputReader input, Animator animator)
+    {
+        base.EnterState(owner, input, animator);
+        Debug.Log("強制配置ステートに入った", owner);
 
         // ステート終了後も再使用時刻を保持する。
         nextUseTime = Time.time + settings.CooldownTime;
@@ -93,6 +98,8 @@ public class PlayerStateForcePlace : PlayerState
 
             rangeCircle.Init(settings.HitRadius, settings.HitForwardOffset);
         }
+
+        animator?.SetTrigger("tForcePlace");
     }
 
     public override void UpdateState()
@@ -102,15 +109,7 @@ public class PlayerStateForcePlace : PlayerState
             return;
         }
 
-        TurnManager turn = TurnManager.Instance;
-
-        if (!IsActiveTurn(turn))
-        {
-            owner.ChangeState("idle");
-            return;
-        }
-
-        if (Time.timeScale <= 0f || turn.IsBattlePaused())
+        if (Time.timeScale <= 0f)
         {
             return;
         }
@@ -157,7 +156,15 @@ public class PlayerStateForcePlace : PlayerState
         }
 
         // 攻撃判定を1回だけ実行
-        ExecuteHit();
+        if (TurnManager.Instance != null) 
+        {
+            ExecuteHit();
+        }
+
+        if (TutorialManager.Instance != null)
+        {
+            ExecuteDummyAttack();
+        }
 
         // 命中・空振りにかかわらずENDへ移行
         currentPhase = ForcePlaceState.End;
@@ -197,23 +204,11 @@ public class PlayerStateForcePlace : PlayerState
 
     public bool TryHit(Player opponent)
     {
-        if (!skillActive ||
-            currentPhase != ForcePlaceState.Activate ||
-            resolvingHit ||
+        if (resolvingHit ||
             opponent == null ||
             opponent == owner ||
             !opponent.isActiveAndEnabled ||
-            !IsInHitRange(opponent))
-        {
-            return false;
-        }
-
-        TurnManager turn = TurnManager.Instance;
-
-        if (!IsActiveTurn(turn) ||
-            turn.IsBattlePaused() ||
-            Time.timeScale <= 0f ||
-            turn.GetAttackPlayer() != opponent)
+            !IsInHitRange(opponent.gameObject))
         {
             return false;
         }
@@ -227,7 +222,7 @@ public class PlayerStateForcePlace : PlayerState
                 return false;
             }
 
-            Debug.Log("ForcePlace命中：相手の駒を強制配置",owner);
+            Debug.Log("ForcePlace命中：相手の駒を強制配置", owner);
 
             return true;
         }
@@ -237,16 +232,7 @@ public class PlayerStateForcePlace : PlayerState
         }
     }
 
-    private bool IsActiveTurn(TurnManager turn)
-    {
-        return turn != null &&
-               turn.IsBattleStarted() &&
-               turn.GetCurrentStateType() == TurnStateType.Playing &&
-               turn.GetTurnCount() == activeTurn &&
-               turn.GetDefendPlayer() == owner;
-    }
-
-    private bool IsInHitRange(Player opponent)
+    private bool IsInHitRange(GameObject opponent)
     {
         if (opponent == null || owner == null)
         {
@@ -277,30 +263,30 @@ public class PlayerStateForcePlace : PlayerState
     // 攻撃判定を実行
     public void ExecuteHit()
     {
-        if (!skillActive ||
-            currentPhase != ForcePlaceState.Activate ||
-            owner == null ||
-            settings == null)
-        {
-            return;
-        }
-
         TurnManager turn = TurnManager.Instance;
 
-        if (!IsActiveTurn(turn) ||
-            turn.IsBattlePaused() ||
-            Time.timeScale <= 0f)
+        if (turn == null)
         {
             return;
         }
 
         Player opponent = turn.GetAttackPlayer();
 
-        if (opponent == null)
+        TryHit(opponent);
+    }
+
+    private void ExecuteDummyAttack()
+    {
+        // ダミーの探索
+        Dummy_Player[] dummies = GameObject.FindObjectsByType<Dummy_Player>();
+
+        foreach(var target in dummies)
         {
-            return;
+            if (IsInHitRange(target.gameObject))
+            {
+                target.HitAttack(owner);
+            }
         }
 
-        TryHit(opponent);
     }
 }

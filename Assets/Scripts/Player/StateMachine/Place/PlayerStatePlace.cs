@@ -8,9 +8,9 @@ public class PlayerStatePlace : PlayerState
     [SerializeField] private float rayDistance = 1.0f; // レイの距離
     [SerializeField] private LayerMask fieldLayer; // フィールドのレイヤーマスク
 
-    public override void EnterState(Player owner, PlayerInputReader input)
+    public override void EnterState(Player owner, PlayerInputReader input, Animator animator)
     {
-        base.EnterState(owner, input);
+        base.EnterState(owner, input, animator);
 
         owner.TryGetFieldTileBelow(rayPositionOffset, rayDistance, fieldLayer);
 
