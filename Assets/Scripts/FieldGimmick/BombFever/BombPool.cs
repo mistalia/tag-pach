@@ -11,8 +11,8 @@ public sealed class BombPool : MonoBehaviour
     [SerializeField, Min(1)]
     private int maximumSize = 50;
 
-    private readonly Queue<Bomb>    availableBombs  = new Queue<Bomb>();
-    private readonly HashSet<Bomb>  activeBombs     = new HashSet<Bomb>();
+    private readonly Queue<Bomb> availableBombs = new Queue<Bomb>();
+    private readonly HashSet<Bomb> activeBombs = new HashSet<Bomb>();
 
     private GameObject bombPrefab;
     private bool isInitialized;
@@ -20,36 +20,36 @@ public sealed class BombPool : MonoBehaviour
     public int ActiveCount => activeBombs.Count;
     public int AvailableCount => availableBombs.Count;
 
-    // BombFeverManagerからPrefabを受け取り、必要数を先に生成する
-    public void Initialize(GameObject prefab)
+    public bool Initialize(GameObject prefab)
     {
         if (isInitialized)
-            return;
+            return true;
 
         if (prefab == null)
         {
             Debug.LogError("[BombPool] Bomb Prefabが設定されていません。", this);
-            return;
+            return false;
         }
 
         if (!prefab.TryGetComponent(out Bomb _))
         {
             Debug.LogError("[BombPool] Bomb PrefabにBombコンポーネントがありません。", prefab);
-            return;
+            return false;
         }
 
-        bombPrefab      = prefab;
-        maximumSize     = Mathf.Max(initialSize, maximumSize);
-        isInitialized   = true;
+        bombPrefab = prefab;
+        maximumSize = Mathf.Max(initialSize, maximumSize);
+        isInitialized = true;
 
         for (int index = 0; index < initialSize; index++)
         {
             Bomb bomb = CreateBomb();
             Return(bomb);
         }
+
+        return true;
     }
 
-    // 使用可能なBombを取得する
     public Bomb Get()
     {
         if (!isInitialized)
@@ -65,18 +65,15 @@ public sealed class BombPool : MonoBehaviour
 
         activeBombs.Add(bomb);
         bomb.gameObject.SetActive(true);
-
         return bomb;
     }
 
-    // 使用を終えたBombをPoolへ戻す
     public void Return(Bomb bomb)
     {
         if (bomb == null)
             return;
 
         activeBombs.Remove(bomb);
-
         bomb.ResetForPool();
         bomb.transform.SetParent(transform);
         bomb.gameObject.SetActive(false);
@@ -85,16 +82,13 @@ public sealed class BombPool : MonoBehaviour
             availableBombs.Enqueue(bomb);
     }
 
-    // 現在使用中のBombをすべてPoolへ戻す
     public void ReturnAll()
     {
         Bomb[] bombs = new Bomb[activeBombs.Count];
         activeBombs.CopyTo(bombs);
 
         foreach (Bomb bomb in bombs)
-        {
             Return(bomb);
-        }
     }
 
     private Bomb GetAvailableBomb()
@@ -115,8 +109,8 @@ public sealed class BombPool : MonoBehaviour
 
     private Bomb CreateBomb()
     {
-        GameObject bombObject   = Instantiate(bombPrefab, transform);
-        Bomb bomb               = bombObject.GetComponent<Bomb>();
+        GameObject bombObject = Instantiate(bombPrefab, transform);
+        Bomb bomb = bombObject.GetComponent<Bomb>();
 
         bomb.SetPool(this);
         bombObject.SetActive(false);
