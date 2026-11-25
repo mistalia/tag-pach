@@ -343,7 +343,7 @@ public class Player : MonoBehaviour
         {
             return false;
         }
-
+        animator?.SetTrigger("tDamage");
         // 通常の配置と同じステートを使う。
         ChangeState("place");
 

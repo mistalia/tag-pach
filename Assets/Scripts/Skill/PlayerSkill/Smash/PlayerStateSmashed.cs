@@ -77,6 +77,8 @@ public class PlayerStateSmashed : PlayerState
                 owner
             );
         }
+
+        animator?.SetTrigger("tDamage");
     }
 
     // Playerがこのステートへ切り替えた直後に呼ぶ。

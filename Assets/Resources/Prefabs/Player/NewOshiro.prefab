@@ -360,7 +360,7 @@ MonoBehaviour:
   labpDevice: {fileID: 0}
   rootDisableObj: {fileID: 1935178909416537306}
   runEffect: {fileID: 8410598881715091155}
-  teamColor: {r: 0, g: 0.059121132, b: 1, a: 1}
+  teamColor: {r: 0.09955848, g: 0.57642716, b: 0.89433956, a: 1}
 --- !u!114 &9058986331295156085
 MonoBehaviour:
   m_ObjectHideFlags: 0
