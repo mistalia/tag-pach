@@ -37,18 +37,22 @@ public class FieldTile : MonoBehaviour
 
     private void Update()
     {
-        if (holo)
+        if (holo || meshRenderer == null)
         {
             return;
         }
 
-        if (PutedStone != null)
+        Color color = defaultColor;
+
+        if (PutedStone != null && PutedStone.Owner != null)
         {
             if(PutedStone.IsTransitioning)
             {
-                meshRenderer.material.SetColor("_Base_Color", Color.Lerp(PutedStone.Owner.TeamColor, defaultColor,PutedStone.CurrentProg));
+                color =  Color.Lerp(PutedStone.Owner.TeamColor, defaultColor,PutedStone.CurrentProg);
             }
         }
+
+        meshRenderer.material.SetColor("_Base_Color", color);
     }
 
     public bool PutStone(Stone stone, string effectColor = null)
@@ -131,10 +135,12 @@ public class FieldTile : MonoBehaviour
         if (PutedStone && PutedStone.IsTransitioning)
         {
             meshRenderer.material.SetColor("_Base_Color", Color.Lerp(PutedStone.Owner.TeamColor, highlightColor, PutedStone.CurrentProg));
-            
+
         }
-        
-        meshRenderer.material.SetColor("_Base_Color", highlightColor);
+        else
+        {
+            meshRenderer.material.SetColor("_Base_Color", highlightColor);
+        }
     }
 
     public void ResetTileColor()
