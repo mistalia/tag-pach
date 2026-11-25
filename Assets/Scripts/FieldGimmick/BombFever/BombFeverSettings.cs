@@ -47,15 +47,15 @@ public sealed class BombFeverSettings : ScriptableObject
     [SerializeField, Min(0.01f)]
     private float endDropIntervalScale      = 0.3f;
 
-    [Header("Spawn Mode")]
-    [SerializeField]
-    private BombSpawnMode spawnMode = BombSpawnMode.DirectSpawn;
+    [Header("Flight")]
+    [SerializeField, Min(0.0f)]
+    private float launchOutsideDistance = 3.0f;
 
     [SerializeField, Min(0.0f)]
-    private float fallingHeight = 10.0f;
+    private float arcHeight = 5.0f;
 
     [SerializeField, Min(0.01f)]
-    private float fallingSpeed  = 8.0f;
+    private float flightDuration = 1.0f;
 
     [Header("Tile Rules")]
     [SerializeField]
@@ -65,11 +65,11 @@ public sealed class BombFeverSettings : ScriptableObject
 
     public BombFeverTriggerMode TriggerMode => triggerMode;
 
-    public BombSpawnMode SpawnMode => spawnMode;
+    public float LaunchOutsideDistance => launchOutsideDistance;
 
-    public float FallingHeight => fallingHeight;
+    public float ArcHeight => arcHeight;
 
-    public float FallingSpeed => fallingSpeed;
+    public float FlightDuration => flightDuration;
 
     public bool AllowMultipleBombsOnSameTile => allowMultipleBombsOnSameTile;
 
@@ -102,8 +102,8 @@ public sealed class BombFeverSettings : ScriptableObject
 
     public bool IsValid =>  bombSettings != null && IsNonNegativeFinite(minimumStartIntervalSeconds) && IsNonNegativeFinite(maximumStartIntervalSeconds) && minimumStartIntervalTurns >= 1 &&
                             maximumStartIntervalTurns >= 1 && IsPositiveFinite(minimumFeverDuration) && IsPositiveFinite(maximumFeverDuration) && IsPositiveFinite(minimumDropInterval) &&
-                            IsPositiveFinite(maximumDropInterval) && IsPositiveFinite(startDropIntervalScale) && IsPositiveFinite(endDropIntervalScale) && IsNonNegativeFinite(fallingHeight) &&
-                            IsPositiveFinite(fallingSpeed);
+                            IsPositiveFinite(maximumDropInterval) && IsPositiveFinite(startDropIntervalScale) && IsPositiveFinite(endDropIntervalScale) &&
+                            IsNonNegativeFinite(launchOutsideDistance) &&Å@IsNonNegativeFinite(arcHeight) &&Å@IsPositiveFinite(flightDuration);
 
     private static float GetRandomRange(float valueA, float valueB)
     {
