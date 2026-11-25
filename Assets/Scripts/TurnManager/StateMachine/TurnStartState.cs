@@ -6,6 +6,7 @@ public class TurnStartState : TurnBaseState
     {
         manager.ResetTurnTimer();
         TurnUI.Instance.SetColor(manager.GetAttackPlayer().TeamColor);
+        FieldManager.Instance.SetFrameColor(manager.GetAttackPlayer().TeamColor);
     }
 
 

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LABP_Place
   MoveDuration: 0.2
   stonePrefab: {fileID: 2254132153046115247, guid: 4e62b006bd9c56d459314fd51d3fdfa1, type: 3}
+  waitTimeAfterDrop: 1.05

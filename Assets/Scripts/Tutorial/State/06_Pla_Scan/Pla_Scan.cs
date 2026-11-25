@@ -71,12 +71,14 @@ public class Pla_Scan : TutorialState
                         if (math[y][x] == 1)
                         {
                             tempStone.SetOwner(tutorialManager.GetPlayerMag());
+                            FieldManager.Instance.GetFieldTile(new Vector2Int(x + offset.x, (4 - y) + offset.y)).PutStone(tempStone, "Red");
                         }
                         if (math[y][x] == 2)
                         {
                             tempStone.SetOwner(tutorialManager.GetPlayerOsh());
+                            FieldManager.Instance.GetFieldTile(new Vector2Int(x + offset.x, (4 - y) + offset.y)).PutStone(tempStone, "Blue");
                         }
-                        FieldManager.Instance.GetFieldTile(new Vector2Int(x + offset.x, (4 - y) + offset.y)).PutStone(tempStone);
+
                         FieldManager.Instance.GetFieldTile(new Vector2Int(x + offset.x, (4 - y) + offset.y)).ResetTileColor();
                         tempStone.ResetColor();
                     }

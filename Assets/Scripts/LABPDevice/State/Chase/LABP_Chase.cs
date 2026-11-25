@@ -24,6 +24,7 @@ public class LABP_Chase : LABPState
 
         //初期位置を設定
         owner.transform.position = target.position + target.forward * chaseOffset.z + target.right * chaseOffset.x + target.up * chaseOffset.y;
+        EffectManager.Instance.PlayEffect(owner.GetSpawnEffectKey(), owner.transform.position, Quaternion.identity);
     }
 
     public override void FixedUpdateState()
@@ -35,16 +36,30 @@ public class LABP_Chase : LABPState
         //プレイヤーの向いている方向を前として、追従する対象の位置を計算
         Vector3 desiredPosition = target.position + target.forward * chaseOffset.z + target.right * chaseOffset.x + target.up * chaseOffset.y;
 
+        Vector3 previousPosition = owner.transform.position;
         //現在の位置から目標位置までイージング
-        owner.transform.position = Vector3.Lerp(owner.transform.position, desiredPosition, speed * Time.deltaTime);
+        owner.transform.position = Vector3.Lerp(previousPosition, desiredPosition, speed * Time.fixedDeltaTime);
 
         //プレイヤーの向きに合わせて回転
         Quaternion desiredRotation = Quaternion.LookRotation((target.position + target.right * chaseOffset.x + target.up * chaseOffset.y) - owner.transform.position);
-        owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+        owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, desiredRotation, rotationSpeed * Time.fixedDeltaTime);
+
+        float actualSpeed = Vector3.Distance(previousPosition, owner.transform.position) / Time.fixedDeltaTime;
+
+        if (actualSpeed > 0.5f)
+        {
+            owner.PlayMoveEffect();
+        }
+        else
+        {
+            owner.StopMoveEffect();
+        }
+
     }
 
     public override void ExitState()
     {
         base.ExitState();
+        owner.StopMoveEffect(); //移動エフェクトを停止
     }
 }
