@@ -1,50 +1,34 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-// Bomb Feverの開始・進行と、フィールド上へのBomb生成を管理する
+// Bomb Feverの開始・進行を管理する
 public sealed class BombFeverManager : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField]
     private BombFeverSettings settings;
 
-    [Header("Field Reference")]
+    [Header("References")]
     [SerializeField]
-    private Transform fieldRoot;
+    private BombSpawner bombSpawner;
 
-    [Header("Pool Reference")]
-    [SerializeField]
-    private BombPool bombPool;
-
-    private readonly List<FieldTile>                candidateTiles      = new List<FieldTile>();
-    private readonly HashSet<FieldTile>             bombOccupiedTiles   = new HashSet<FieldTile>();
-    private readonly Dictionary<Bomb, FieldTile>    bombTiles           = new Dictionary<Bomb, FieldTile>();
-
-    private FieldTile[] fieldTiles;
-
-    private float   nextFeverTimer;
-    private int     nextFeverTurn;
-    private int     lastObservedTurn;
-
-    private float   feverDuration;
-    private float   feverRemainingTime;
-    private float   nextDropTimer;
-
-    private bool    wasBattleStarted;
-    private bool    isFeverActive;
-
-    private void Awake()
-    {
-        FindFieldRoot();
-
-        if (!ValidateReferences())
-            enabled = false;
-    }
+    private float nextFeverTimer;
+    private int nextFeverTurn;
+    private int lastObservedTurn;
+    private float feverDuration;
+    private float feverRemainingTime;
+    private float nextDropTimer;
+    private bool wasBattleStarted;
+    private bool isFeverActive;
+    private bool isBattlePrepared;
+    private TurnManager observedTurnManager;
 
     private void Start()
     {
-        CacheFieldTiles();
-        bombPool.Initialize(settings.BombSettings.BombPrefab);
+        if (bombSpawner.Initialize())
+            return;
+
+        Debug.LogError("[BombFeverManager] BombSpawnerの初期化に失敗しました。", this);
+        enabled = false;
     }
 
     private void Update()
@@ -54,47 +38,30 @@ public sealed class BombFeverManager : MonoBehaviour
         if (turnManager == null)
             return;
 
+        if (observedTurnManager != turnManager)
+        {
+            HandleTurnManagerChanged(turnManager);
+            return;
+        }
+
         UpdateBattleState(turnManager);
 
         if (!CanUpdateFever(turnManager))
             return;
 
+        if (!isBattlePrepared)
+        {
+            TryPrepareForBattle(turnManager.GetTurnCount());
+            return;
+        }
+
         if (isFeverActive)
         {
-            UpdateFever();
+            UpdateFever(turnManager.GetTurnCount());
             return;
         }
 
         UpdateFeverTrigger(turnManager);
-    }
-
-    private bool ValidateReferences()
-    {
-        if (settings == null)
-        {
-            Debug.LogError("[BombFeverManager] BombFeverSettingsが設定されていません。", this);
-            return false;
-        }
-
-        if (!settings.IsValid)
-        {
-            Debug.LogError("[BombFeverManager] BombFeverSettingsの設定値が不正です。", this);
-            return false;
-        }
-
-        if (fieldRoot == null)
-        {
-            Debug.LogError("[BombFeverManager] Field Rootが設定されていません。", this);
-            return false;
-        }
-
-        if (bombPool == null)
-        {
-            Debug.LogError("[BombFeverManager] Bomb Poolが設定されていません。", this);
-            return false;
-        }
-
-        return true;
     }
 
     private bool CanUpdateFever(TurnManager turnManager)
@@ -111,50 +78,46 @@ public sealed class BombFeverManager : MonoBehaviour
         return turnManager.GetCurrentStateType() == TurnStateType.Playing;
     }
 
-    // Battle開始・終了・切り替えを監視
+    private void HandleTurnManagerChanged(TurnManager turnManager)
+    {
+        observedTurnManager = turnManager;
+        ResetBattle();
+        wasBattleStarted = false;
+        lastObservedTurn = 0;
+    }
+
+    // Battleの開始・終了とターン数のリセットを検出する
     private void UpdateBattleState(TurnManager turnManager)
     {
-        bool isBattleStarted    = turnManager.IsBattleStarted();
-        int currentTurn         = turnManager.GetTurnCount();
-
-        bool battleStartedNow   = isBattleStarted && !wasBattleStarted;
-        bool turnCountReset     = isBattleStarted && lastObservedTurn > 0 && currentTurn < lastObservedTurn;
+        bool isBattleStarted = turnManager.IsBattleStarted();
+        int currentTurn = turnManager.GetTurnCount();
+        bool battleStartedNow = isBattleStarted && !wasBattleStarted;
+        bool turnCountReset = isBattleStarted && lastObservedTurn > 0 && currentTurn < lastObservedTurn;
 
         if (battleStartedNow || turnCountReset)
         {
-            PrepareForBattle(currentTurn);
+            ResetBattle();
         }
         else if (!isBattleStarted && wasBattleStarted)
         {
-            ResetFever();
+            ResetBattle();
         }
 
         lastObservedTurn = currentTurn;
         wasBattleStarted = isBattleStarted;
     }
 
-    // 新しいBattle用にFever状態を初期化
-    private void PrepareForBattle(int currentTurn)
+    // Fieldが生成されるまで次フレーム以降も取得を試みる
+    private void TryPrepareForBattle(int currentTurn)
     {
-        CacheFieldTiles();
+        if (!bombSpawner.RefreshField())
+            return;
 
-        isFeverActive       = false;
-        feverDuration       = 0.0f;
-        feverRemainingTime  = 0.0f;
-        nextDropTimer       = 0.0f;
-
+        ResetFeverState();
         ScheduleNextFever(currentTurn);
+        isBattlePrepared = true;
     }
 
-    private void CacheFieldTiles()
-    {
-        fieldTiles = fieldRoot.GetComponentsInChildren<FieldTile>(true);
-
-        if (fieldTiles.Length == 0)
-            Debug.LogWarning("[BombFeverManager] Field Root以下にFieldTileがありません。", this);
-    }
-
-    // Fever開始方式に応じて現在の待機処理を更新
     private void UpdateFeverTrigger(TurnManager turnManager)
     {
         switch (settings.TriggerMode)
@@ -169,7 +132,6 @@ public sealed class BombFeverManager : MonoBehaviour
         }
     }
 
-    // 次回Feverの開始条件をランダムに決める
     private void ScheduleNextFever(int currentTurn)
     {
         switch (settings.TriggerMode)
@@ -203,36 +165,32 @@ public sealed class BombFeverManager : MonoBehaviour
         if (isFeverActive)
             return;
 
-        isFeverActive       = true;
-        feverDuration       = settings.GetRandomFeverDuration();
-        feverRemainingTime  = feverDuration;
-
-        // Fever開始時は最初のBombをすぐ生成
+        isFeverActive = true;
+        feverDuration = settings.GetRandomFeverDuration();
+        feverRemainingTime = feverDuration;
         nextDropTimer = 0.0f;
     }
 
-    private void UpdateFever()
+    private void UpdateFever(int currentTurn)
     {
-        feverRemainingTime  -= Time.deltaTime;
-        nextDropTimer       -= Time.deltaTime;
+        feverRemainingTime -= Time.deltaTime;
+        nextDropTimer -= Time.deltaTime;
 
         if (nextDropTimer <= 0.0f)
         {
-            TrySpawnBomb();
+            bombSpawner.TrySpawnBomb();
             nextDropTimer = GetNextDropInterval();
         }
 
         if (feverRemainingTime <= 0.0f)
-            FinishFever();
+            FinishFever(currentTurn);
     }
 
-    // Fever終盤になるほどBomb生成間隔を短くする
     private float GetNextDropInterval()
     {
-        float baseInterval  = settings.GetRandomDropInterval();
-        float progress      = GetFeverProgress();
+        float baseInterval = settings.GetRandomDropInterval();
+        float progress = GetFeverProgress();
         float intervalScale = Mathf.Lerp(settings.StartDropIntervalScale, settings.EndDropIntervalScale, progress);
-
         return baseInterval * intervalScale;
     }
 
@@ -244,179 +202,26 @@ public sealed class BombFeverManager : MonoBehaviour
         return Mathf.Clamp01(1.0f - feverRemainingTime / feverDuration);
     }
 
-    private void FinishFever()
+    private void FinishFever(int currentTurn)
     {
-        isFeverActive       = false;
-        feverDuration       = 0.0f;
-        feverRemainingTime  = 0.0f;
-        nextDropTimer       = 0.0f;
-
-        int currentTurn     = TurnManager.Instance != null ? TurnManager.Instance.GetTurnCount() : 0;
-
+        ResetFeverState();
         ScheduleNextFever(currentTurn);
     }
 
-    // 使用可能なマスを選択し、PoolからBombを取得して開始する
-    private bool TrySpawnBomb()
+    private void ResetBattle()
     {
-        if (!TryGetSpawnTile(out FieldTile selectedTile))
-            return false;
-
-        Bomb bomb = GetBombFromPool(selectedTile);
-
-        if (bomb == null)
-            return false;
-
-        RegisterBomb(bomb, selectedTile);
-        StartBomb(bomb, selectedTile);
-
-        return true;
+        ResetFeverState();
+        bombSpawner.ResetBattle();
+        nextFeverTimer = 0.0f;
+        nextFeverTurn = 0;
+        isBattlePrepared = false;
     }
 
-    // Bombを生成可能なFieldTileからランダムに1マス選ぶ
-    private bool TryGetSpawnTile(out FieldTile selectedTile)
+    private void ResetFeverState()
     {
-        selectedTile = null;
-        candidateTiles.Clear();
-
-        foreach (FieldTile tile in fieldTiles)
-        {
-            if (tile == null || !tile.isActiveAndEnabled)
-                continue;
-
-            if (!settings.AllowMultipleBombsOnSameTile && bombOccupiedTiles.Contains(tile))
-                continue;
-
-            candidateTiles.Add(tile);
-        }
-
-        if (candidateTiles.Count == 0)
-            return false;
-
-        selectedTile = candidateTiles[Random.Range(0, candidateTiles.Count)];
-
-        return true;
-    }
-
-    // PoolからBombを取得し、今回の生成位置へ移動する
-    private Bomb GetBombFromPool(FieldTile selectedTile)
-    {
-        Bomb bomb = bombPool.Get();
-
-        if (bomb == null)
-            return null;
-
-        Vector3 landingPosition = GetLandingPosition(selectedTile);
-        Vector3 spawnPosition   = GetSpawnPosition(landingPosition);
-
-        bomb.transform.SetParent(null);
-        bomb.transform.SetPositionAndRotation(spawnPosition, Quaternion.identity);
-
-        return bomb;
-    }
-
-    private Vector3 GetLandingPosition(FieldTile tile)
-    {
-        return tile.transform.position + Vector3.up * settings.BombSettings.SpawnHeight;
-    }
-
-    private Vector3 GetSpawnPosition(Vector3 landingPosition)
-    {
-        if (settings.SpawnMode == BombSpawnMode.Falling)
-            return landingPosition + Vector3.up * settings.FallingHeight;
-
-        return landingPosition;
-    }
-
-    private void StartBomb(Bomb bomb, FieldTile selectedTile)
-    {
-        BombSettings bombSettings = settings.BombSettings;
-
-        if (settings.SpawnMode == BombSpawnMode.Falling)
-        {
-            Vector3 landingPosition = GetLandingPosition(selectedTile);
-            bomb.InitializeFalling(bombSettings, landingPosition, settings.FallingSpeed);
-            return;
-        }
-
-        bomb.Initialize(bombSettings);
-    }
-
-    // Bombと生成先FieldTileの対応を記録する
-    private void RegisterBomb(Bomb bomb, FieldTile tile)
-    {
-        bombTiles.Add(bomb, tile);
-        bombOccupiedTiles.Add(tile);
-        bomb.Removed += OnBombRemoved;
-    }
-
-    // BombがPoolへ戻った後に使用中マスを解放する
-    private void OnBombRemoved(Bomb bomb)
-    {
-        bomb.Removed -= OnBombRemoved;
-
-        if (!bombTiles.TryGetValue(bomb, out FieldTile tile))
-            return;
-
-        bombTiles.Remove(bomb);
-
-        if (!HasBombOnTile(tile))
-            bombOccupiedTiles.Remove(tile);
-    }
-
-    private bool HasBombOnTile(FieldTile tile)
-    {
-        foreach (FieldTile occupiedTile in bombTiles.Values)
-        {
-            if (occupiedTile == tile)
-                return true;
-        }
-
-        return false;
-    }
-
-    private void ResetFever()
-    {
-        isFeverActive       = false;
-        nextFeverTimer      = 0.0f;
-        nextFeverTurn       = 0;
-        feverDuration       = 0.0f;
-        feverRemainingTime  = 0.0f;
-        nextDropTimer       = 0.0f;
-        lastObservedTurn    = 0;
-    }
-
-    private void OnDestroy()
-    {
-        foreach (Bomb bomb in bombTiles.Keys)
-        {
-            if (bomb != null)
-                bomb.Removed -= OnBombRemoved;
-        }
-
-        bombTiles.Clear();
-        bombOccupiedTiles.Clear();
-        candidateTiles.Clear();
-    }
-
-    private void FindFieldRoot()
-    {
-        if (fieldRoot != null)
-            return;
-
-        FieldManager manager = FindAnyObjectByType<FieldManager>();
-
-        if (manager == null)
-        {
-            Debug.LogError("FieldManagerが見つかりません。", this);
-            return;
-        }
-
-        fieldRoot = manager.transform.Find("Generated Fields");
-
-        if (fieldRoot == null)
-        {
-            Debug.LogError("Generated Fieldsが見つかりません。", this);
-        }
+        isFeverActive = false;
+        feverDuration = 0.0f;
+        feverRemainingTime = 0.0f;
+        nextDropTimer = 0.0f;
     }
 }

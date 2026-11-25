@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7980663253675712585}
   - component: {fileID: 5799461547655460781}
   - component: {fileID: 1889871769105633210}
+  - component: {fileID: 5461635337998952517}
   m_Layer: 0
   m_Name: BombFeverManager
   m_TagString: Untagged
@@ -46,8 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BombFeverManager
   settings: {fileID: 11400000, guid: 461652c855ff0034794d870a8067c5ae, type: 2}
-  fieldRoot: {fileID: 0}
-  bombPool: {fileID: 1889871769105633210}
+  bombSpawner: {fileID: 5461635337998952517}
 --- !u!114 &1889871769105633210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,3 +62,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BombPool
   initialSize: 20
   maximumSize: 50
+--- !u!114 &5461635337998952517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2610677158045485901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 758ed4d4c606fde46ba7c16f76ac3a2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BombSpawner
+  settings: {fileID: 11400000, guid: 461652c855ff0034794d870a8067c5ae, type: 2}
+  bombPool: {fileID: 1889871769105633210}
