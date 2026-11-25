@@ -57,6 +57,7 @@ public class PlayerStateSmash : PlayerState
         lastUseFrame = Time.frameCount;
         
         animator?.SetTrigger("tSmash");
+        EffectManager.Instance?.PlayEffect("Smash_" + owner.PlayerName, owner.transform.position, owner.transform.rotation);
 
         // UŒ‚”ÍˆÍ‚ğ•\¦
         ShowAttackRange(owner);

@@ -79,6 +79,7 @@ public class PlayerStateSmashed : PlayerState
         }
 
         animator?.SetTrigger("tDamage");
+        EffectManager.Instance?.PlayEffect("Damage", owner.transform.position, Quaternion.identity);
     }
 
     // Playerがこのステートへ切り替えた直後に呼ぶ。

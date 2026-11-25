@@ -73,7 +73,23 @@ MonoBehaviour:
     effectPrefab: {fileID: 9038255276488315499, guid: 378f4a050b844934cac44437790744c0, type: 3}
     defaultCapacity: 10
     maxCapacity: 15
-  - effectKey: Hit
+  - effectKey: Damage
     effectPrefab: {fileID: 7155152469153158068, guid: 9b82d2a1aea09ea46a6256175894ccef, type: 3}
     defaultCapacity: 20
     maxCapacity: 35
+  - effectKey: Smash_Osh
+    effectPrefab: {fileID: 8837483096440138485, guid: 154bc401c4fd4654b98cd90596818a0a, type: 3}
+    defaultCapacity: 3
+    maxCapacity: 8
+  - effectKey: ForcePlace_Osh
+    effectPrefab: {fileID: 8553222700815509974, guid: 75630911038c59640b8b6c364aa9c6a9, type: 3}
+    defaultCapacity: 3
+    maxCapacity: 8
+  - effectKey: Smash_Mag
+    effectPrefab: {fileID: 7020401429208862005, guid: 92a4b3eab1d159448aa0f12f475f031a, type: 3}
+    defaultCapacity: 3
+    maxCapacity: 8
+  - effectKey: ForcePlace_Mag
+    effectPrefab: {fileID: 3574679428804712948, guid: 12f11075604dd2748903fc219604a70a, type: 3}
+    defaultCapacity: 3
+    maxCapacity: 8

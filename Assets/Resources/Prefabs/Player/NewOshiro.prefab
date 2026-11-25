@@ -360,6 +360,7 @@ MonoBehaviour:
   labpDevice: {fileID: 0}
   rootDisableObj: {fileID: 0}
   runEffect: {fileID: 8410598881715091155}
+  playerName: Osh
   teamColor: {r: 0.09955848, g: 0.57642716, b: 0.89433956, a: 1}
 --- !u!114 &9058986331295156085
 MonoBehaviour:
