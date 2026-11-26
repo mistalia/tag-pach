@@ -14,6 +14,8 @@ public class TurnManager : MonoBehaviour
     [SerializeField]
     private float turnTimeLimit = 20.0f;
 
+    [SerializeField] TransitionSettings transitionSettings;
+
     // 現在のターン数
     private int turnCount = 0;
 
@@ -218,6 +220,10 @@ public class TurnManager : MonoBehaviour
         {
             DecideRandomFirstPlayer();
         }
+        else
+        {
+            SetFirstPlayer(currentAttackPlayer);
+        }
 
         turnCount = 1;
 
@@ -300,13 +306,22 @@ public class TurnManager : MonoBehaviour
             return;
         }
 
-        SetFirstPlayer(firstPlayer);
+        //SetFirstPlayer(firstPlayer);
 
         // ========================================
         // 次Battle開始
         // ========================================
 
-        StartBattle();
+        //StartBattle();
+
+        if (ControllerSessionManager.Instance.BindingMode == ControllerBindingMode.FourControllers)
+        {
+            SceneTransitionManager.Instance.LoadScene("ChangeScene", transitionSettings);
+        }
+        else
+        {
+            SceneTransitionManager.Instance.LoadScene("BindScene", transitionSettings);
+        }
     }
 
     // ========================================
