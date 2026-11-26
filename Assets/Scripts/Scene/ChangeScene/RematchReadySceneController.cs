@@ -5,7 +5,7 @@ public sealed class RematchReadySceneController : MonoBehaviour
 {
     [Header("Scene")]
     [SerializeField]
-    private string nextSceneName = "GameScene";
+    private string nextSceneName = "DefaultScene";
 
     [SerializeField]
     private TransitionSettings transitionSettings;

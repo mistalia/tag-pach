@@ -238,9 +238,6 @@ public class BattleManager : MonoBehaviour
 
     private void OnGUI()
     {
-        if (SceneManager.GetActiveScene().name != "GameScene" || SceneManager.GetSceneByName("ResultScene").isLoaded)
-            return;
-
         GUI.color = Color.black;
 
         GUI.Label(new Rect(320, 10, 300, 30), $"BATTLE : {battleCount}");
