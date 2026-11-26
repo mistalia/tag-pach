@@ -97,3 +97,7 @@ MonoBehaviour:
     effectPrefab: {fileID: 8248493441387167764, guid: 76a9035d762ed4e40bf4a5ed1aa7c657, type: 3}
     defaultCapacity: 15
     maxCapacity: 30
+  - effectKey: WarunokoSpawn
+    effectPrefab: {fileID: 8554915844643629224, guid: 73d1e4039dc9338488a59cf856de784a, type: 3}
+    defaultCapacity: 15
+    maxCapacity: 30
