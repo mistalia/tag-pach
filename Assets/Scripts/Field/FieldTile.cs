@@ -20,6 +20,7 @@ public class FieldTile : MonoBehaviour
 
     private Material defaultMaterial;
     private Color defaultColor;
+    private int baseColorProperty;
 
     private void Start()
     {
@@ -31,7 +32,8 @@ public class FieldTile : MonoBehaviour
         if(meshRenderer != null)
         {
             defaultMaterial = meshRenderer.material;
-            defaultColor = defaultMaterial.GetColor("_Base_Color");
+            baseColorProperty = Shader.PropertyToID(defaultMaterial.HasProperty("_Base_Color") ? "_Base_Color" : "_BaseColor");
+            defaultColor = defaultMaterial.GetColor(baseColorProperty);
         }
     }
 
@@ -46,7 +48,7 @@ public class FieldTile : MonoBehaviour
         {
             if(PutedStone.IsTransitioning)
             {
-                meshRenderer.material.SetColor("_Base_Color", Color.Lerp(PutedStone.Owner.TeamColor, defaultColor,PutedStone.CurrentProg));
+                meshRenderer.material.SetColor(baseColorProperty, Color.Lerp(PutedStone.Owner.TeamColor, defaultColor,PutedStone.CurrentProg));
             }
         }
     }
@@ -130,11 +132,11 @@ public class FieldTile : MonoBehaviour
 
         if (PutedStone && PutedStone.IsTransitioning)
         {
-            meshRenderer.material.SetColor("_Base_Color", Color.Lerp(PutedStone.Owner.TeamColor, highlightColor, PutedStone.CurrentProg));
+            meshRenderer.material.SetColor(baseColorProperty, Color.Lerp(PutedStone.Owner.TeamColor, highlightColor, PutedStone.CurrentProg));
             
         }
         
-        meshRenderer.material.SetColor("_Base_Color", highlightColor);
+        meshRenderer.material.SetColor(baseColorProperty, highlightColor);
     }
 
     public void ResetTileColor()
@@ -147,7 +149,7 @@ public class FieldTile : MonoBehaviour
 
         if (defaultMaterial != null)
         {
-            meshRenderer.material.SetColor("_Base_Color", defaultColor);
+            meshRenderer.material.SetColor(baseColorProperty, defaultColor);
         }
     }
 
@@ -184,6 +186,8 @@ public class FieldTile : MonoBehaviour
 
     public void SetFrameColor(Color color)
     {
-        meshRenderer.material.SetColor("_Frame_Color", color);
+        var material = meshRenderer.material;
+        if (material.HasProperty("_Frame_Color"))
+            material.SetColor("_Frame_Color", color);
     }
 }

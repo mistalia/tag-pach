@@ -173,10 +173,16 @@ public class BattleManager : MonoBehaviour
 
         if (turnManager != null)
         {
-            turnManager.EndBattle();
+            turnManager.ResetBattle();
         }
 
-        SceneManager.LoadScene("ResultScene");
+        bool player1Won = player1Wins >= requiredWins;
+        ResultSceneController.Record(battleWinner, previousLoser,
+            player1Won ? player1Wins : player2Wins,
+            player1Won ? player2Wins : player1Wins);
+
+        ResetBattle();
+        SceneManager.LoadScene("ResultScene", LoadSceneMode.Additive);
     }
 
     // ========================================
@@ -232,6 +238,9 @@ public class BattleManager : MonoBehaviour
 
     private void OnGUI()
     {
+        if (SceneManager.GetActiveScene().name != "GameScene" || SceneManager.GetSceneByName("ResultScene").isLoaded)
+            return;
+
         GUI.color = Color.black;
 
         GUI.Label(new Rect(320, 10, 300, 30), $"BATTLE : {battleCount}");

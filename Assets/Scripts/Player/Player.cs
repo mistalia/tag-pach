@@ -38,6 +38,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Color teamColor = Color.red;
     public Color TeamColor => teamColor;
 
+    [SerializeField] private Sprite resultPortrait;
+    public Sprite ResultPortrait => resultPortrait;
+
     private bool canPlaceStone = true;
     public void SetCanPlaceStone(bool value)
     {

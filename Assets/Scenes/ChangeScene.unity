@@ -1658,7 +1658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9864e034d7eea4469de042e40ba32c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RematchReadySceneController
-  nextSceneName: DefaultScene
+  nextSceneName: GameScene
   transitionSettings: {fileID: 11400000, guid: 8deb613a05f9c3c47a872a5946c44d1a, type: 2}
 --- !u!114 &1261388884
 MonoBehaviour:

@@ -629,6 +629,9 @@ public class TurnManager : MonoBehaviour
 
     private void OnGUI()
     {
+        if (UnityEngine.SceneManagement.SceneManager.GetSceneByName("ResultScene").isLoaded)
+            return;
+
         GUI.color = Color.black;
 
         float timeLimit = 0.0f;

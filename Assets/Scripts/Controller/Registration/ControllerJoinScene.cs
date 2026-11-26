@@ -6,7 +6,7 @@ public sealed class ControllerJoinScene : MonoBehaviour
 {
     // Ÿ‚É‘JˆÚ‚·‚éƒV[ƒ“–¼
     [SerializeField]
-    private string nextSceneName = "DefaultScene";
+    private string nextSceneName = "GameScene";
 
     [SerializeField]
     private TransitionSettings transitionSettings;
