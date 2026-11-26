@@ -22,6 +22,10 @@ public sealed class PlacementInputReader : MonoBehaviour
 
     private InputAction commandAction;
     private InputAction selectAction;
+
+    public Vector2 MoveValue { get; private set; }
+
+    private InputAction moveAction;
     //------------------------------------------------------------------------------
 
 
@@ -61,6 +65,11 @@ public sealed class PlacementInputReader : MonoBehaviour
 
         selectAction.performed += HandleSelect;
         selectAction.canceled += HandleSelectCanceled;
+
+        moveAction = playerInput.actions.FindAction("Placement/CommandMove", true);
+
+        moveAction.performed += HandleMove;
+        moveAction.canceled += HandleMoveCanceled;
         //------------------------------------------------------------------------------
     }
 
@@ -89,6 +98,12 @@ public sealed class PlacementInputReader : MonoBehaviour
         {
             selectAction.performed -= HandleSelect;
             selectAction.canceled -= HandleSelectCanceled;
+        }
+
+        if (moveAction != null)
+        {
+            moveAction.performed -= HandleMove;
+            moveAction.canceled -= HandleMoveCanceled;
         }
         //------------------------------------------------------------------------------
 
@@ -124,6 +139,7 @@ public sealed class PlacementInputReader : MonoBehaviour
         //------------------------------------------------------------------------------
         Command.ClearAllFlags();
         Select.ClearAllFlags();
+        MoveValue = Vector2.zero;
         //------------------------------------------------------------------------------
 
     }
@@ -167,6 +183,16 @@ public sealed class PlacementInputReader : MonoBehaviour
     private void HandleSelectCanceled(InputAction.CallbackContext context)
     {
         Select.SetReleased();
+    }
+
+    private void HandleMove(InputAction.CallbackContext context)
+    {
+        MoveValue = context.ReadValue<Vector2>();
+    }
+
+    private void HandleMoveCanceled(InputAction.CallbackContext context)
+    {
+        MoveValue = Vector2.zero;
     }
     //------------------------------------------------------------------------------
 }

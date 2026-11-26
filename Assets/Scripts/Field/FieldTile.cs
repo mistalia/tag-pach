@@ -178,6 +178,8 @@ public class FieldTile : MonoBehaviour
             return;
         }
 
+        holo = active;
+
         if (active)
         {
             meshRenderer.material = holoMaterial;
@@ -186,10 +188,10 @@ public class FieldTile : MonoBehaviour
         {
             // ホログラム終了時は必ず通常マテリアルへ
             meshRenderer.material = defaultMaterial;
-        }
 
-        holo = active;
-        
+            // 回転前のハイライト色をリセット
+            ResetTileColor();
+        }
     }
 
     public void SetFrameColor(Color color)

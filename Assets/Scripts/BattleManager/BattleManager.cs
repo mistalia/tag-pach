@@ -173,10 +173,16 @@ public class BattleManager : MonoBehaviour
 
         if (turnManager != null)
         {
-            turnManager.EndBattle();
+            turnManager.ResetBattle();
         }
 
-        SceneManager.LoadScene("ResultScene");
+        bool player1Won = player1Wins >= requiredWins;
+        ResultSceneController.Record(battleWinner, previousLoser,
+            player1Won ? player1Wins : player2Wins,
+            player1Won ? player2Wins : player1Wins);
+
+        ResetBattle();
+        SceneManager.LoadScene("ResultScene", LoadSceneMode.Additive);
     }
 
     // ========================================
