@@ -11,6 +11,9 @@ public sealed class Bomb : MonoBehaviour
     [Header("Visual References")]
     [SerializeField]
     private Renderer bombRenderer;
+    [SerializeField] ParticleSystem trailEffect;
+    [SerializeField] ParticleSystem waitingEffect;
+    [SerializeField] string explosionEffectKey = "BombExplosion";
 
     [SerializeField]
     private Transform explosionRangeVisual;
@@ -49,6 +52,9 @@ public sealed class Bomb : MonoBehaviour
         }
 
         StartCoroutine(FlyingSequence(landingPosition, arcHeight, flightDuration));
+
+        if (trailEffect != null && !trailEffect.isPlaying)
+            trailEffect.Play();
     }
 
     public void ResetForPool()
@@ -73,6 +79,12 @@ public sealed class Bomb : MonoBehaviour
         settings = bombSettings;
         hasColorProperty = false;
         hasNotifiedRemoval = false;
+
+        // 全てのエフェクトの状態を停止させる
+        if (trailEffect != null && trailEffect.isPlaying)
+            trailEffect.Stop();
+        if (waitingEffect != null && waitingEffect.isPlaying)
+            waitingEffect.Stop();
 
         if (settings == null || !settings.IsValid)
         {
@@ -160,6 +172,12 @@ public sealed class Bomb : MonoBehaviour
         }
 
         transform.position = landingPosition;
+
+        if (trailEffect != null && trailEffect.isPlaying)
+            trailEffect.Stop();
+        if (waitingEffect != null && !waitingEffect.isPlaying)
+            waitingEffect.Play();
+
         yield return ExplosionSequence();
     }
 
@@ -232,6 +250,8 @@ public sealed class Bomb : MonoBehaviour
 
         // 複数のColliderを持つPlayerへノックバックを重複適用しないため
         HashSet<Player> hitPlayers = new HashSet<Player>();
+
+        EffectManager.Instance?.PlayEffect(explosionEffectKey, transform.position, Quaternion.identity);
 
         foreach (Collider hitCollider in hitColliders)
         {

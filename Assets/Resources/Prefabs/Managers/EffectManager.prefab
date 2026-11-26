@@ -93,3 +93,7 @@ MonoBehaviour:
     effectPrefab: {fileID: 3574679428804712948, guid: 12f11075604dd2748903fc219604a70a, type: 3}
     defaultCapacity: 3
     maxCapacity: 8
+  - effectKey: BombExplosion
+    effectPrefab: {fileID: 8248493441387167764, guid: 76a9035d762ed4e40bf4a5ed1aa7c657, type: 3}
+    defaultCapacity: 15
+    maxCapacity: 30
