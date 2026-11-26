@@ -290,7 +290,9 @@ public class Player : MonoBehaviour
             ChangeState("place");
         }
 
-        UpdateCommunicationInput();
+  
+        UpdatePointCommandInput();
+
     }
 
     public bool TryGetFieldTileBelow(float rayStartHeight, float rayDistance, LayerMask fieldLayer)
@@ -467,44 +469,44 @@ public class Player : MonoBehaviour
         {
             OnStandingPiece.ResetTileColor();
             OnStandingPiece = null;
-        // Deviceへの指示入力
         }
     }
-    private void UpdateCommunicationInput()
+
+    // Deviceへの指示入力
+    private void UpdatePointCommandInput()
     {
         if (labpDevice == null || input == null)
         {
             return;
         }
 
-        // Commandボタンで開閉を切り替える
+        // コマンドボタンで開閉
         if (input.Command.Pressed)
         {
-            if (labpDevice.IsCommandOpen())
+            if (labpDevice.IsPointCommandOpen())
             {
-                labpDevice.CloseCommand();
+                labpDevice.ClosePointCommand();
             }
             else
             {
-                labpDevice.OpenCommand();
+                labpDevice.OpenPointCommand();
             }
 
             return;
         }
 
-        // 指示UIが閉じている場合
-        if (!labpDevice.IsCommandOpen())
+        if (!labpDevice.IsPointCommandOpen())
         {
             return;
         }
 
-        // スティックで方向を選択
-        labpDevice.SelectCommandDirection(input.MoveValue);
+        // マーカーを移動
+        labpDevice.SelectPointPosition(input.CommandMoveValue);
 
-        // 確定ボタン
+        // 確定
         if (input.Select.Pressed)
         {
-            labpDevice.ConfirmCommand();
+            labpDevice.ConfirmPointCommand();
         }
     }
 

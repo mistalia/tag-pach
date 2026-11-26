@@ -68,6 +68,9 @@ public sealed class PlayerInputReader : MonoBehaviour
     public InputState Command => currentPlacementInputReader?.Command;
 
     public InputState Select => currentPlacementInputReader?.Select;
+
+    public Vector2 CommandMoveValue => currentOperationInputReader != null ? currentPlacementInputReader.MoveValue : Vector2.zero;
+
     //------------------------------------------------------------------------------
 
     private void Awake()
