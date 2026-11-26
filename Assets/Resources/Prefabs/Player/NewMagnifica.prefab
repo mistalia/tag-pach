@@ -350,7 +350,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   labpDevice: {fileID: 0}
-  resultPortrait: {fileID: 21300000, guid: 5af9e71309fd5ce45bf37b32f292f042, type: 3}
   rootDisableObj: {fileID: 0}
   runEffect: {fileID: 6450756271885063044}
   teamColor: {r: 0.8867924, g: 0.23666169, b: 0.11210393, a: 1}

@@ -16,8 +16,6 @@ public sealed class ResultSceneController : MonoBehaviour
     [SerializeField] private Image opponentPortrait;
     [SerializeField] private Text caption;
     [SerializeField] private Text score;
-    [SerializeField] private Sprite oshiro;
-    [SerializeField] private Sprite magnifica;
     [SerializeField] private GameObject oshiroModel;
     [SerializeField] private GameObject magnificaModel;
     [SerializeField, Min(0)] private float entranceDuration = 0.4f;
@@ -45,9 +43,8 @@ public sealed class ResultSceneController : MonoBehaviour
         pendingResult = null;
         if (result.HasValue)
         {
-            Sprite portrait = result.Value.Winner.ResultPortrait;
-            bool isOshiro = portrait == oshiro;
-            bool isMagnifica = portrait == magnifica;
+            bool isOshiro = result.Value.Winner.PlayerName == "Osh";
+            bool isMagnifica = result.Value.Winner.PlayerName == "Mag";
             caption.text = isOshiro ? "[TagPach] マグニフィカと勝負！ 絶対勝つ！！"
                 : isMagnifica ? "[TagPach] オシロくんたちと勝負！ 絶対勝つ！！"
                 : "[TagPach] 対戦終了";
@@ -75,8 +72,8 @@ public sealed class ResultSceneController : MonoBehaviour
             result.Value.Loser.enabled = false;
             winnerPartner.enabled = false;
             Canvas.ForceUpdateCanvases();
-            ResultFieldView.Show(winnerPortrait, result.Value.Winner, true, isOshiro ? oshiroModel : magnificaModel, fieldCamera);
-            ResultFieldView.Show(opponentPortrait, result.Value.Loser, false, isOshiro ? magnificaModel : oshiroModel, fieldCamera);
+            ResultFieldView.Show(winnerPortrait, result.Value.Winner, true, GetFallbackModel(result.Value.Winner), fieldCamera);
+            ResultFieldView.Show(opponentPortrait, result.Value.Loser, false, GetFallbackModel(result.Value.Loser), fieldCamera);
         }
 
         presentation.interactable = false;
@@ -85,6 +82,13 @@ public sealed class ResultSceneController : MonoBehaviour
         canContinue = true;
         EventSystem.current?.SetSelectedGameObject(nextButton.gameObject);
     }
+
+    private GameObject GetFallbackModel(Player player) => player.PlayerName switch
+    {
+        "Osh" => oshiroModel,
+        "Mag" => magnificaModel,
+        _ => null
+    };
 
     private void ContinueToTitle()
     {
