@@ -59,15 +59,6 @@ public class Player : MonoBehaviour
     private PlayerState currentState;
     public FieldTile OnStandingPiece { get; private set; }
 
-    public enum CommandType
-    {
-        Direction, // 旧：8方向指定
-        Point      // 新：位置指定
-    }
-
-    [Header("Command Settings")]
-    [SerializeField] private CommandType commandType = CommandType.Point;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -293,16 +284,9 @@ public class Player : MonoBehaviour
             ChangeState("place");
         }
 
-        switch (commandType)
-        {
-            case CommandType.Direction:
-                UpdateCommunicationInput();
-                break;
+  
+        UpdatePointCommandInput();
 
-            case CommandType.Point:
-                UpdatePointCommandInput();
-                break;
-        }
     }
 
     public bool TryGetFieldTileBelow(float rayStartHeight, float rayDistance, LayerMask fieldLayer)
@@ -482,45 +466,6 @@ public class Player : MonoBehaviour
     }
 
     // Deviceへの指示入力
-    private void UpdateCommunicationInput()
-    {
-        if (labpDevice == null || input == null)
-        {
-            return;
-        }
-
-        // Commandボタンで開閉を切り替える
-        if (input.Command.Pressed)
-        {
-            if (labpDevice.IsCommandOpen())
-            {
-                labpDevice.CloseCommand();
-            }
-            else
-            {
-                labpDevice.OpenCommand();
-            }
-
-            return;
-        }
-
-        // 指示UIが閉じている場合
-        if (!labpDevice.IsCommandOpen())
-        {
-            return;
-        }
-
-        // スティックで方向を選択
-        labpDevice.SelectCommandDirection(input.MoveValue);
-
-        // 確定ボタン
-        if (input.Select.Pressed)
-        {
-            labpDevice.ConfirmCommand();
-        }
-    }
-
-
     private void UpdatePointCommandInput()
     {
         if (labpDevice == null || input == null)

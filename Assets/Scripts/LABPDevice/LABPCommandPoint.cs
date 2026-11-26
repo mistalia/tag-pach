@@ -2,40 +2,33 @@ using UnityEngine;
 
 public class LABP_CommandPoint : MonoBehaviour
 {
-    private Renderer[] pointRenderers;
-    private SpriteRenderer[] wheelRenderers;
+    [Header("Effect Objects")]
+    [SerializeField] private GameObject markerEffect;
+    [SerializeField] private Transform pinFront;
+
+    private ParticleSystem[] markerParticles;
+    private ParticleSystem[] pinParticles;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5.0f;
+    [SerializeField] private Vector3 spawnOffset = Vector3.zero;
 
-    private Vector3 spawnOffset = Vector3.zero;
-
-    [Header("Wheel Animation")]
+    [Header("Pin Animation")]
     [SerializeField] private float floatHeight = 0.2f;
     [SerializeField] private float floatSpeed = 3.0f;
     [SerializeField] private float displayDuration = 3.0f;
 
-    [Header("Wheel Transform")]
-    [SerializeField] private Vector3 wheelOffset = new Vector3(0f, 0.5f, 0f);
-
-    [Header("Billboard")]
-    [SerializeField] private bool useBillboard = true;
-    [SerializeField] private Vector3 billboardRotationOffset = new Vector3(0f, 0f, 180f);
-    
-    [Header("Screen Offset")]
-    [SerializeField] private float screenYOffset = 40.0f;
-    private Camera targetCamera;
+    [Header("Pin Transform")]
+    [SerializeField]
+    private Vector3 pinOffset = new Vector3(0f, 0.5f, 0f);
 
     [Header("Field")]
     private Transform fieldRoot;
     private Bounds fieldBounds;
     private bool hasFieldBounds;
 
-    private GameObject repositionMesh;
-    private Transform wheelFront;
-
     private Vector3 startPosition;
-    private Vector3 wheelInitialPosition;
+    private Vector3 pinInitialPosition;
 
     private bool isSelecting;
     private bool isConfirmed;
@@ -46,53 +39,46 @@ public class LABP_CommandPoint : MonoBehaviour
 
     private void Awake()
     {
-        Transform mesh = transform.Find("PointMesh");
-        if (mesh != null)
+        // マーカーの取得
+        if (markerEffect == null)
         {
-            repositionMesh = mesh.gameObject;
+            Transform marker =
+                transform.Find("eff_gasha_pin_marker");
+
+            if (marker != null)
+            {
+                markerEffect = marker.gameObject;
+            }
+        }
+
+        // ピンと子エフェクトを取得
+        if (pinFront != null)
+        {
+            pinInitialPosition = pinOffset;
+            pinFront.localPosition = pinInitialPosition;
+
+            pinParticles =
+                pinFront.GetComponentsInChildren<ParticleSystem>(true);
         }
         else
         {
-            Debug.LogError("PointMesh is not found", this);
+            Debug.LogError(
+                "gasha_pin is not found", this);
         }
 
-        wheelFront = transform.Find("Wheel_front");
-        if (wheelFront != null)
-        {
-            // Inspectorの配置ではなく、コード側で基準位置を決める
-            wheelInitialPosition = wheelOffset;
-            wheelFront.localPosition = wheelInitialPosition;
-        }
-        else
-        {
-            Debug.LogError("Wheel_front is not found", this);
-        }
-
-        if (repositionMesh != null)
-        {
-            pointRenderers =
-                repositionMesh.GetComponentsInChildren<Renderer>(true);
-        }
-
-        if (wheelFront != null)
-        {
-            wheelRenderers =
-                wheelFront.GetComponentsInChildren<SpriteRenderer>(true);
-        }
-
-        targetCamera = Camera.main;
+        SetupRenderOrder();
 
         Hide();
     }
 
     private void Update()
     {
-        if (!isConfirmed || wheelFront == null)
+        if (!isConfirmed)
         {
             return;
         }
 
-        UpdateWheelVisual();
+        UpdatePinVisual();
 
         confirmedTimer -= Time.deltaTime;
 
@@ -110,6 +96,7 @@ public class LABP_CommandPoint : MonoBehaviour
         }
 
         FieldManager manager = FieldManager.Instance;
+
         if (manager == null)
         {
             manager = FindAnyObjectByType<FieldManager>();
@@ -117,7 +104,9 @@ public class LABP_CommandPoint : MonoBehaviour
 
         if (manager == null)
         {
-            Debug.LogError("FieldManagerが見つかりません。", this);
+            Debug.LogError(
+                "FieldManagerが見つかりません。", this);
+
             return;
         }
 
@@ -125,7 +114,8 @@ public class LABP_CommandPoint : MonoBehaviour
 
         if (fieldRoot == null)
         {
-            Debug.LogError("Generated Fieldsが見つかりません。", this);
+            Debug.LogError(
+                "Generated Fieldsが見つかりません。", this);
         }
     }
 
@@ -151,6 +141,7 @@ public class LABP_CommandPoint : MonoBehaviour
             }
 
             Collider col = tile.GetComponent<Collider>();
+
             if (col == null)
             {
                 continue;
@@ -196,18 +187,24 @@ public class LABP_CommandPoint : MonoBehaviour
         isConfirmed = false;
         confirmedTimer = 0.0f;
 
-        if (repositionMesh != null)
-        {
-            repositionMesh.SetActive(true);
-        }
-
-        if (wheelFront != null)
-        {
-            wheelFront.localPosition = wheelInitialPosition;
-            wheelFront.gameObject.SetActive(false);
-        }
-
         gameObject.SetActive(true);
+
+        // マーカー表示・再生
+        if (markerEffect != null)
+        {
+            markerEffect.SetActive(true);
+
+            PlayParticles(markerParticles);
+        }
+
+        // 確定前はピンを非表示
+        if (pinFront != null)
+        {
+            StopParticles(pinParticles);
+
+            pinFront.localPosition = pinInitialPosition;
+            pinFront.gameObject.SetActive(false);
+        }
     }
 
     public void MoveMarker(Vector2 input)
@@ -217,10 +214,11 @@ public class LABP_CommandPoint : MonoBehaviour
             return;
         }
 
-        Vector3 direction = new Vector3(
-            input.x, 0.0f, input.y);
+        Vector3 direction =
+            new Vector3(input.x, 0.0f, input.y);
 
-        direction = Vector3.ClampMagnitude(direction, 1.0f);
+        direction =
+            Vector3.ClampMagnitude(direction, 1.0f);
 
         Vector3 nextPosition =
             transform.position +
@@ -253,12 +251,14 @@ public class LABP_CommandPoint : MonoBehaviour
         isConfirmed = true;
         confirmedTimer = displayDuration;
 
-        if (wheelFront != null)
+        // 確定後はピンと子エフェクトを表示
+        if (pinFront != null)
         {
-            wheelFront.gameObject.SetActive(true);
+            pinFront.gameObject.SetActive(true);
 
-            // 最初のフレームから位置を合わせる
-            UpdateWheelVisual();
+            UpdatePinVisual();
+
+            PlayParticles(pinParticles);
         }
     }
 
@@ -268,10 +268,21 @@ public class LABP_CommandPoint : MonoBehaviour
         isConfirmed = false;
         confirmedTimer = 0.0f;
 
-        if (wheelFront != null)
+        // マーカー停止
+        StopParticles(markerParticles);
+
+        if (markerEffect != null)
         {
-            wheelFront.localPosition = wheelInitialPosition;
-            wheelFront.gameObject.SetActive(false);
+            markerEffect.SetActive(false);
+        }
+
+        // ピン停止
+        StopParticles(pinParticles);
+
+        if (pinFront != null)
+        {
+            pinFront.localPosition = pinInitialPosition;
+            pinFront.gameObject.SetActive(false);
         }
 
         gameObject.SetActive(false);
@@ -282,96 +293,104 @@ public class LABP_CommandPoint : MonoBehaviour
         return transform.position;
     }
 
-    public void SetTeamColor(Color color)
+    // ========================================
+    // ParticleSystem制御
+    // ========================================
+
+    private void PlayParticles(ParticleSystem[] particles)
     {
-        if (pointRenderers != null)
+        if (particles == null)
         {
-            foreach (Renderer renderer in pointRenderers)
-            {
-                foreach (Material material in renderer.materials)
-                {
-                    if (material.HasProperty("_BaseColor"))
-                    {
-                        material.SetColor("_BaseColor", color);
-                    }
-                    else if (material.HasProperty("_Color"))
-                    {
-                        material.SetColor("_Color", color);
-                    }
-                }
-            }
+            return;
         }
 
-        if (wheelRenderers != null)
+        foreach (ParticleSystem particle in particles)
         {
-            foreach (SpriteRenderer renderer in wheelRenderers)
+            if (particle == null)
             {
-                renderer.color = color;
+                continue;
             }
+
+            particle.Stop(
+                false,
+                ParticleSystemStopBehavior.StopEmittingAndClear);
+
+            particle.Play(false);
         }
     }
 
-    private void UpdateWheelVisual()
+    private void StopParticles(ParticleSystem[] particles)
     {
-        if (wheelFront == null)
+        if (particles == null)
         {
             return;
         }
 
-        if (targetCamera == null)
+        foreach (ParticleSystem particle in particles)
         {
-            targetCamera = Camera.main;
-        }
+            if (particle == null)
+            {
+                continue;
+            }
 
-        if (targetCamera == null)
+            particle.Stop(
+                false,
+                ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+    }
+
+    // ========================================
+    // ピンの表示位置・アニメーション
+    // ========================================
+
+    private void UpdatePinVisual()
+    {
+        if (pinFront == null)
         {
             return;
-        }
-
-        Vector3 pointPosition = repositionMesh != null
-            ? repositionMesh.transform.position
-            : transform.position;
-
-        // 円の画面座標を取得
-        Vector3 screenPosition =
-            targetCamera.WorldToScreenPoint(pointPosition);
-
-        // 画面上で三角形を上にずらす
-        screenPosition.y += screenYOffset;
-
-        // 三角形の基準高さ
-        float baseY =
-            transform.position.y + wheelOffset.y;
-
-        Ray ray =
-            targetCamera.ScreenPointToRay(screenPosition);
-
-        Plane plane = new Plane(
-            Vector3.up,
-            new Vector3(0f, baseY, 0f));
-
-        Vector3 basePosition =
-            pointPosition + Vector3.up * wheelOffset.y;
-
-        if (plane.Raycast(ray, out float distance))
-        {
-            basePosition = ray.GetPoint(distance);
         }
 
         // 上下アニメーション
         float offset =
             Mathf.Sin(Time.time * floatSpeed) * floatHeight;
 
-        wheelFront.position =
-            basePosition + Vector3.up * offset;
+        pinFront.localPosition =
+            pinInitialPosition + Vector3.up * offset;
+    }
 
-        // ビルボード
-        if (useBillboard)
+    private void SetupRenderOrder()
+    {
+        // 地面マーカー
+        if (markerEffect != null)
         {
-            wheelFront.rotation =
-                targetCamera.transform.rotation *
-                Quaternion.Euler(billboardRotationOffset);
+            Renderer[] renderers =
+                markerEffect.GetComponentsInChildren<Renderer>(true);
+
+            foreach (Renderer renderer in renderers)
+            {
+                renderer.sortingOrder = 0;
+            }
+        }
+
+        // ピンと背面エフェクト
+        if (pinFront != null)
+        {
+            Renderer[] renderers =
+                pinFront.GetComponentsInChildren<Renderer>(true);
+
+            foreach (Renderer renderer in renderers)
+            {
+                if (renderer is ParticleSystemRenderer)
+                {
+                    // ピンの背面エフェクト
+                    renderer.sortingOrder = 10;
+                }
+                else
+                {
+                    // ピン本体
+                    renderer.sortingOrder = 20;
+                }
+            }
         }
     }
 }
-

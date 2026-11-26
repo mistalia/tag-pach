@@ -33,13 +33,6 @@ public class LABPCommandPointController : MonoBehaviour
         {
             return;
         }
-
-        Player player = device.GetPlayer();
-
-        if (player != null)
-        {
-            commandPoint.SetTeamColor(player.TeamColor);
-        }
     }
 
     // =====================================
