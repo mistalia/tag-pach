@@ -119,6 +119,96 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &285009
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 285010}
+  - component: {fileID: 285012}
+  - component: {fileID: 285011}
+  m_Layer: 0
+  m_Name: Cube (15)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &285010
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285009}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.33, y: 0.11, z: 15.7}
+  m_LocalScale: {x: 1.6376845, y: 4.931064, z: 13.478334}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 19983456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &285011
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285009}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 17539a614f23ac342bacd643ff01c410, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &285012
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285009}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &13691280
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +344,8 @@ Transform:
   - {fileID: 316425444}
   - {fileID: 1235897387}
   - {fileID: 990246657}
-  - {fileID: 1969355826}
+  - {fileID: 1404516712}
+  - {fileID: 285010}
   m_Father: {fileID: 644087788}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &31111985
@@ -309,6 +400,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 1, y: 6}
+  frameIntensity: 3
 --- !u!65 &31111988
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -452,6 +544,7 @@ RectTransform:
   m_Children:
   - {fileID: 1377695106}
   - {fileID: 98186010}
+  - {fileID: 146530656}
   m_Father: {fileID: 926805152}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
@@ -676,6 +769,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 1, y: 4}
+  frameIntensity: 3
 --- !u!65 &39764850
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -859,6 +953,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 4, y: 2}
+  frameIntensity: 3
 --- !u!65 &44051560
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -932,6 +1027,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 11, y: 6}
+  frameIntensity: 3
 --- !u!65 &46246361
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1379,6 +1475,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 10, y: 3}
+  frameIntensity: 3
 --- !u!65 &108514003
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1452,6 +1549,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 8, y: 1}
+  frameIntensity: 3
 --- !u!65 &110005223
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1833,6 +1931,81 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142258210}
   m_Mesh: {fileID: 4300000, guid: ca09d6a5122532742a0d26707decd665, type: 2}
+--- !u!1 &146530655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 146530656}
+  - component: {fileID: 146530658}
+  - component: {fileID: 146530657}
+  m_Layer: 5
+  m_Name: 'Icon '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &146530656
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146530655}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 33304793}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 30, y: 45}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &146530657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146530655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 35d57b2df166d6546b8cbbdf9f39fb1f, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &146530658
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146530655}
+  m_CullTransparentMesh: 1
 --- !u!1 &162570799
 GameObject:
   m_ObjectHideFlags: 0
@@ -1885,6 +2058,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 9, y: 2}
+  frameIntensity: 3
 --- !u!65 &162570802
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2186,6 +2360,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 7, y: 4}
+  frameIntensity: 3
 --- !u!65 &217480039
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2349,6 +2524,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 2, y: 6}
+  frameIntensity: 3
 --- !u!65 &242166889
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2639,6 +2815,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 5, y: 4}
+  frameIntensity: 3
 --- !u!65 &265844019
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2712,6 +2889,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 9, y: 7}
+  frameIntensity: 3
 --- !u!65 &266171421
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2875,6 +3053,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 1, y: 3}
+  frameIntensity: 3
 --- !u!65 &287829926
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2948,6 +3127,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 9, y: 3}
+  frameIntensity: 3
 --- !u!65 &298661528
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2969,6 +3149,81 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &298764638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 298764639}
+  - component: {fileID: 298764641}
+  - component: {fileID: 298764640}
+  m_Layer: 5
+  m_Name: 'Icon '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &298764639
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298764638}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 958251944}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 30, y: 54}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &298764640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298764638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 8ada282686dae8348a549511d5b57b1a, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &298764641
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298764638}
+  m_CullTransparentMesh: 1
 --- !u!1 &310911484
 GameObject:
   m_ObjectHideFlags: 0
@@ -3291,6 +3546,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 0, y: 3}
+  frameIntensity: 3
 --- !u!65 &317991499
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3343,6 +3599,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 507867986}
+  - {fileID: 622606202}
   m_Father: {fileID: 245555090}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
@@ -3419,6 +3676,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 192112454}
+  - {fileID: 873476198}
   m_Father: {fileID: 385503066}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
@@ -3606,6 +3864,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 3, y: 2}
+  frameIntensity: 3
 --- !u!65 &347904660
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3769,6 +4028,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 4, y: 1}
+  frameIntensity: 3
 --- !u!65 &381364327
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4239,6 +4499,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 5, y: 0}
+  frameIntensity: 3
 --- !u!65 &410773744
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4368,6 +4629,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 10, y: 1}
+  frameIntensity: 3
 --- !u!65 &421499717
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4441,6 +4703,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 7, y: 1}
+  frameIntensity: 3
 --- !u!65 &423750641
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4756,6 +5019,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 8, y: 0}
+  frameIntensity: 3
 --- !u!65 &445360026
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4829,6 +5093,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 4, y: 6}
+  frameIntensity: 3
 --- !u!65 &457023844
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5247,6 +5512,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 3, y: 1}
+  frameIntensity: 3
 --- !u!65 &497183598
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5495,6 +5761,81 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505074097}
   m_Mesh: {fileID: 4300000, guid: ca09d6a5122532742a0d26707decd665, type: 2}
+--- !u!1 &506119118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 506119119}
+  - component: {fileID: 506119121}
+  - component: {fileID: 506119120}
+  m_Layer: 5
+  m_Name: Icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &506119119
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506119118}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1364243195}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -30, y: 54}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &506119120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506119118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 5b77ae9861b496f44a4398ff8b4ec6b1, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &506119121
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506119118}
+  m_CullTransparentMesh: 1
 --- !u!1 &507867985
 GameObject:
   m_ObjectHideFlags: 0
@@ -5811,6 +6152,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 7, y: 3}
+  frameIntensity: 3
 --- !u!65 &526648939
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6354,6 +6696,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 11, y: 7}
+  frameIntensity: 3
 --- !u!65 &563854499
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6607,6 +6950,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 0, y: 0}
+  frameIntensity: 3
 --- !u!65 &578242586
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6680,6 +7024,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 0, y: 2}
+  frameIntensity: 3
 --- !u!65 &584435932
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6791,6 +7136,81 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 603362259}
   m_Mesh: {fileID: 4300000, guid: ca09d6a5122532742a0d26707decd665, type: 2}
+--- !u!1 &622606201
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 622606202}
+  - component: {fileID: 622606204}
+  - component: {fileID: 622606203}
+  m_Layer: 5
+  m_Name: 'Icon '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &622606202
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622606201}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 318412102}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 29.999908, y: 45}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &622606203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622606201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 35d57b2df166d6546b8cbbdf9f39fb1f, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &622606204
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622606201}
+  m_CullTransparentMesh: 1
 --- !u!1 &635815435
 GameObject:
   m_ObjectHideFlags: 0
@@ -6843,6 +7263,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 3, y: 0}
+  frameIntensity: 3
 --- !u!65 &635815438
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7142,6 +7563,81 @@ MonoBehaviour:
   cameraFOVMin: 50
   cameraFOVMax: 60
   chaseBoxInsideRatio: 0.8
+--- !u!1 &665833678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 665833679}
+  - component: {fileID: 665833681}
+  - component: {fileID: 665833680}
+  m_Layer: 5
+  m_Name: 'Icon '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &665833679
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665833678}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1588207698}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 30, y: 54}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &665833680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665833678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 8ada282686dae8348a549511d5b57b1a, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &665833681
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665833678}
+  m_CullTransparentMesh: 1
 --- !u!1 &667829628
 GameObject:
   m_ObjectHideFlags: 0
@@ -7194,6 +7690,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 7, y: 6}
+  frameIntensity: 3
 --- !u!65 &667829631
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7267,6 +7764,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 2, y: 0}
+  frameIntensity: 3
 --- !u!65 &691920169
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7430,6 +7928,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 8, y: 7}
+  frameIntensity: 3
 --- !u!65 &699808749
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7593,6 +8092,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 3, y: 7}
+  frameIntensity: 3
 --- !u!65 &705763371
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7666,6 +8166,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 4, y: 4}
+  frameIntensity: 3
 --- !u!65 &709726116
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7829,6 +8330,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 11, y: 0}
+  frameIntensity: 3
 --- !u!65 &765093344
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7850,6 +8352,81 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &776063895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 776063896}
+  - component: {fileID: 776063898}
+  - component: {fileID: 776063897}
+  m_Layer: 5
+  m_Name: Icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &776063896
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776063895}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2070520772}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -30, y: 54}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &776063897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776063895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 5af9e71309fd5ce45bf37b32f292f042, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &776063898
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776063895}
+  m_CullTransparentMesh: 1
 --- !u!1 &776425981
 GameObject:
   m_ObjectHideFlags: 0
@@ -8082,6 +8659,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 3, y: 6}
+  frameIntensity: 3
 --- !u!65 &789137855
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8245,6 +8823,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 11, y: 4}
+  frameIntensity: 3
 --- !u!65 &801056081
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8318,6 +8897,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 6, y: 3}
+  frameIntensity: 3
 --- !u!65 &803878039
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8481,6 +9061,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 4, y: 5}
+  frameIntensity: 3
 --- !u!65 &814963163
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8655,6 +9236,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 5, y: 2}
+  frameIntensity: 3
 --- !u!65 &843151011
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8728,6 +9310,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 0, y: 4}
+  frameIntensity: 3
 --- !u!65 &850277693
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8839,6 +9422,81 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 858980074}
   m_Mesh: {fileID: 4300000, guid: ca09d6a5122532742a0d26707decd665, type: 2}
+--- !u!1 &873476197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 873476198}
+  - component: {fileID: 873476200}
+  - component: {fileID: 873476199}
+  m_Layer: 5
+  m_Name: 'Icon '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &873476198
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873476197}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 322273262}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 29.999908, y: 45}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &873476199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873476197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 35d57b2df166d6546b8cbbdf9f39fb1f, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &873476200
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873476197}
+  m_CullTransparentMesh: 1
 --- !u!1 &892958534
 GameObject:
   m_ObjectHideFlags: 0
@@ -8891,6 +9549,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 7, y: 0}
+  frameIntensity: 3
 --- !u!65 &892958537
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9107,6 +9766,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 6, y: 0}
+  frameIntensity: 3
 --- !u!65 &935255004
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9270,6 +9930,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 5, y: 1}
+  frameIntensity: 3
 --- !u!65 &951993632
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9322,6 +9983,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1713939532}
+  - {fileID: 298764639}
   m_Father: {fileID: 1659560748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
@@ -9509,6 +10171,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 1, y: 1}
+  frameIntensity: 3
 --- !u!65 &972568920
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9672,6 +10335,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 6, y: 6}
+  frameIntensity: 3
 --- !u!65 &980037715
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9925,6 +10589,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 9, y: 6}
+  frameIntensity: 3
 --- !u!65 &998356556
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9998,6 +10663,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 9, y: 4}
+  frameIntensity: 3
 --- !u!65 &998879295
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10071,6 +10737,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 5, y: 3}
+  frameIntensity: 3
 --- !u!65 &1014965000
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10144,6 +10811,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 2, y: 7}
+  frameIntensity: 3
 --- !u!65 &1027945175
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10307,6 +10975,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 2, y: 5}
+  frameIntensity: 3
 --- !u!65 &1044976363
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11057,6 +11726,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 1, y: 0}
+  frameIntensity: 3
 --- !u!65 &1120717328
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11135,6 +11805,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 10, y: 2}
+  frameIntensity: 3
 --- !u!65 &1133036907
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11478,6 +12149,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 7, y: 7}
+  frameIntensity: 3
 --- !u!65 &1154674476
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11551,6 +12223,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 5, y: 5}
+  frameIntensity: 3
 --- !u!65 &1167357947
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11624,6 +12297,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 11, y: 3}
+  frameIntensity: 3
 --- !u!65 &1172756033
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11697,6 +12371,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 2, y: 2}
+  frameIntensity: 3
 --- !u!65 &1184467715
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11907,6 +12582,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 0, y: 1}
+  frameIntensity: 3
 --- !u!65 &1184915688
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12070,6 +12746,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 2, y: 4}
+  frameIntensity: 3
 --- !u!65 &1194841947
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12174,6 +12851,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 3, y: 4}
+  frameIntensity: 3
 --- !u!65 &1221090442
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12247,6 +12925,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 7, y: 2}
+  frameIntensity: 3
 --- !u!65 &1222420322
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12459,6 +13138,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 0, y: 7}
+  frameIntensity: 3
 --- !u!65 &1238288985
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12532,6 +13212,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 6, y: 7}
+  frameIntensity: 3
 --- !u!65 &1241608265
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12770,6 +13451,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 10, y: 4}
+  frameIntensity: 3
 --- !u!65 &1270951153
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12912,6 +13594,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2022684859}
+  - {fileID: 1835050152}
   m_Father: {fileID: 385503066}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
@@ -13230,6 +13913,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 8, y: 6}
+  frameIntensity: 3
 --- !u!65 &1316073299
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13303,6 +13987,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 11, y: 2}
+  frameIntensity: 3
 --- !u!65 &1316718882
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13376,6 +14061,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 4, y: 7}
+  frameIntensity: 3
 --- !u!65 &1318244176
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13449,6 +14135,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 7, y: 5}
+  frameIntensity: 3
 --- !u!65 &1323327942
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13720,6 +14407,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 5, y: 7}
+  frameIntensity: 3
 --- !u!65 &1334397774
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13846,6 +14534,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 1, y: 7}
+  frameIntensity: 3
 --- !u!65 &1362555872
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13898,6 +14587,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2080882404}
+  - {fileID: 506119119}
   m_Father: {fileID: 521895362}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
@@ -14085,6 +14775,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 6, y: 1}
+  frameIntensity: 3
 --- !u!65 &1370296983
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14451,6 +15142,96 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1404213499}
   m_Mesh: {fileID: 4300000, guid: ca09d6a5122532742a0d26707decd665, type: 2}
+--- !u!1 &1404516711
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1404516712}
+  - component: {fileID: 1404516714}
+  - component: {fileID: 1404516713}
+  m_Layer: 0
+  m_Name: Cube (14)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1404516712
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404516711}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 21.07, y: 0.11, z: 15.7}
+  m_LocalScale: {x: 1.6376845, y: 4.931064, z: 13.478334}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 19983456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1404516713
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404516711}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 17539a614f23ac342bacd643ff01c410, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1404516714
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404516711}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1415961386
 GameObject:
   m_ObjectHideFlags: 0
@@ -14583,6 +15364,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1429048189
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1429048190}
+  - component: {fileID: 1429048192}
+  - component: {fileID: 1429048191}
+  m_Layer: 5
+  m_Name: 'Icon '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1429048190
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429048189}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1995811621}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -30, y: 54}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1429048191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429048189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 5b77ae9861b496f44a4398ff8b4ec6b1, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1429048192
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429048189}
+  m_CullTransparentMesh: 1
 --- !u!1 &1442690615
 GameObject:
   m_ObjectHideFlags: 0
@@ -14958,6 +15814,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 0, y: 5}
+  frameIntensity: 3
 --- !u!65 &1465401447
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15031,6 +15888,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 8, y: 5}
+  frameIntensity: 3
 --- !u!65 &1466105575
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15284,6 +16142,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 9, y: 1}
+  frameIntensity: 3
 --- !u!65 &1520182908
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15485,6 +16344,81 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1544158898}
   m_Mesh: {fileID: 4300000, guid: ca09d6a5122532742a0d26707decd665, type: 2}
+--- !u!1 &1545054571
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1545054572}
+  - component: {fileID: 1545054574}
+  - component: {fileID: 1545054573}
+  m_Layer: 5
+  m_Name: Icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1545054572
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545054571}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2075241795}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -30, y: 54}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1545054573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545054571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 5af9e71309fd5ce45bf37b32f292f042, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1545054574
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545054571}
+  m_CullTransparentMesh: 1
 --- !u!1 &1545304222
 GameObject:
   m_ObjectHideFlags: 0
@@ -15537,6 +16471,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 1, y: 5}
+  frameIntensity: 3
 --- !u!65 &1545304225
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15790,6 +16725,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 11, y: 5}
+  frameIntensity: 3
 --- !u!65 &1576594063
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15953,6 +16889,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 6, y: 2}
+  frameIntensity: 3
 --- !u!65 &1582104213
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16026,6 +16963,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 9, y: 5}
+  frameIntensity: 3
 --- !u!65 &1582834143
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16099,6 +17037,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 9, y: 0}
+  frameIntensity: 3
 --- !u!65 &1582996113
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16182,6 +17121,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1184702285}
+  - {fileID: 665833679}
   m_Father: {fileID: 521895362}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
@@ -16279,6 +17219,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 3, y: 5}
+  frameIntensity: 3
 --- !u!65 &1596501525
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16715,38 +17656,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1376382998511514773, guid: 915b94a94df07ec4c978bf6aefb08619, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1645473830}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 915b94a94df07ec4c978bf6aefb08619, type: 3}
---- !u!1 &1645473829 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1376382998511514773, guid: 915b94a94df07ec4c978bf6aefb08619, type: 3}
-  m_PrefabInstance: {fileID: 1645473828}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1645473830
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1645473829}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: ca09d6a5122532742a0d26707decd665, type: 2}
 --- !u!1 &1659560747
 GameObject:
   m_ObjectHideFlags: 0
@@ -16984,6 +17895,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 10, y: 5}
+  frameIntensity: 3
 --- !u!65 &1685399904
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17268,6 +18180,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 4, y: 0}
+  frameIntensity: 3
 --- !u!65 &1698914819
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17341,6 +18254,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 11, y: 1}
+  frameIntensity: 3
 --- !u!65 &1703511719
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17504,6 +18418,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 10, y: 6}
+  frameIntensity: 3
 --- !u!65 &1709561838
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17984,6 +18899,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 6, y: 5}
+  frameIntensity: 3
 --- !u!65 &1749509114
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18237,6 +19153,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 2, y: 3}
+  frameIntensity: 3
 --- !u!65 &1769883442
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18562,6 +19479,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 8, y: 2}
+  frameIntensity: 3
 --- !u!65 &1824978262
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18810,6 +19728,81 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1831967359}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1835050151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1835050152}
+  - component: {fileID: 1835050154}
+  - component: {fileID: 1835050153}
+  m_Layer: 5
+  m_Name: Icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1835050152
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835050151}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1306886914}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -30, y: 54}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1835050153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835050151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 5af9e71309fd5ce45bf37b32f292f042, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1835050154
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835050151}
+  m_CullTransparentMesh: 1
 --- !u!1 &1855069967
 GameObject:
   m_ObjectHideFlags: 0
@@ -18862,6 +19855,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 8, y: 3}
+  frameIntensity: 3
 --- !u!65 &1855069970
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19115,6 +20109,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 4, y: 3}
+  frameIntensity: 3
 --- !u!65 &1882199279
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19403,6 +20398,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 2, y: 1}
+  frameIntensity: 3
 --- !u!65 &1954137067
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19424,96 +20420,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1969355825
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1969355826}
-  - component: {fileID: 1969355828}
-  - component: {fileID: 1969355827}
-  m_Layer: 0
-  m_Name: Cube (14)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1969355826
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969355825}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.69, y: -4.44, z: 1.99}
-  m_LocalScale: {x: 78.24609, y: 0.10698024, z: 78.24609}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 19983456}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &1969355827
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969355825}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 17539a614f23ac342bacd643ff01c410, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1969355828
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969355825}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1974837873
 GameObject:
   m_ObjectHideFlags: 0
@@ -19778,6 +20684,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1061608051}
+  - {fileID: 1429048190}
   m_Father: {fileID: 1659560748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
@@ -19965,6 +20872,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 5, y: 6}
+  frameIntensity: 3
 --- !u!65 &2013717053
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20322,6 +21230,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 6, y: 4}
+  frameIntensity: 3
 --- !u!65 &2026778964
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20730,6 +21639,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 0, y: 6}
+  frameIntensity: 3
 --- !u!65 &2056299227
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20873,6 +21783,7 @@ RectTransform:
   m_Children:
   - {fileID: 488232312}
   - {fileID: 1827110646}
+  - {fileID: 776063896}
   m_Father: {fileID: 926805152}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
@@ -20949,6 +21860,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 501232776}
+  - {fileID: 1545054572}
   m_Father: {fileID: 245555090}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
@@ -21183,6 +22095,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 10, y: 0}
+  frameIntensity: 3
 --- !u!65 &2085268804
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21256,6 +22169,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 1, y: 2}
+  frameIntensity: 3
 --- !u!65 &2085310460
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21468,6 +22382,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 10, y: 7}
+  frameIntensity: 3
 --- !u!65 &2104544167
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21721,6 +22636,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 8, y: 4}
+  frameIntensity: 3
 --- !u!65 &2116566133
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21884,6 +22800,7 @@ MonoBehaviour:
   effect_Red: Field_Red
   effect_Blue: Field_Blue
   coordinate: {x: 3, y: 3}
+  frameIntensity: 3
 --- !u!65 &2125617687
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22264,17 +23181,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueLine
       objectReference: {fileID: 0}
-    - target: {fileID: 2428823283994202610, guid: b8323ba005549884dbb6433a4670cff6, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 2879378715991171615, guid: b8323ba005549884dbb6433a4670cff6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9997248
       objectReference: {fileID: 0}
-    - target: {fileID: 2682157697741722099, guid: b8323ba005549884dbb6433a4670cff6, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 2879378715991171615, guid: b8323ba005549884dbb6433a4670cff6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4492984402402475066, guid: b8323ba005549884dbb6433a4670cff6, type: 3}
-      propertyPath: inputDurationTime
-      value: 1
+    - target: {fileID: 2879378715991171615, guid: b8323ba005549884dbb6433a4670cff6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2879378715991171615, guid: b8323ba005549884dbb6433a4670cff6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.023457905
+      objectReference: {fileID: 0}
+    - target: {fileID: 2879378715991171615, guid: b8323ba005549884dbb6433a4670cff6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -35.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2879378715991171615, guid: b8323ba005549884dbb6433a4670cff6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2879378715991171615, guid: b8323ba005549884dbb6433a4670cff6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 2.688
+      objectReference: {fileID: 0}
+    - target: {fileID: 8610049272334509915, guid: b8323ba005549884dbb6433a4670cff6, type: 3}
+      propertyPath: m_margin.w
+      value: 12.8770275
+      objectReference: {fileID: 0}
+    - target: {fileID: 8610049272334509915, guid: b8323ba005549884dbb6433a4670cff6, type: 3}
+      propertyPath: m_margin.z
+      value: -61.77881
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

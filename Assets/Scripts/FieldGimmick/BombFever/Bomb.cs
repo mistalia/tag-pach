@@ -51,6 +51,7 @@ public sealed class Bomb : MonoBehaviour
             return;
         }
 
+        SEManager.Instance?.PlaySE("Bomb_Throw");
         StartCoroutine(FlyingSequence(landingPosition, arcHeight, flightDuration));
 
         if (trailEffect != null && !trailEffect.isPlaying)
@@ -178,6 +179,7 @@ public sealed class Bomb : MonoBehaviour
         if (waitingEffect != null && !waitingEffect.isPlaying)
             waitingEffect.Play();
 
+        SEManager.Instance?.PlaySE("Bomb_Wait", transform.position);
         yield return ExplosionSequence();
     }
 
@@ -252,6 +254,7 @@ public sealed class Bomb : MonoBehaviour
         HashSet<Player> hitPlayers = new HashSet<Player>();
 
         EffectManager.Instance?.PlayEffect(explosionEffectKey, transform.position, Quaternion.identity);
+        SEManager.Instance?.PlaySE("Bomb_Explosion", transform.position);
 
         foreach (Collider hitCollider in hitColliders)
         {

@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Dialogue_Reset
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   lines:
-  - speakerName: "\u30B3\u30DE\u30CE\u30B3"
-    message: "\u305D\u3053\u3058\u3083\u306A\u3044\u30CE\u30C0\u3001\u3082\u4E00\u56DE\u3084\u3063\u3066\u307F\u308B\u30CE\u30C0\u3002"
-    portrait: {fileID: 21300000, guid: 18ff807223c98314fafb93ccff7445df, type: 3}
+  - message: "\u305D\u3053\u3058\u3083\u306A\u3044\u30CE\u30C0\u3001\u3082\u4E00\u56DE\u3084\u3063\u3066\u307F\u308B\u30CE\u30C0\u3002"
+    portrait: {fileID: 21300000, guid: b29ff7a0a03ffe44781e32ef60ad8553, type: 3}
   IsFinished: 0

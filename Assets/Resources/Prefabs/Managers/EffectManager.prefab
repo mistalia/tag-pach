@@ -65,11 +65,11 @@ MonoBehaviour:
     effectPrefab: {fileID: 9157587105558329540, guid: 9fec9615db4762446bad518d5a6ccdf9, type: 3}
     defaultCapacity: 1
     maxCapacity: 2
-  - effectKey: Scan_Gasha
+  - effectKey: Search_Gasha
     effectPrefab: {fileID: 8183428990073747964, guid: 94af1cc088c106a479612605e72007dd, type: 3}
     defaultCapacity: 1
     maxCapacity: 3
-  - effectKey: Scan_Penta
+  - effectKey: Search_Penta
     effectPrefab: {fileID: 1507697780549875046, guid: 1a8601d69ed7db248a00ed67be32c797, type: 3}
     defaultCapacity: 1
     maxCapacity: 3

@@ -159,6 +159,7 @@ public class PlayerStateForcePlace : PlayerState
         Debug.Log("ForcePlace_" + owner.PlayerName);
         var effectOffset = owner.transform.position + owner.transform.forward * settings.HitForwardOffset;
         EffectManager.Instance?.PlayEffect("ForcePlace_" + owner.PlayerName, effectOffset, owner.transform.rotation);
+        SEManager.Instance?.PlaySE("ForcePlace_" + owner.PlayerName, owner.transform.position);
 
         // çUåÇîªíËÇ1âÒÇæÇØé¿çs
         if (TurnManager.Instance != null) 

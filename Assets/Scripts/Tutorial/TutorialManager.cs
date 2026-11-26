@@ -110,6 +110,8 @@ public class TutorialManager : MonoBehaviour
 
     public void DisablePlayer()
     {
+        player_mag.ChangeState("idle");
+        player_osh.ChangeState("idle");
         player_mag.enabled = false;
         player_osh.enabled = false;
     }

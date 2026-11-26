@@ -117,6 +117,7 @@ MonoBehaviour:
   MoveEffect: {fileID: 4046130736324064103}
   spawnEffectKey: Spawn_Penta
   placeEffectKey: Place_Penta
+  deviceKey: Penta
 --- !u!114 &3712785186489469408
 MonoBehaviour:
   m_ObjectHideFlags: 0

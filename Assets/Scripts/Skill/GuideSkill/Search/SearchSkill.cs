@@ -134,6 +134,10 @@ public class SearchSkill : MonoBehaviour
         revealedStones.Clear();
         isSearching = true;
 
+        var player = GetComponent<Player>();
+
+        player.GetLABPDevice()?.PlaySearch();
+
         RevealStonesInRange();
         return true;
     }

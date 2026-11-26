@@ -6,13 +6,10 @@ using UnityEngine;
 [Serializable]
 public class DialogueLine
 {
-    [SerializeField] private string speakerName;
-
     [SerializeField, TextArea(3, 6)] private string message;
 
     [SerializeField] private Sprite portrait;
 
-    public string SpeakerName => speakerName;
     public string Message => message;
     public Sprite Portrait => portrait;
 

@@ -80,6 +80,7 @@ public class PlayerStateSmashed : PlayerState
 
         animator?.SetTrigger("tDamage");
         EffectManager.Instance?.PlayEffect("Damage", owner.transform.position, Quaternion.identity);
+        SEManager.Instance?.PlaySE("Hit", owner.transform.position);
     }
 
     // Playerがこのステートへ切り替えた直後に呼ぶ。

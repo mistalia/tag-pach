@@ -26,6 +26,10 @@ public sealed class BombSpawner : MonoBehaviour
     private float fieldRightEdge;
     private bool isInitialized;
 
+    private readonly Queue<Warunoko_BombThrower> availableThrowers = new();
+    private readonly HashSet<Warunoko_BombThrower> activeThrowers = new();
+
+
     public bool Initialize()
     {
         if (isInitialized)
@@ -65,13 +69,32 @@ public sealed class BombSpawner : MonoBehaviour
         if (bomb == null)
             return false;
 
-        Warunoko_BombThrower thrower = Instantiate(warunokoPrefub, bomb.transform.position - (Vector3.up * 1.0f), Quaternion.LookRotation(landingPosition - bomb.transform.position)).GetComponent<Warunoko_BombThrower>();
+        Vector3 position = bomb.transform.position - Vector3.up * 1.0f;
+
+        Vector3 direction = landingPosition - bomb.transform.position;
+
+        Quaternion rotation =
+            direction.sqrMagnitude > 0.0001f
+            ? Quaternion.LookRotation(direction)
+            : Quaternion.identity;
+
+        Warunoko_BombThrower thrower = GetThrower(position, rotation);
+
+        if (thrower == null)
+        {
+            // ワルノコを取得できなかったら、先に取得したボムも返す
+            bombPool.Return(bomb);
+            return false;
+        }
+
         thrower.Initialize(this, bomb, landingPosition, selectedTile);
         return true;
     }
 
     public void ResetBattle()
     {
+        ReturnAllThrowers();
+
         ClearBombRegistrations();
 
         if (bombPool != null)
@@ -270,5 +293,67 @@ public sealed class BombSpawner : MonoBehaviour
     {
         ClearBombRegistrations();
         candidateTiles.Clear();
+    }
+
+    private Warunoko_BombThrower GetThrower(
+    Vector3 position,
+    Quaternion rotation)
+    {
+        Warunoko_BombThrower thrower = null;
+
+        // 外部から削除されたオブジェクトは飛ばす
+        while (availableThrowers.Count > 0 && thrower == null)
+        {
+            thrower = availableThrowers.Dequeue();
+        }
+
+        // 待機中のものがないときだけ新規生成
+        if (thrower == null)
+        {
+            if (warunokoPrefub == null ||
+                !warunokoPrefub.TryGetComponent<Warunoko_BombThrower>(out _))
+            {
+                Debug.LogError("ワルノコPrefabの設定が不正です", this);
+                return null;
+            }
+
+            thrower = Instantiate(
+                warunokoPrefub,
+                position,
+                rotation
+            ).GetComponent<Warunoko_BombThrower>();
+        }
+
+        thrower.transform.SetParent(null);
+        thrower.transform.SetPositionAndRotation(position, rotation);
+
+        activeThrowers.Add(thrower);
+        thrower.gameObject.SetActive(true);
+
+        return thrower;
+    }
+
+    public void ReturnThrower(Warunoko_BombThrower thrower)
+    {
+        // 二重返却を防ぐ
+        if (thrower == null || !activeThrowers.Remove(thrower))
+            return;
+
+        thrower.ResetForPool();
+        thrower.gameObject.SetActive(false);
+        thrower.transform.SetParent(transform, false);
+
+        availableThrowers.Enqueue(thrower);
+    }
+
+    private void ReturnAllThrowers()
+    {
+        // 返却中にHashSetが変更されるのでコピーして処理
+        var targets = new List<Warunoko_BombThrower>(activeThrowers);
+
+        foreach (var thrower in targets)
+        {
+            ReturnThrower(thrower);
+        }
     }
 }
