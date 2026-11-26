@@ -76,3 +76,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BombSpawner
   settings: {fileID: 11400000, guid: 461652c855ff0034794d870a8067c5ae, type: 2}
   bombPool: {fileID: 1889871769105633210}
+  warunokoPrefub: {fileID: 5895224990355147415, guid: 08d938c330d77a647879835e4a2cf04b, type: 3}
