@@ -28,6 +28,14 @@ public class Warunoko_BombThrower : MonoBehaviour
 
     public void Initialize(BombSpawner spawner, Bomb throwObject, Vector3 landingPoint, FieldTile targetTile)
     {
+        ResetForPool();
+
+        if (animator)
+        {
+            animator.Rebind();
+            animator.Update(0f);
+        }
+
         this.spawner = spawner;
         this.throwObject = throwObject;
         this.landingPoint = landingPoint;
@@ -82,5 +90,19 @@ public class Warunoko_BombThrower : MonoBehaviour
         spawner.StartBomb(throwObject, landingPoint);
         animated = true;
         currentCountTime = afterWaitTime;
+    }
+
+    public void ResetForPool()
+    {
+        StopAllCoroutines();
+
+        throwWaiting = false;
+        animated = false;
+        currentCountTime = 0f;
+
+        spawner = null;
+        throwObject = null;
+        targetTile = null;
+        landingPoint = Vector3.zero;
     }
 }

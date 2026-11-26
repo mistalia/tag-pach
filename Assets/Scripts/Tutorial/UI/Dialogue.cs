@@ -11,7 +11,6 @@ public class Dialogue : MonoBehaviour
     [Header("Ref")]
     [SerializeField] private GameObject dialogueRoot;
     [SerializeField] private Image speakerIcon;
-    [SerializeField] private TMP_Text speakerName;
     [SerializeField] private TMP_Text messageBox;
 
     [Header("Settings")]
@@ -130,7 +129,6 @@ public class Dialogue : MonoBehaviour
         isTyping = false;
         dialogueData.IsFinished = false;
         speakerIcon.sprite = dialogueLine.Portrait;
-        speakerName.text = dialogueLine.SpeakerName;
         messageBox.maxVisibleCharacters = 0;
         messageBox.text = dialogueLine.Message;
 

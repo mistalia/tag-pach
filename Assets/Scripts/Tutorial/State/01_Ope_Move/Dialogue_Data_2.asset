@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Dialogue_Data_2
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   lines:
-  - speakerName: "\u30B3\u30DE\u30CE\u30B3"
-    message: "\u3088\u304F\u3084\u3063\u305F\u30CE\u30C0\uFF01"
-    portrait: {fileID: 21300000, guid: 18ff807223c98314fafb93ccff7445df, type: 3}
-  - speakerName: "\u30B3\u30DE\u30CE\u30B3"
-    message: "\u4EBA\u9593\u5074\u306F\u64CD\u4F5C\u62C5\u5F53\u306A\u30CE\u30C0\u3001\u76F8\u624B\u306E\u76EE\u7684\u3092\u59A8\u5BB3\u3057\u3064\u3064\u30C7\u30D0\u30A4\u30B9\u5074\u306E\u610F\u601D\u3092\u30B5\u30DD\u30FC\u30C8\u3059\u308B\u30CE\u30C0\u3002"
-    portrait: {fileID: 21300000, guid: 18ff807223c98314fafb93ccff7445df, type: 3}
+  - message: "\u3088\u304F\u3084\u3063\u305F\u30CE\u30C0\uFF01"
+    portrait: {fileID: 21300000, guid: 0ed6d1848172e2e4487904e40a05bda4, type: 3}
+  - message: "\u4EBA\u9593\u5074\u306F\u64CD\u4F5C\u62C5\u5F53\u306A\u30CE\u30C0\u3001\u76F8\u624B\u306E\u76EE\u7684\u3092\u59A8\u5BB3\u3057\u3064\u3064\u30C7\u30D0\u30A4\u30B9\u5074\u306E\u610F\u601D\u3092\u30B5\u30DD\u30FC\u30C8\u3059\u308B\u30CE\u30C0\u3002"
+    portrait: {fileID: 21300000, guid: 10dccc4cb96741048b6f1c95176baa28, type: 3}
   IsFinished: 1

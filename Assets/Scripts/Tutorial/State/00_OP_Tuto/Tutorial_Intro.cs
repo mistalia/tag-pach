@@ -33,6 +33,7 @@ public class TutorialIntroduction : TutorialState
             if (!onece)
             {
                 ARScanController.Instance.OnBattleStart();
+                tutorialManager.DisablePlayer();
                 onece = true;
             }
 
@@ -69,5 +70,6 @@ public class TutorialIntroduction : TutorialState
     public override void ExitState()
     {
         base.ExitState();
+        tutorialManager.EnablePlayer();
     }
 }

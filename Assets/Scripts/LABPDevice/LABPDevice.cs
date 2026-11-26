@@ -11,6 +11,8 @@ public class LABPDevice : MonoBehaviour
     [SerializeField] private string spawnEffectKey = "Spawn_";
     public string GetSpawnEffectKey() => spawnEffectKey;
     [SerializeField] private string placeEffectKey = "Place_";
+
+    [SerializeField] private string deviceKey = "Gasha";
     public string GetPlaceEffectKey() => placeEffectKey;
 
     private LABPCommunication communication;
@@ -243,5 +245,11 @@ public class LABPDevice : MonoBehaviour
         {
             MoveEffect.Stop();
         }
+    }
+
+    public void PlaySearch()
+    {
+        animator?.SetTrigger("tSearch");
+        EffectManager.Instance?.PlayEffect("Search_" + deviceKey, player.transform.position);
     }
 }

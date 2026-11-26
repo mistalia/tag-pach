@@ -44,4 +44,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8735f02271dfca489a799f8e033df52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SEManager
-  _seConfigs: []
+  _seConfigs:
+  - seKey: Move_Osh
+    audioClip: {fileID: 8300000, guid: 95c69fc135b9786408cbd9e19bcda2ca, type: 3}
+    volume: 0.5
+    pitch: 1
+    spatialBlend: 0.5
+    defaultCapacity: 1
+    maxCapacity: 1
+  - seKey: Move_Mag
+    audioClip: {fileID: 8300000, guid: 5355458ae9dfdbc40a50263c8144743e, type: 3}
+    volume: 0.5
+    pitch: 1
+    spatialBlend: 0.5
+    defaultCapacity: 1
+    maxCapacity: 1
+  - seKey: ForceSmash_Osh
+    audioClip: {fileID: 8300000, guid: 85832113ee49fcd4e9e718f45c375895, type: 3}
+    volume: 0.5
+    pitch: 0
+    spatialBlend: 1
+    defaultCapacity: 1
+    maxCapacity: 1
+  - seKey: ForceSmash_Mag
+    audioClip: {fileID: 8300000, guid: 0f5cb17029537d648b22321b55818ef1, type: 3}
+    volume: 0.5
+    pitch: 1
+    spatialBlend: 0.5
+    defaultCapacity: 1
+    maxCapacity: 1
+  - seKey: Hit
+    audioClip: {fileID: 8300000, guid: 3f39d38cb8eb8544da89b8e4da3d1c5b, type: 3}
+    volume: 0.5
+    pitch: 1
+    spatialBlend: 0.5
+    defaultCapacity: 10
+    maxCapacity: 30
+  - seKey: Bomb_Throw
+    audioClip: {fileID: 8300000, guid: 2ad754d507683f147857435f20a7ddb5, type: 3}
+    volume: 0.1
+    pitch: 1
+    spatialBlend: 0.5
+    defaultCapacity: 3
+    maxCapacity: 5
+  - seKey: Bomb_Wait
+    audioClip: {fileID: 8300000, guid: bfa0e66fac3e8a04eb7df155374efae2, type: 3}
+    volume: 0.1
+    pitch: 1
+    spatialBlend: 0.5
+    defaultCapacity: 3
+    maxCapacity: 5
+  - seKey: Bomb_Explosion
+    audioClip: {fileID: 8300000, guid: 19fe2f8923456864699d2d94e8e1e756, type: 3}
+    volume: 0.1
+    pitch: 1
+    spatialBlend: 0.5
+    defaultCapacity: 3
+    maxCapacity: 5
