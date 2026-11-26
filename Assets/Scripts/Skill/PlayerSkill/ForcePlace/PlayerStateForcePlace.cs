@@ -100,6 +100,7 @@ public class PlayerStateForcePlace : PlayerState
         }
 
         animator?.SetTrigger("tForcePlace");
+
     }
 
     public override void UpdateState()
@@ -154,6 +155,10 @@ public class PlayerStateForcePlace : PlayerState
         {
             return;
         }
+
+        Debug.Log("ForcePlace_" + owner.PlayerName);
+        var effectOffset = owner.transform.position + owner.transform.forward * settings.HitForwardOffset;
+        EffectManager.Instance?.PlayEffect("ForcePlace_" + owner.PlayerName, effectOffset, owner.transform.rotation);
 
         // çUåÇîªíËÇ1âÒÇæÇØé¿çs
         if (TurnManager.Instance != null) 

@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     [SerializeField] private LABPDevice labpDevice;
     [SerializeField] private GameObject rootDisableObj;
     [SerializeField] private ParticleSystem runEffect;
+    [SerializeField] private string playerName = "Mag";
+    public string PlayerName { get; private set; }
 
     public readonly float moveDeadzone = 0.3f; // 移動入力のデッドゾーン
 
@@ -89,6 +91,8 @@ public class Player : MonoBehaviour
 
         // 初期位置・初期回転を保存
         InitializeSpawnPoint();
+
+        PlayerName = playerName;
     }
 
     void Start()
@@ -265,6 +269,7 @@ public class Player : MonoBehaviour
             input.ForcePlace.Pressed && 
             forcePlaceEnable)
         {
+            //animator?.SetTrigger("tForcePlace");
             ChangeState("forcePlace");
             return;
         }
@@ -273,6 +278,7 @@ public class Player : MonoBehaviour
             input.Attack.Pressed &&
             smashEnable)
         {
+
             ChangeState("smash");
             return;
         }
@@ -343,7 +349,8 @@ public class Player : MonoBehaviour
         {
             return false;
         }
-
+        animator?.SetTrigger("tDamage");
+        EffectManager.Instance?.PlayEffect("Damage", transform.position, Quaternion.identity);
         // 通常の配置と同じステートを使う。
         ChangeState("place");
 

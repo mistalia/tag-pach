@@ -13,6 +13,8 @@ public sealed class BombSpawner : MonoBehaviour
     [Header("References")]
     [SerializeField]
     private BombPool bombPool;
+    [SerializeField]
+    private GameObject warunokoPrefub;
 
     private readonly List<FieldTile> candidateTiles = new List<FieldTile>();
     private readonly HashSet<FieldTile> bombOccupiedTiles = new HashSet<FieldTile>();
@@ -63,8 +65,8 @@ public sealed class BombSpawner : MonoBehaviour
         if (bomb == null)
             return false;
 
-        RegisterBomb(bomb, selectedTile);
-        StartBomb(bomb, landingPosition);
+        Warunoko_BombThrower thrower = Instantiate(warunokoPrefub, bomb.transform.position - (Vector3.up * 1.0f), Quaternion.LookRotation(landingPosition - bomb.transform.position)).GetComponent<Warunoko_BombThrower>();
+        thrower.Initialize(this, bomb, landingPosition, selectedTile);
         return true;
     }
 
@@ -215,12 +217,12 @@ public sealed class BombSpawner : MonoBehaviour
         return fieldRoot.TransformPoint(spawnLocalPosition);
     }
 
-    private void StartBomb(Bomb bomb, Vector3 landingPosition)
+    public void StartBomb(Bomb bomb, Vector3 landingPosition)
     {
         bomb.InitializeFlying(settings.BombSettings, landingPosition, settings.ArcHeight, settings.FlightDuration);
     }
 
-    private void RegisterBomb(Bomb bomb, FieldTile tile)
+    public void RegisterBomb(Bomb bomb, FieldTile tile)
     {
         bombTiles.Add(bomb, tile);
         bombOccupiedTiles.Add(tile);
