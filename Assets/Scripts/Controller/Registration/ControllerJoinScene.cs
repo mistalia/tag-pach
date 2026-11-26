@@ -8,6 +8,8 @@ public sealed class ControllerJoinScene : MonoBehaviour
     [SerializeField]
     private string nextSceneName = "DefaultScene";
 
+    private string gameSceneName = "GameScene";
+
     [SerializeField]
     private TransitionSettings transitionSettings;
 
@@ -74,7 +76,21 @@ public sealed class ControllerJoinScene : MonoBehaviour
             return;
         }
 
-        SceneTransitionManager.Instance.LoadScene(nextSceneName, transitionSettings);
+        //SceneTransitionManager.Instance.LoadScene(nextSceneName, transitionSettings);
+
+        // ‘JˆÚæ‚ÌŒˆ’è
+        string targetSceneName = nextSceneName;
+
+        BattleManager battleManager = BattleManager.Instance;
+
+        // 2–{–ÚˆÈ~‚ÍGameScene‚Ö‘JˆÚ
+        if (battleManager != null && battleManager.GetBattleCount() >= 2)
+        {
+            targetSceneName = gameSceneName;
+        }
+
+        // ƒV[ƒ“‘JˆÚ
+        SceneTransitionManager.Instance.LoadScene(targetSceneName, transitionSettings);
     }
 
     private void OnProceedPerformed(InputAction.CallbackContext context)
