@@ -369,4 +369,17 @@ public class FieldManager : MonoBehaviour
             tile.SetFrameColor(color);
         }
     }
+
+    public void ResetAllTileColors()
+    {
+        foreach (FieldTile tile in FieldTile)
+        {
+            if (tile == null)
+            {
+                continue;
+            }
+
+            tile.ResetTileColor();
+        }
+    }
 }
