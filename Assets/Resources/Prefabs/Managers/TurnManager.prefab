@@ -45,6 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnManager
   turnTimeLimit: 20
-  repositionTimeLimit: 10
-  secondPlayerExitDelay: 2
-  repositionTurnInterval: 10
+  transitionSettings: {fileID: 11400000, guid: 93d8b4863f0d0d74da083a36fce197b5, type: 2}

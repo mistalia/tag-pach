@@ -1034,6 +1034,9 @@ public class FieldEventManager : MonoBehaviour
 
         yield return StartCoroutine(PlayFinishAnimation());
 
+        // 回転前のハイライト色をすべてリセット
+        fieldManager?.ResetAllTileColors();
+
         IsEventPlaying = false;
     }
 
