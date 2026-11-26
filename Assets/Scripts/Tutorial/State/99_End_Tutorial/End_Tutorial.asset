@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::End_Tutorial
   StartDialogue: {fileID: 11400000, guid: 5a1684672c13cd74a87a320b232b317e, type: 2}
   transitionSettings: {fileID: 11400000, guid: 93d8b4863f0d0d74da083a36fce197b5, type: 2}
-  sceneName: DefaultScene
+  sceneName: GameScene

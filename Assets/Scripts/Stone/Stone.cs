@@ -1,175 +1,166 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-
-/// <summary>
-/// 駒の持ち主と、配置後の色変化を管理する。
-///
-/// SetOwnerで持ち主を記録し、そのプレイヤーの色を表示する。
-/// 設定時間の経過後、徐々に共通色へ戻る。
-/// 色が戻っても持ち主の記録は維持する。
-/// </summary>
 
 public class Stone : MonoBehaviour
 {
-    // 既存の参照との互換性を保つため、名前は変更しない。
     public Player Owner { get; private set; }
 
-    [Header("色の設定")]
+    // 0 = 表示開始、1 = フェード完了
+    public float CurrentProg { get; private set; }
+    public bool IsTransitioning { get; private set; }
 
-    [Tooltip("配置前と色変化終了後の共通色。両チームとも同じ色に設定する。")]
-    [SerializeField] private Color neutralColor = Color.gray;
+    [Header("リム表示")]
+    [SerializeField, Min(0f)]
+    private float revealedRimIntensity = 1f;
 
-    [Header("時間の設定（秒）")]
+    [Header("時間（秒）")]
+    [SerializeField, Min(0f)]
+    private float holdDuration = 1f;
 
-    [Tooltip("プレイヤーの色を保持する秒数。0なら、すぐに共通色へ戻り始める。")]
-    [Min(0f)]
-    [SerializeField] private float holdDuration = 1f;
+    [SerializeField, Min(0f)]
+    private float fadeDuration = 3f;
 
-    [Tooltip("共通色へ徐々に戻る秒数。0なら、保持時間の終了後に即座に戻る。")]
-    [Min(0f)]
-    [SerializeField] private float fadeDuration = 3f;
+    [Header("Renderer")]
+    [SerializeField]
+    private List<Renderer> meshRenderer = new();
 
-    [Header("色付け用メッシュの登録")]
-    [SerializeField]private List<Renderer> meshRenderer;
-    [SerializeField] private List<Renderer> holoMesh;
+    [SerializeField]
+    private List<Renderer> holoMesh = new();
 
-    [Header("ホロマテリアル")]
+    [Header("ホログラム")]
     [SerializeField] private Material holoMaterial;
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
 
-    // この駒だけの表示を変更するために使用する。
-    private MaterialPropertyBlock propertyBlock;
-    private int colorPropertyId;
+    private sealed class RimTarget
+    {
+        public Renderer Renderer;
+        public int ColorId;
+        public int IntensityId;
+        public MaterialPropertyBlock Block = new();
+    }
 
-    private Color revealedColor;
+    private readonly List<RimTarget> rimTargets = new();
+
+    private readonly Dictionary<Renderer, Material[]>
+        originalMaterials = new();
+
+    private bool initialized;
+    private bool holo;
+
+    private Color revealedColor = Color.white;
+    private float currentIntensity;
     private float elapsedTime;
-
     private float activeHoldDuration;
     private float activeFadeDuration;
 
-
-    private bool isTransitioning;
-    private bool isReady;
-
-    private Material defaultMaterial;
-
-    private bool holo = false;
-
-    public float CurrentProg { get; private set; } = 0f;
-    public bool IsTransitioning => isTransitioning;
-
     private void Awake()
     {
-        InitializeColor();
-
-        holoMaterial = Resources.Load<Material>("Materials/HologramMaterial");
-        defaultMaterial = holoMesh[0].material;
-
-        if(animator == null)
-        {
-            animator = GetComponent<Animator>();
-        }
-
-        animator?.SetBool("bLightUp", false);
+        Initialize();
     }
 
-    /// <summary>
-    /// 描画の準備を行い、初期状態を共通色にする。
-    /// 準備済みなら再初期化しない。
-    /// </summary>
-    private bool InitializeColor()
+    private void Initialize()
     {
-        if (isReady)
+        if (initialized)
+            return;
+
+        initialized = true;
+
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
+
+        // Inspectorの設定を優先する
+        if (holoMaterial == null)
         {
-            return true;
+            holoMaterial =
+                Resources.Load<Material>("Materials/HologramMaterial");
         }
 
+        RegisterRimTargets();
+        CacheOriginalMaterials();
 
-        // 共有素材は確認にだけ使用し、直接変更しない。
-        foreach (var renderer in meshRenderer)
+        ResetColor();
+    }
+
+    private void RegisterRimTargets()
+    {
+        if (meshRenderer == null)
+            return;
+
+        var registered = new HashSet<Renderer>();
+
+        foreach (Renderer target in meshRenderer)
         {
-            if (renderer == null)
-            {
-                Debug.LogError("駒のMeshRendererが設定されていません。", this);
-                return false;
-            }
-        }
+            if (target == null || !registered.Add(target))
+                continue;
 
-        foreach (var renderer in meshRenderer)
-        {
-
-
-            Material material = renderer.sharedMaterial;
+            Material material = target.sharedMaterial;
 
             if (material == null)
-            {
-                Debug.LogError("駒にマテリアルが設定されていません。", this);
-                return false;
-            }
+                continue;
 
-            // 使用する素材に合わせて、色の設定項目を選ぶ。
-            if (material.HasProperty("_BaseColor"))
+            string colorName;
+            string intensityName;
+
+            // BaseMateria用
+            if (material.HasProperty("_RimColor") &&
+                material.HasProperty("_RimIntensity"))
             {
-                colorPropertyId = Shader.PropertyToID("_BaseColor");
+                colorName = "_RimColor";
+                intensityName = "_RimIntensity";
             }
-            else if (material.HasProperty("_Color"))
+            // ToonBaseMaterial用
+            else if (material.HasProperty("_Rim_Color") &&
+                     material.HasProperty("_Rim_Intensity"))
             {
-                colorPropertyId = Shader.PropertyToID("_Color");
+                colorName = "_Rim_Color";
+                intensityName = "_Rim_Intensity";
             }
             else
             {
-                Debug.LogError(
-                    "駒のマテリアルに対応する色設定がありません。",
-                    this);
-                return false;
+                Debug.LogWarning(
+                    $"{target.name}のマテリアルにリム設定がありません。",
+                    target);
+                continue;
             }
 
-            propertyBlock = new MaterialPropertyBlock();
-            isReady = true;
-
-            ApplyColor(neutralColor);
+            rimTargets.Add(new RimTarget
+            {
+                Renderer = target,
+                ColorId = Shader.PropertyToID(colorName),
+                IntensityId = Shader.PropertyToID(intensityName)
+            });
         }
-        return true;
     }
 
-    /// <summary>
-    /// 配置処理から呼び出し、持ち主の記録と色変化を開始する。
-    /// PlayerStoneColorはPlayerと同じGameObjectに付ける。
-    ///
-    /// 再度呼ぶと、色変化の時間を最初から数え直す。
-    /// nullの場合は持ち主なし・共通色にする。
-    /// </summary>
+    private void CacheOriginalMaterials()
+    {
+        if (holoMesh == null)
+            return;
+
+        foreach (Renderer target in holoMesh)
+        {
+            if (target == null ||
+                originalMaterials.ContainsKey(target))
+                continue;
+
+            // Rendererごとに全スロットを保存
+            originalMaterials.Add(target, target.sharedMaterials);
+        }
+    }
+
     public void SetOwner(Player player)
     {
+        Initialize();
+
         Owner = player;
+        ResetColor();
 
-        // 以前の色変化を終了する。
-        isTransitioning = false;
-        elapsedTime = 0f;
-
-        // 色を表示できない場合も、持ち主の記録は維持する。
-        if (!InitializeColor())
-        {
-            return;
-        }
-
-        ApplyColor(neutralColor);
-
-        if (Owner == null)
-        {
-            return;
-        }
-
-        RevealColor(Owner.TeamColor);
+        if (Owner != null)
+            RevealColor(Owner.TeamColor);
     }
 
-    /// <summary>
-    /// 指定色を表示し、共通色へ戻るまでの計測を開始する。
-    /// 持ち主は変更しない。再度呼ぶと時間がリセットされる。
-    /// </summary>
     public void RevealColor(Color teamColor)
     {
         RevealColor(teamColor, holdDuration, fadeDuration);
@@ -180,80 +171,136 @@ public class Stone : MonoBehaviour
         float visibleDuration,
         float returnDuration)
     {
-        if (!InitializeColor())
-        {
-            return;
-        }
+        Initialize();
 
+        revealedColor = teamColor;
         activeHoldDuration = Mathf.Max(0f, visibleDuration);
         activeFadeDuration = Mathf.Max(0f, returnDuration);
 
-        revealedColor = teamColor;
         elapsedTime = 0f;
-        isTransitioning = true;
+        CurrentProg = 0f;
+        IsTransitioning = true;
 
-        ApplyColor(revealedColor);
+        ApplyRim(revealedRimIntensity);
+        animator?.SetBool("bLightUp", true);
+
+        if (activeHoldDuration == 0f && activeFadeDuration == 0f)
+            CompleteReveal();
     }
 
     private void Update()
     {
-        if (!isTransitioning)
-        {
+        if (!IsTransitioning)
             return;
-        }
 
-        // ゲーム内時間で計測する。
-        // Time.timeScaleが0の間は色変化も止まる。
         elapsedTime += Time.deltaTime;
 
-        float holdTime = activeHoldDuration;
-        float fadeTime = activeFadeDuration;
-
-        // 保持時間中は色を変えない。
-        if (elapsedTime < holdTime)
-        {
+        if (elapsedTime < activeHoldDuration)
             return;
-        }
 
-        // 0＝プレイヤーの色、1＝共通色。
-        // 変化時間が0なら、割り算せず完了扱いにする。
-        CurrentProg = fadeTime <= 0f
+        CurrentProg = activeFadeDuration <= 0f
             ? 1f
-            : Mathf.Clamp01((elapsedTime - holdTime) / fadeTime);
+            : Mathf.Clamp01(
+                (elapsedTime - activeHoldDuration)
+                / activeFadeDuration);
 
-        ApplyColor(Color.Lerp(revealedColor, neutralColor, CurrentProg));
+        // 色は固定し、Intensityだけを変える
+        ApplyRim(Mathf.Lerp(
+            revealedRimIntensity,
+            0f,
+            CurrentProg));
 
         if (CurrentProg >= 1f)
-        {
-            isTransitioning = false;
-            animator?.SetBool("bLightUp", false);
-        }
+            CompleteReveal();
     }
 
-    /// <summary>
-    /// 共有素材を書き換えず、この駒だけに色を反映する。
-    /// 同じGameObjectにRendererがあり、素材が1つの構成を想定。
-    /// </summary>
-    private void ApplyColor(Color color)
+    private void CompleteReveal()
     {
-        foreach (var renderer in meshRenderer)
-        {
-            renderer.GetPropertyBlock(propertyBlock);
-            propertyBlock.SetColor(colorPropertyId, color);
-            renderer.SetPropertyBlock(propertyBlock);
-        }
+        CurrentProg = 1f;
+        IsTransitioning = false;
 
-        animator?.SetBool("bLightUp", color != neutralColor);
+        ApplyRim(0f);
+        animator?.SetBool("bLightUp", false);
     }
 
     public void ResetColor()
     {
-        ApplyColor(neutralColor);
-        isTransitioning = false;
+        Initialize();
+
+        IsTransitioning = false;
         elapsedTime = 0f;
         CurrentProg = 0f;
 
+        ApplyRim(0f);
         animator?.SetBool("bLightUp", false);
+    }
+
+    private void ApplyRim(float intensity)
+    {
+        currentIntensity = intensity;
+
+        foreach (RimTarget target in rimTargets)
+        {
+            if (target.Renderer == null)
+                continue;
+
+            // ホログラム中は通常材質への設定を保留
+            if (holo &&
+                originalMaterials.ContainsKey(target.Renderer))
+                continue;
+
+            // 他のプロパティ設定を維持する
+            target.Renderer.GetPropertyBlock(target.Block);
+
+            target.Block.SetColor(
+                target.ColorId, revealedColor);
+
+            target.Block.SetFloat(
+                target.IntensityId, intensity);
+
+            target.Renderer.SetPropertyBlock(target.Block);
+        }
+    }
+
+    public void SetHolo(bool active)
+    {
+        Initialize();
+
+        if (holo == active)
+            return;
+
+        if (active && holoMaterial == null)
+        {
+            Debug.LogWarning(
+                "ホログラム用マテリアルが未設定です。", this);
+            return;
+        }
+
+        holo = active;
+
+        foreach (var entry in originalMaterials)
+        {
+            Renderer target = entry.Key;
+
+            if (target == null)
+                continue;
+
+            if (!active)
+            {
+                target.sharedMaterials = entry.Value;
+                continue;
+            }
+
+            var materials = new Material[entry.Value.Length];
+
+            for (int i = 0; i < materials.Length; i++)
+                materials[i] = holoMaterial;
+
+            target.sharedMaterials = materials;
+        }
+
+        if (!active)
+            ApplyRim(currentIntensity);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -263,24 +310,10 @@ public class Stone : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        // 回転中はホログラムを解除しない
         if (FieldEventManager.Instance != null &&
             FieldEventManager.Instance.IsRotating)
-        {
             return;
-        }
 
         SetHolo(false);
-    }
-
-    public void SetHolo(bool active)
-    {
-        holo = active;
-
-        foreach (var renderer in holoMesh)
-        {
-            renderer.material =
-                holo ? holoMaterial : defaultMaterial;
-        }
     }
 }

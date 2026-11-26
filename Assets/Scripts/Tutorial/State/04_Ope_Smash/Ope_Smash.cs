@@ -60,9 +60,6 @@ public class Ope_Smash : TutorialState
                 {
                     Mission.Instance.ClearMission();
 
-                    Destroy(dummyLeft.gameObject);
-                    Destroy(dummyRight.gameObject);
-
                     HelpIcon.Instance.Attack.SetActive(false);
 
                     ChangeStep(TutorialStep.Step3);
@@ -84,6 +81,9 @@ public class Ope_Smash : TutorialState
 
                 if(DialogueData_2.IsFinished)
                 {
+                    Destroy(dummyLeft.gameObject);
+                    Destroy(dummyRight.gameObject);
+
                     tutorialManager.GetPlayerMag().SetSmashEnable(false);
                     tutorialManager.GetPlayerOsh().SetSmashEnable(false);
 

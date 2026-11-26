@@ -18,6 +18,10 @@ public class FieldTile : MonoBehaviour
     [SerializeField]private Vector2Int coordinate;
     public Stone PutedStone {get; private set; } = null;
 
+    [Header("フレームの発光")]
+    [SerializeField, Min(0f)]
+    private float frameIntensity = 3f;
+
     private Material defaultMaterial;
     private Color defaultColor;
 
@@ -37,18 +41,22 @@ public class FieldTile : MonoBehaviour
 
     private void Update()
     {
-        if (holo)
+        if (holo || meshRenderer == null)
         {
             return;
         }
 
-        if (PutedStone != null)
+        Color color = defaultColor;
+
+        if (PutedStone != null && PutedStone.Owner != null)
         {
             if(PutedStone.IsTransitioning)
             {
-                meshRenderer.material.SetColor("_Base_Color", Color.Lerp(PutedStone.Owner.TeamColor, defaultColor,PutedStone.CurrentProg));
+                color =  Color.Lerp(PutedStone.Owner.TeamColor, defaultColor,PutedStone.CurrentProg);
             }
         }
+
+        meshRenderer.material.SetColor("_Base_Color", color);
     }
 
     public bool PutStone(Stone stone, string effectColor = null)
@@ -131,10 +139,12 @@ public class FieldTile : MonoBehaviour
         if (PutedStone && PutedStone.IsTransitioning)
         {
             meshRenderer.material.SetColor("_Base_Color", Color.Lerp(PutedStone.Owner.TeamColor, highlightColor, PutedStone.CurrentProg));
-            
+
         }
-        
-        meshRenderer.material.SetColor("_Base_Color", highlightColor);
+        else
+        {
+            meshRenderer.material.SetColor("_Base_Color", highlightColor);
+        }
     }
 
     public void ResetTileColor()
@@ -184,6 +194,8 @@ public class FieldTile : MonoBehaviour
 
     public void SetFrameColor(Color color)
     {
-        meshRenderer.material.SetColor("_Frame_Color", color);
+        Color hdrCol = new Color(color.r * frameIntensity, color.g * frameIntensity, color.b * frameIntensity);
+
+        meshRenderer.material.SetColor("_Frame_Color", hdrCol);
     }
 }

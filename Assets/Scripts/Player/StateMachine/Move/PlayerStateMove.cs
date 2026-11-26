@@ -46,8 +46,6 @@ public class PlayerStateMove : PlayerState
         base.ExitState();
         var rb = owner.GetComponent<Rigidbody>();
 
-        animator?.SetBool("bRun", false);
-
         owner.StopRunEffect();
 
         rb.linearVelocity = Vector3.zero;
