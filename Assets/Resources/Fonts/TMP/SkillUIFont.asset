@@ -19,7 +19,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties:
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Material: {fileID: -6974920131008983956}
   m_SourceFontFileGUID: 6a739ec6f4dedc744a7bc93f2c3308cf
   m_CreationSettings:
-    sourceFontFileName:
+    sourceFontFileName: 
     sourceFontFileGUID: 6a739ec6f4dedc744a7bc93f2c3308cf
     faceIndex: 0
     pointSizeSamplingMode: 0
@@ -158,15 +158,15 @@ MonoBehaviour:
     atlasWidth: 2048
     atlasHeight: 2048
     characterSetSelectionMode: 7
-    characterSequence:
-    referencedFontAssetGUID:
-    referencedTextAssetGUID:
+    characterSequence: 
+    referencedFontAssetGUID: 
+    referencedTextAssetGUID: 
     fontStyle: 0
     fontStyleModifier: 0
     renderMode: 4165
     includeFontFeatures: 0
   m_SourceFontFile: {fileID: 12800000, guid: 6a739ec6f4dedc744a7bc93f2c3308cf, type: 3}
-  m_SourceFontFilePath:
+  m_SourceFontFilePath: 
   m_AtlasPopulationMode: 1
   InternalDynamicOS: 0
   m_GlyphTable: []
@@ -9109,7 +9109,7 @@ MonoBehaviour:
   italicStyle: 35
   tabSize: 10
   m_fontInfo:
-    Name:
+    Name: 
     PointSize: 0
     Scale: 0
     CharacterCount: 0
@@ -9156,7 +9156,7 @@ Texture2D:
   m_IsReadable: 1
   m_IsPreProcessed: 0
   m_IgnoreMipmapLimit: 1
-  m_MipmapLimitGroupName:
+  m_MipmapLimitGroupName: 
   m_StreamingMipmaps: 0
   m_StreamingMipmapsPriority: 0
   m_VTOnly: 0
@@ -9173,11 +9173,11 @@ Texture2D:
     m_WrapW: 0
   m_LightmapFormat: 0
   m_ColorSpace: 1
-  m_PlatformBlob:
+  m_PlatformBlob: 
   image data: 1
   _typelessdata: 00
   m_StreamData:
     serializedVersion: 2
     offset: 0
     size: 0
-    path:
+    path: 
