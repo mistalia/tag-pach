@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e1f0ee4f4c21d84aa9866b249d52806, type: 3}
   m_Name: ControllerRegistrationSettings
   m_EditorClassIdentifier: Assembly-CSharp::ControllerRegistrationSettings
-  keyboardMode: 1
+  keyboardMode: 0
