@@ -7,6 +7,7 @@ public abstract class SkillCooldownUI : MonoBehaviour
     [Header("UI")]
     [SerializeField] private Image background;
     [SerializeField] private TMP_Text iconText;
+    [SerializeField] private Image iconImage;
     [SerializeField] private Image cooldownOverlay;
     [SerializeField] private Image cooldownFill;
     [SerializeField] private TMP_Text cooldownText;
@@ -37,7 +38,7 @@ public abstract class SkillCooldownUI : MonoBehaviour
     private Sprite readyBackgroundSprite;
     private Sprite cooldownSprite;
     private Texture2D cooldownTexture;
-    private SearchSkillUIRing outline;
+    [SerializeField] private SearchSkillUIRing outline;
     private Player targetPlayer;
     private bool referencesReady;
     private bool hasPreviousState;
@@ -61,7 +62,7 @@ public abstract class SkillCooldownUI : MonoBehaviour
     {
         targetPlayer = ResolvePlayer();
 
-        referencesReady = targetPlayer != null && background != null && iconText != null &&
+        referencesReady = targetPlayer != null && background != null && (iconImage != null || iconText != null) &&
             cooldownOverlay != null && cooldownFill != null && cooldownText != null;
 
         if (!referencesReady)
@@ -74,17 +75,21 @@ public abstract class SkillCooldownUI : MonoBehaviour
         CreateCooldownSprite();
         cooldownFill.sprite = cooldownSprite;
 
-        var outlineObject = new GameObject("SkillOutline", typeof(RectTransform), typeof(SearchSkillUIRing));
-        outline = outlineObject.GetComponent<SearchSkillUIRing>();
-        outline.raycastTarget = false;
-        outline.rectTransform.SetParent(background.transform, false);
-        outline.rectTransform.anchorMin = Vector2.zero;
-        outline.rectTransform.anchorMax = Vector2.one;
-        outline.rectTransform.offsetMin = Vector2.zero;
-        outline.rectTransform.offsetMax = Vector2.zero;
+        if (outline == null)
+        {
+            var outlineObject = new GameObject("SkillOutline", typeof(RectTransform), typeof(SearchSkillUIRing));
+            outline = outlineObject.GetComponent<SearchSkillUIRing>();
+            outline.raycastTarget = false;
+            outline.rectTransform.SetParent(background.transform, false);
+            outline.rectTransform.anchorMin = Vector2.zero;
+            outline.rectTransform.anchorMax = Vector2.one;
+            outline.rectTransform.offsetMin = Vector2.zero;
+            outline.rectTransform.offsetMax = Vector2.zero;
+        }
 
-        // Keep text above any fill/overlay, with its own independent alpha.
-        iconText.transform.SetAsLastSibling();
+        // Keep the icon and timer above the fill.
+        if (iconImage != null) iconImage.transform.SetAsLastSibling();
+        else iconText.transform.SetAsLastSibling();
         cooldownText.transform.SetAsLastSibling();
     }
 
@@ -163,8 +168,9 @@ public abstract class SkillCooldownUI : MonoBehaviour
         outline.Thickness = outlineThickness;
         outline.color = subdued ? cooldownOutlineColor : readyOutlineColor;
         outline.SetVerticesDirty();
-        iconText.color = isBlocked ? blockedIconColor : readyIconColor;
-        iconText.gameObject.SetActive(!isCoolingDown);
+        Graphic icon = iconImage != null ? (Graphic)iconImage : iconText;
+        icon.color = isBlocked ? blockedIconColor : readyIconColor;
+        icon.gameObject.SetActive(!isCoolingDown);
         cooldownOverlay.gameObject.SetActive(false);
         cooldownFill.color = meterColor;
         cooldownFill.gameObject.SetActive(isCoolingDown);
