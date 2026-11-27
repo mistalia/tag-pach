@@ -16,4 +16,4 @@ MonoBehaviour:
   expansionSpeed: 5
   revealDuration: 2
   fadeDuration: 1
-  cooldownTime: 600
+  cooldownTime: 40

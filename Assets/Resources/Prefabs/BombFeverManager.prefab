@@ -60,8 +60,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2973712685c6d164781e877560c63b4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BombPool
-  initialSize: 20
-  maximumSize: 50
+  initialSize: 10
+  maximumSize: 20
 --- !u!114 &5461635337998952517
 MonoBehaviour:
   m_ObjectHideFlags: 0

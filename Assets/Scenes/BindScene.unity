@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fe6d8d14d0a85c49b4a7b77b669128c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StartGameButton
-  nextSceneName: GameScene
+  nextSceneName: TutorialScene
   transitionSettings: {fileID: 11400000, guid: 93d8b4863f0d0d74da083a36fce197b5, type: 2}
   proceedAction: {fileID: 6747814918030940708, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   backAction: {fileID: 5927897860797073845, guid: 052faaac586de48259a63d0c4782560b, type: 3}
@@ -1767,7 +1767,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &820751210
 MonoBehaviour:
   m_ObjectHideFlags: 0

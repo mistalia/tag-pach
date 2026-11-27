@@ -1612,6 +1612,17 @@
                 },
                 {
                     "name": "",
+                    "id": "d39cfd4d-8bdf-4af7-a1e6-ab6b6090b9bc",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Proceed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "7bb8c784-912b-468e-8a26-0d54a4f7d7c6",
                     "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
