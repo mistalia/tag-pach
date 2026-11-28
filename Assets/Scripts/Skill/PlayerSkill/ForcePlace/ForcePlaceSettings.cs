@@ -28,6 +28,11 @@ public class ForcePlaceSettings : ScriptableObject
     [Tooltip("発動してから再使用できるまでの時間。単位は秒")]
     private float cooldownTime = 8f;
 
+    [Header("ノックバック設定")]
+    [SerializeField, Min(0f)] private float knockbackDistance = 1.5f;
+    [SerializeField, Min(0f)] private float knockbackSpeed = 5f;
+    [SerializeField, Min(0f)] private float knockbackStunDuration = 0.5f;
+
     public float ChargeDuration => chargeDuration;
     public float EndDuration => endDuration;
     
@@ -35,6 +40,10 @@ public class ForcePlaceSettings : ScriptableObject
     public float HitForwardOffset => hitForwardOffset;
 
     public float CooldownTime => cooldownTime;
+
+    public float KnockbackDistance => knockbackDistance;
+    public float KnockbackSpeed => knockbackSpeed;
+    public float KnockbackStunDuration => knockbackStunDuration;
 
     public bool IsValid =>
         IsFinite(chargeDuration) && chargeDuration >= 0f &&

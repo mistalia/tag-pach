@@ -1006,6 +1006,10 @@ public class FieldEventManager : MonoBehaviour
         }
 
         IsEventPlaying = true;
+
+        /* トリックルームの実行 */
+        TrickRoomEffectManager.Instance?.PlayEffect();
+        
         StartCoroutine(PlayFieldEvents(events));
 
         return true;

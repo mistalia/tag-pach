@@ -59,14 +59,14 @@ MonoBehaviour:
     spatialBlend: 0.5
     defaultCapacity: 1
     maxCapacity: 1
-  - seKey: ForceSmash_Osh
+  - seKey: ForcePlace_Osh
     audioClip: {fileID: 8300000, guid: 85832113ee49fcd4e9e718f45c375895, type: 3}
     volume: 0.5
     pitch: 0
     spatialBlend: 1
     defaultCapacity: 1
     maxCapacity: 1
-  - seKey: ForceSmash_Mag
+  - seKey: ForcePlace_Mag
     audioClip: {fileID: 8300000, guid: 0f5cb17029537d648b22321b55818ef1, type: 3}
     volume: 0.5
     pitch: 1

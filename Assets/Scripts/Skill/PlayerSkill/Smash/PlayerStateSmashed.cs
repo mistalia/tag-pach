@@ -30,6 +30,9 @@ public class PlayerStateSmashed : PlayerState
     private Collider wallNear;
     private Collider wallFar;
 
+    private bool animationPaused = false;
+    private float previousAnimatorSpeed;
+
     // 吹き飛ばしの終了とは別に、追加被弾を無視する期間を表す。
     public bool IsStunned => Time.time < stunEndTime;
 
@@ -78,8 +81,19 @@ public class PlayerStateSmashed : PlayerState
             );
         }
 
+        animationPaused = false;
+
         animator?.SetTrigger("tDamage");
         EffectManager.Instance?.PlayEffect("Damage", owner.transform.position, Quaternion.identity);
+
+        if(owner.ImpactFeedbackProfile != null)
+        {
+            Debug.Log($"ImpactFeedbackProfile: {owner.ImpactFeedbackProfile.name}");
+            ImpactFeedbackPlayer.Instance?.Play(owner.ImpactFeedbackProfile,owner.gameObject);
+        }
+
+        FieldCamera.Instance?.CameraShake(0.1f, 0.5f);
+
         SEManager.Instance?.PlaySE("Hit", owner.transform.position);
     }
 
@@ -120,6 +134,29 @@ public class PlayerStateSmashed : PlayerState
 
     public override void FixedUpdateState()
     {
+        var timeTarget = owner.GetComponent<CharacterTimeTarget>();
+        if (timeTarget != null && timeTarget.IsStopped)
+        {
+            if (!animationPaused && animator != null)
+            {
+                Debug.Log("Pausing animation due to time stop.");
+                previousAnimatorSpeed = animator.speed;
+                animator.speed = 0f;
+                animationPaused = true;
+            }
+
+            return;
+        }
+
+        if (animationPaused)
+        {
+
+            if (animator != null)
+                animator.speed = previousAnimatorSpeed;
+
+            animationPaused = false;
+        }
+
         if (playerRigidbody == null)
         {
             return;

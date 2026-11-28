@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CharacterFlashEffect
   m_EditorClassIdentifier: Assembly-CSharp::CharacterFlashEffect
   flashMaterial: {fileID: 2100000, guid: 9f0861275fabecc48b836be6cec50a28, type: 2}
-  flashCount: 2
+  flashCount: 10
   visibleDuration: 0.035
   hiddenDuration: 0.025

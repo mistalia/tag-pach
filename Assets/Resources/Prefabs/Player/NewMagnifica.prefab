@@ -269,6 +269,9 @@ GameObject:
   - component: {fileID: 6839388946122522228}
   - component: {fileID: 7562772386216303013}
   - component: {fileID: 8127282512772482577}
+  - component: {fileID: 5321103485240715393}
+  - component: {fileID: 2851408530091220761}
+  - component: {fileID: 7823676604117298044}
   m_Layer: 0
   m_Name: NewMagnifica
   m_TagString: Player
@@ -352,6 +355,8 @@ MonoBehaviour:
   labpDevice: {fileID: 0}
   rootDisableObj: {fileID: 0}
   runEffect: {fileID: 6450756271885063044}
+  playerName: Mag
+  impactFeedbackProfile: {fileID: 11400000, guid: 70969834e3a53a842b1407f27a64803d, type: 2}
   teamColor: {r: 0.8867924, g: 0.23666169, b: 0.11210393, a: 1}
 --- !u!114 &6839388946122522228
 MonoBehaviour:
@@ -417,6 +422,44 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &5321103485240715393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4839054488654286231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c296e32609b44a94ab988ba3d3cf7463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterTimeTarget
+--- !u!114 &2851408530091220761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4839054488654286231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7af03f23dda531f4f99f884c0d17f70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterShakeTarget
+  visualRoot: {fileID: 5384755298587252421}
+--- !u!114 &7823676604117298044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4839054488654286231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60b1cb5b4c2b14642b6af128f4932f36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterFlashTarget
+  rendererRoot: {fileID: 4751771249628302463}
 --- !u!1 &5301070885817939412
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,6 +879,11 @@ PrefabInstance:
 --- !u!95 &2043036359443074239 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: d93d03a2bc702fb4aa1e52245d5989af, type: 3}
+  m_PrefabInstance: {fileID: 5562164443146580270}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4751771249628302463 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d93d03a2bc702fb4aa1e52245d5989af, type: 3}
   m_PrefabInstance: {fileID: 5562164443146580270}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &5384755298587252421 stripped

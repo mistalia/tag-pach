@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d83c3a7b447efb49919d4319e7ccc44, type: 3}
   m_Name: CharacterShakeEffect
   m_EditorClassIdentifier: Assembly-CSharp::CharacterShakeEffect
-  duration: 0.1
+  duration: 0.3
   mode: 0
-  positionStrength: 0.05
+  positionStrength: 0.1
   rotationStrength: 3
   frequency: 25
