@@ -277,6 +277,9 @@ GameObject:
   - component: {fileID: 9058986331295156085}
   - component: {fileID: 8926393357000467467}
   - component: {fileID: 1440665179138532477}
+  - component: {fileID: 6820352636198730154}
+  - component: {fileID: 7238742462742051715}
+  - component: {fileID: -8310632362631304675}
   m_Layer: 0
   m_Name: NewOshiro
   m_TagString: Player
@@ -361,6 +364,7 @@ MonoBehaviour:
   rootDisableObj: {fileID: 0}
   runEffect: {fileID: 8410598881715091155}
   playerName: Osh
+  impactFeedbackProfile: {fileID: 11400000, guid: 70969834e3a53a842b1407f27a64803d, type: 2}
   teamColor: {r: 0.09955848, g: 0.57642716, b: 0.89433956, a: 1}
 --- !u!114 &9058986331295156085
 MonoBehaviour:
@@ -426,6 +430,44 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.25, z: 0}
+--- !u!114 &6820352636198730154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016671838205114224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c296e32609b44a94ab988ba3d3cf7463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterTimeTarget
+--- !u!114 &7238742462742051715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016671838205114224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7af03f23dda531f4f99f884c0d17f70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterShakeTarget
+  visualRoot: {fileID: 821765519887149626}
+--- !u!114 &-8310632362631304675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016671838205114224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60b1cb5b4c2b14642b6af128f4932f36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterFlashTarget
+  rendererRoot: {fileID: 12578200273678464}
 --- !u!1 &1749746710728694876
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,6 +943,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c0c2655961c9f0845a06d05d219a9bee, type: 3}
+--- !u!1 &12578200273678464 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c0c2655961c9f0845a06d05d219a9bee, type: 3}
+  m_PrefabInstance: {fileID: 931618536851557841}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &821765519887149626 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c0c2655961c9f0845a06d05d219a9bee, type: 3}

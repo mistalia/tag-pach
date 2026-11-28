@@ -227,7 +227,7 @@ public class PlayerStateForcePlace : PlayerState
             {
                 return false;
             }
-
+            opponent.AddKnockback(owner.transform.forward, settings.KnockbackDistance, settings.KnockbackSpeed, settings.KnockbackStunDuration);
             Debug.Log("ForcePlace–½’†F‘Šè‚Ì‹î‚ğ‹­§”z’u", owner);
 
             return true;

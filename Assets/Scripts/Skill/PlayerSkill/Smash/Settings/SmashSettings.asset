@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SmashSettings
   m_EditorClassIdentifier: Assembly-CSharp::SmashSettings
   range: 2
+  attackAngle: 180
   knockbackDistance: 5
   knockbackSpeed: 20
   knockbackDuration: 0.25

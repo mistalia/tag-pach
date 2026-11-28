@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8734c0fd69d730f42a4e27db376558c0, type: 3}
   m_Name: ImpactFeedbackProfile
   m_EditorClassIdentifier: Assembly-CSharp::ImpactFeedbackProfile
-  effects: []
+  effects:
+  - {fileID: 11400000, guid: ecec2fa39fb2e394bba1c55f60ba0241, type: 2}
+  - {fileID: 11400000, guid: ebfd49c04d43cc141ba81ab7af6a3a63, type: 2}
+  - {fileID: 11400000, guid: f9010931b297d164da5a6a16b5debef6, type: 2}

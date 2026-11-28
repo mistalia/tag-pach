@@ -166,7 +166,7 @@ public class FieldTile : MonoBehaviour
         if (PutedStone != null)
         {
             FieldManager.Instance.SubtractStoneCount();
-            EffectManager.Instance.PlayEffect("Warunoko_Spawn", PutedStone.transform.position);
+            EffectManager.Instance.PlayEffect("WarunokoSpawn", PutedStone.transform.position);
             Destroy(PutedStone.gameObject);
             PutedStone = null;
         }

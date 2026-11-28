@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
     [SerializeField] private ParticleSystem runEffect;
     [SerializeField] private string playerName = "Mag";
     public string PlayerName { get; private set; }
+    [SerializeField] public ImpactFeedbackProfile impactFeedbackProfile;
+    public ImpactFeedbackProfile ImpactFeedbackProfile  { get; private set; } = null;
 
     public readonly float moveDeadzone = 0.3f; // 移動入力のデッドゾーン
 
@@ -82,6 +84,11 @@ public class Player : MonoBehaviour
                 Debug.LogError("Animator is not found");
                 return;
             }
+        }
+
+        if(impactFeedbackProfile)
+        {
+            ImpactFeedbackProfile = impactFeedbackProfile;
         }
 
         // ステータスのコピーインスタンスを生成
